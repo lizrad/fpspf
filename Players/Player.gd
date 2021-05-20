@@ -75,6 +75,9 @@ func _physics_process(delta):
 		look_at(rotate_input_vector + transform.origin, Vector3.UP)
 	
 	movement_records.append(MovementFrame.new(global_transform))
+	
+	if Input.is_action_pressed("ui_accept"):
+		$Shooter.Shoot()
 
 
 func reset():
