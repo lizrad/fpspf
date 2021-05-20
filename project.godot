@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Spatial",
+"class": "Door",
+"language": "GDScript",
+"path": "res://Level/Door.gd"
+}, {
+"base": "Spatial",
+"class": "PlayerBase",
+"language": "GDScript",
+"path": "res://Level/PlayerBase.gd"
+} ]
+_global_script_class_icons={
+"Door": "",
+"PlayerBase": ""
+}
+
 [application]
 
 config/name="fpspf"
