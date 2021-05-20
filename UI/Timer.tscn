@@ -1,10 +1,11 @@
 [gd_scene format=2]
 
 [node name="Timer" type="TextEdit"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = -935.0
-margin_bottom = -547.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -44.5
+margin_right = 44.5
+margin_bottom = 53.0
 text = "xx:yy"
 __meta__ = {
 "_edit_use_anchors_": false
