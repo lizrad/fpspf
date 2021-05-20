@@ -12,6 +12,9 @@ export(float) var move_acceleration := 1.2
 export(float) var inner_deadzone := 0.2
 export(float) var outer_deadzone := 0.8
 
+signal active_player_died
+signal ghost_player_died
+
 
 func get_normalized_input(type):
 	var input = Vector2(Input.get_action_strength(type + "_up") - Input.get_action_strength(type + "_down"),
