@@ -15,12 +15,11 @@ var label_score2 # score for player 2
 
 func _ready():
 	left_time = round_time # round timer in ms
-	player_manager = $PlayerManager
-	player_manager.connect("active_player_died", self, "_on_active_player_died")
-	player_manager.connect("ghost_player_died", self, "_on_ghost_player_died")
-	player_manager2 = $PlayerManager2
-	player_manager2.connect("active_player_died", self, "_on_active_player_died")
-	player_manager2.connect("ghost_player_died", self, "_on_ghost_player_died")
+	
+	for player_manager in $PlayerManagers.get_children():
+		player_manager.connect("active_player_died", self, "_on_active_player_died")
+		player_manager.connect("ghost_player_died", self, "_on_ghost_player_died")
+
 	label_timer = $Timer
 	label_score1 = $Score
 	label_score2 = $Score2
@@ -48,6 +47,9 @@ func _process(delta):
 func restart():
 	print("restarting...")
 	left_time = round_time
+	
+	for player_manager in $PlayerManagers.get_children():
+		player_manager.convert_active_to_ghost()
 
 
 # one of the current active players died:

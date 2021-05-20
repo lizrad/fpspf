@@ -1,4 +1,5 @@
 extends KinematicBody
+class_name Player
 
 
 class MovementFrame extends Spatial:
@@ -74,3 +75,7 @@ func _physics_process(delta):
 		look_at(rotate_input_vector + transform.origin, Vector3.UP)
 	
 	movement_records.append(MovementFrame.new(global_transform))
+
+
+func reset():
+	movement_records = []

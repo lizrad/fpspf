@@ -14,10 +14,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Level/Door.gd"
 }, {
+"base": "KinematicBody",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Players/Player.gd"
+}, {
 "base": "Spatial",
 "class": "PlayerBase",
 "language": "GDScript",
 "path": "res://Level/PlayerBase.gd"
+}, {
+"base": "Spatial",
+"class": "PlayerManager",
+"language": "GDScript",
+"path": "res://Players/PlayerManager.gd"
 }, {
 "base": "Resource",
 "class": "ShooterType",
@@ -26,7 +36,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Door": "",
+"Player": "",
 "PlayerBase": "",
+"PlayerManager": "",
 "ShooterType": ""
 }
 
