@@ -1,7 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Players/PlayerManager.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World.gd" type="Script" id=2]
+[ext_resource path="res://UI/Timer.tscn" type="PackedScene" id=3]
 
 [node name="World" type="Spatial"]
+script = ExtResource( 2 )
+round_time = 5
 
 [node name="PlayerManager" parent="." instance=ExtResource( 1 )]
+
+[node name="Timer" parent="." instance=ExtResource( 3 )]
