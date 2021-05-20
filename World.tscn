@@ -8,7 +8,6 @@
 
 [node name="World" type="Spatial"]
 script = ExtResource( 2 )
-cycle_time = 5.0
 
 [node name="Timer" parent="." instance=ExtResource( 3 )]
 text = "00:00"

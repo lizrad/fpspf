@@ -1,11 +1,14 @@
 extends Node
 
-export var cycle_time := 90.0 # total round time in seconds
+export var cycle_time := 10.0 # total round time in seconds
+export var prep_time := 5.0 # time, before the round starts
 export var win_score := 5
 
 var left_time # round timer in ms
 # TODO: combine into array
 #var player_manager # holds information about active player and ghosts
+
+var active_prep_time := true
 
 var player1 # first player, used to connect score to players
 
@@ -16,8 +19,6 @@ var label_score2 # score for player 2
 
 
 func _ready():
-	left_time = cycle_time
-	
 	for player_manager in $PlayerManagers.get_children():
 		if player1 == null:
 			player1 = player_manager.active_player
@@ -27,6 +28,9 @@ func _ready():
 	label_timer = $Timer
 	label_score1 = $Score
 	label_score2 = $Score2
+
+	left_time = prep_time if active_prep_time else cycle_time
+	#restart()
 
 
 func _process(delta):
@@ -49,10 +53,18 @@ func _process(delta):
 #	- reset player starting point
 # 	- restarting level time
 func restart():
-	left_time = cycle_time
-	_updateScore(player1)
-	for player_manager in $PlayerManagers.get_children():
-		player_manager.convert_active_to_ghost()
+	active_prep_time = !active_prep_time
+	print("start " + ("preparation" if active_prep_time else "cycle"))
+	left_time = prep_time if active_prep_time else cycle_time
+	if active_prep_time:
+		# TODO: remove, test only
+		_updateScore(player1)
+	
+		$LevelManager.close_doors()
+		for player_manager in $PlayerManagers.get_children():
+			player_manager.convert_active_to_ghost()
+	else:
+		$LevelManager.open_doors()
 
 
 func _updateScore(player):
