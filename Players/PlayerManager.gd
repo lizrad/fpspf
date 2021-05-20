@@ -1,4 +1,5 @@
 extends Spatial
+class_name PlayerManager
 
 
 signal active_player_died
