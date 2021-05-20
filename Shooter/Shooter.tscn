@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Shooter/default_shooter.tres" type="Resource" id=1]
+[ext_resource path="res://Shooter/Shooter.gd" type="Script" id=2]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+
+[node name="Shooter" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.208776, 0.0781412, -0.156078 )
+script = ExtResource( 2 )
+shooter_type = ExtResource( 1 )
+
+[node name="ShooterMesh" type="Spatial" parent="."]
+
+[node name="Bottom" type="CSGMesh" parent="ShooterMesh"]
+transform = Transform( 0.185438, 0, 0, 0, 0.36458, 0, 0, 0, 0.185438, -0.00294232, -0.0176549, 0 )
+mesh = SubResource( 1 )
+material = SubResource( 2 )
+
+[node name="Top" type="CSGMesh" parent="ShooterMesh"]
+transform = Transform( 0.23048, 0, 0, 0, 0.198219, 0, 0, 0, 0.551983, 0, 0.32085, -0.291078 )
+mesh = SubResource( 1 )
+material = SubResource( 2 )
+
+[node name="BulletSpawnPosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.321, -0.856 )
