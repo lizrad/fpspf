@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "PlayerManager",
 "language": "GDScript",
 "path": "res://Players/PlayerManager.gd"
+}, {
+"base": "Resource",
+"class": "ShooterType",
+"language": "GDScript",
+"path": "res://Shooter/ShooterType.gd"
 } ]
 _global_script_class_icons={
 "Door": "",
 "Player": "",
 "PlayerBase": "",
-"PlayerManager": ""
+"PlayerManager": "",
+"ShooterType": ""
 }
 
 [application]
