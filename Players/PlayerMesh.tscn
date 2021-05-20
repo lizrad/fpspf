@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 0.5
+bottom_radius = 0.5
+
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 0.5, 0.5, 0.5 )
+
+[node name="PlayerMesh" type="Spatial"]
+
+[node name="CharacterMesh" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="ForwardMesh" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.57337, -0.607265 )
+mesh = SubResource( 3 )
+material/0 = null
