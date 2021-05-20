@@ -41,15 +41,15 @@ transform = Transform( 38, 0, 0, 0, 3, 0, 0, 0, 1, 0, 4, 79 )
 [node name="LevelObstacles" type="Spatial" parent="."]
 
 [node name="Wall" parent="LevelObstacles" instance=ExtResource( 3 )]
-transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 1, 0, 5, 30 )
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 1, 0, 4, 30 )
 
 [node name="Wall2" parent="LevelObstacles" instance=ExtResource( 3 )]
-transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 1, 0, 5, -30 )
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 1, 0, 4, -30 )
 
 [node name="Wall3" parent="LevelObstacles" instance=ExtResource( 3 )]
-transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, 28, 5, 0 )
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, 28, 4, 0 )
 
 [node name="Wall4" parent="LevelObstacles" instance=ExtResource( 3 )]
-transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, -28, 5, 0 )
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, -28, 4, 0 )
 
 [editable path="Ground"]
