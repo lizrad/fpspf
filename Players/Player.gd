@@ -13,9 +13,9 @@ export(float) var inner_deadzone := 0.2
 export(float) var outer_deadzone := 0.8
 
 
-func get_normalized_input():
-	var input = Vector2(Input.get_action_strength("move_up") - Input.get_action_strength("move_down"),
-			Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
+func get_normalized_input(type):
+	var input = Vector2(Input.get_action_strength(type + "_up") - Input.get_action_strength(type + "_down"),
+			Input.get_action_strength(type + "_right") - Input.get_action_strength(type + "_left"))
 	
 	# Remove signs to reduce the number of cases
 	var signs = Vector2(sign(input.x), sign(input.y))
@@ -56,14 +56,13 @@ func apply_acceleration(acceleration):
 
 
 func _physics_process(delta):
-	var input = get_normalized_input()
+	var input = get_normalized_input("move")
 	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
 	
-	print(movement_input_vector)
-	
 	apply_acceleration(movement_input_vector * move_acceleration)
-	
 	move_and_slide(velocity)
 	
+	var rotate_input = get_normalized_input("look")
+	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
 	
-	
+	look_at(rotate_input_vector + transform.origin, Vector3.UP)
