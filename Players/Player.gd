@@ -1,7 +1,12 @@
 extends KinematicBody
 
 
-var movement_record = []
+class MovementFrame extends Spatial:
+	func _init(initial_transform):
+		self.transform = initial_transform
+
+# TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
+var movement_records = []
 
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
@@ -11,9 +16,6 @@ export(float) var move_acceleration := 1.2
 
 export(float) var inner_deadzone := 0.2
 export(float) var outer_deadzone := 0.8
-
-signal active_player_died
-signal ghost_player_died
 
 
 func get_normalized_input(type):
@@ -68,4 +70,7 @@ func _physics_process(delta):
 	var rotate_input = get_normalized_input("look")
 	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
 	
-	look_at(rotate_input_vector + transform.origin, Vector3.UP)
+	if rotate_input_vector != Vector3.ZERO:
+		look_at(rotate_input_vector + transform.origin, Vector3.UP)
+	
+	movement_records.append(MovementFrame.new(global_transform))
