@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "PlayerBase",
 "language": "GDScript",
 "path": "res://Level/PlayerBase.gd"
+}, {
+"base": "Resource",
+"class": "ShooterType",
+"language": "GDScript",
+"path": "res://Shooter/ShooterType.gd"
 } ]
 _global_script_class_icons={
 "Door": "",
-"PlayerBase": ""
+"PlayerBase": "",
+"ShooterType": ""
 }
 
 [application]
