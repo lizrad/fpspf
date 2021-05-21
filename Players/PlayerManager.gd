@@ -1,6 +1,7 @@
 extends Spatial
 class_name PlayerManager
 
+export var player_id: int # The id of the player this manager manages
 
 signal active_player_died
 signal ghost_player_died
@@ -13,6 +14,7 @@ var active_player: Player
 
 func _ready():
 	active_player = active_player_scene.instance()
+	active_player.id = player_id
 	add_child(active_player)
 	
 	active_player.connect("died", self, "_on_player_died")
