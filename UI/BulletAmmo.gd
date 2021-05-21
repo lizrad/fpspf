@@ -1,6 +1,9 @@
 extends Control
 
-var _num_bullets := 5
+# TODO: define in constants for ammotypes
+#export var num_bullets : int
+#var _num_bullets := num_bullets
+var _num_bullets := 9
 var _img_bullet = load("res://Attacking/Shots/bullet.png")
 
 
@@ -23,8 +26,8 @@ func remove_bullet():
 	_num_bullets -= 1
 
 
-func reload(player):
+func reload():
 	print("reloading bullets")
+	_num_bullets = 9
 	for i in range(_num_bullets):
-		$HBoxContainer.get_child(_num_bullets - 1).visible = true
-	_num_bullets = 5
+		$HBoxContainer.get_child(i).visible = true
