@@ -60,7 +60,7 @@ func restart():
 			player_manager.convert_active_to_ghost()
 	else:
 		cycle += 1
-		if (cycle > num_cycles)
+		if (cycle > num_cycles):
 			print("game over -> cycles")
 			get_tree().quit()
 		$HUD.set_cycle(cycle)

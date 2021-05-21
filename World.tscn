@@ -7,10 +7,6 @@
 
 [node name="World" type="Spatial"]
 script = ExtResource( 2 )
-time_cycle = null
-time_prep = null
-win_score = null
-num_cycles = null
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
 
