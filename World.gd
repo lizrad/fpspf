@@ -12,23 +12,19 @@ var cycle := 0 # number of current cylce
 
 var active_prep_time := true # flag to indicate prep or cycle time
 
-var player1 # first player, used to connect score to players
-var _score1 := 0 # score for player one
-var _score2 := 0 # score for player two
+var _scores := [] # Scores for each player
 
 var hud # view for current cycle, timer and scores
 
 
 func _ready():
+	# Connect to player events
 	for player_manager in $PlayerManagers.get_children():
-		if player1 == null:
-			player1 = player_manager.active_player
-		player_manager.connect("active_player_died", self, "_on_active_player_died", [player_manager.active_player])
-		player_manager.connect("ghost_player_died", self, "_on_ghost_player_died", [player_manager.active_player])
+		player_manager.connect("active_player_died", self, "_on_active_player_died", [player_manager])
+		player_manager.connect("ghost_player_died", self, "_on_ghost_player_died", [player_manager])
 
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
 	$HUD.set_time(time_left)
-	#restart()
 
 
 func _process(delta):
@@ -52,10 +48,7 @@ func restart():
 	$HUD.set_prep_time(active_prep_time)
 	print("start " + ("preparation" if active_prep_time else "cycle"))
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
-	if active_prep_time:
-		# TODO: remove, test only
-		_updateScore(player1)
-	
+	if active_prep_time:	
 		$LevelManager.close_doors()
 		for player_manager in $PlayerManagers.get_children():
 			player_manager.convert_active_to_ghost()
@@ -68,10 +61,10 @@ func restart():
 		$LevelManager.open_doors()
 
 
-func _updateScore(player):
-	var score = _score1 if player == player1 else _score2
-	score += 1
-	$HUD.set_score(0 if player == player1 else 1, score)
+func _update_score(id: int) -> void:
+	_scores[id] += 1
+	var score = _scores[id]
+	$HUD.set_score(id, score)
 	if score == win_score:
 		print("game over -> score")
 		get_tree().quit()
@@ -80,14 +73,13 @@ func _updateScore(player):
 # one of the current active players died:
 #	- add score
 # 	- restart round
-func _on_active_player_died(player):
-	print("active player died: " + player.name)
-	_updateScore(player)
-	restart()
+func _on_active_player_died(playerManger: PlayerManager) -> void:
+	print("active player died: " + playerManger.active_player.name)
+	_update_score(playerManger.player_id)
 
 
 # a ghost clone of one player died:
 # 	- add score
-func _on_ghost_player_died(player):
-	_updateScore(player)
+func _on_ghost_player_died(playerManger: PlayerManager) -> void:
+	_update_score(playerManger.player_id)
 	print("ghost player died")
