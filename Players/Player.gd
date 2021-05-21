@@ -76,7 +76,7 @@ func _physics_process(delta):
 	
 	movement_records.append(MovementFrame.new(global_transform))
 	
-	if Input.is_action_pressed("ui_accept"):
+	if Input.is_action_pressed("player_shoot"):
 		$Shooter.Shoot()
 
 
