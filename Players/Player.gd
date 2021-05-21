@@ -3,8 +3,11 @@ class_name Player
 
 
 class MovementFrame extends Spatial:
-	func _init(initial_transform):
+	var is_shooting
+	
+	func _init(initial_transform, initial_shooting):
 		self.transform = initial_transform
+		self.is_shooting = initial_shooting
 
 # TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
 var movement_records = []
@@ -74,10 +77,12 @@ func _physics_process(delta):
 	if rotate_input_vector != Vector3.ZERO:
 		look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
 	
-	movement_records.append(MovementFrame.new(global_transform))
-	
+	var is_shooting = false
 	if Input.is_action_pressed("player_shoot"):
+		is_shooting = true
 		$Shooter.Shoot()
+	
+	movement_records.append(MovementFrame.new(global_transform, is_shooting))
 
 
 func reset():
