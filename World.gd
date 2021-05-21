@@ -20,6 +20,7 @@ func _ready():
 	for player_manager in $PlayerManagers.get_children():
 		player_manager.connect("active_player_died", self, "_on_active_player_died", [player_manager])
 		player_manager.connect("ghost_player_died", self, "_on_ghost_player_died", [player_manager])
+		_scores.append(0)
 
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
 	$HUD.set_time(time_left)
