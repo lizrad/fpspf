@@ -6,15 +6,11 @@ export var win_score := 5 # needed score to win game
 export var num_cycles := 5 # max cycles for one game
 
 var time_left # round timer in ms
-var cycle := 0 # number of current cylce
-# TODO: combine into array
-#var player_manager # holds information about active player and ghosts
+var cycle := 1 # number of current cylce
 
 var active_prep_time := true # flag to indicate prep or cycle time
 
 var _scores := [] # Scores for each player
-
-var hud # view for current cycle, timer and scores
 
 
 func _ready():
@@ -25,6 +21,8 @@ func _ready():
 
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
 	$HUD.set_time(time_left)
+	$HUD.set_num_cycles(num_cycles)
+	$HUD.set_cycle(cycle)
 
 
 func _process(delta):
@@ -48,16 +46,16 @@ func restart():
 	$HUD.set_prep_time(active_prep_time)
 	print("start " + ("preparation" if active_prep_time else "cycle"))
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
-	if active_prep_time:	
+	if active_prep_time:
+		cycle += 1
+		$HUD.set_cycle(cycle)
 		$LevelManager.close_doors()
 		for player_manager in $PlayerManagers.get_children():
 			player_manager.convert_active_to_ghost()
 	else:
-		cycle += 1
-		if (cycle > num_cycles):
+		if cycle > num_cycles:
 			print("game over -> cycles")
 			get_tree().quit()
-		$HUD.set_cycle(cycle)
 		$LevelManager.open_doors()
 
 
@@ -81,5 +79,5 @@ func _on_active_player_died(playerManger: PlayerManager) -> void:
 # a ghost clone of one player died:
 # 	- add score
 func _on_ghost_player_died(playerManger: PlayerManager) -> void:
+	print("ghost player died for player: " + playerManger.active_player.name)
 	_update_score(playerManger.player_id)
-	print("ghost player died")
