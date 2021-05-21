@@ -7,6 +7,11 @@ export(float) var move_acceleration := 1.5
 export(float) var inner_deadzone := 0.2
 export(float) var outer_deadzone := 0.8
 
+
+
+export var ranged_attack_type: Resource
+export var melee_attack_type: Resource
+
 # TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
 var movement_records = []
 
@@ -17,11 +22,11 @@ var id: int # Id of this player
 
 
 class MovementFrame extends Spatial:
-	var is_shooting
+	var attack_type
 	
-	func _init(initial_transform, initial_shooting):
+	func _init(initial_transform, initial_attack_type):
 		self.transform = initial_transform
-		self.is_shooting = initial_shooting
+		self.attack_type = initial_attack_type
 
 signal died
 
@@ -84,18 +89,17 @@ func _physics_process(delta):
 	if rotate_input_vector != Vector3.ZERO:
 		look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
 	
-	var is_shooting = false
+	var attack_type = null
 	if Input.is_action_pressed("player_shoot_" + str(id)):
-		is_shooting = true
-		$Shooter.Shoot()
+		attack_type = ranged_attack_type
 	
-	var is_melee_attacking = false
 	if Input.is_action_pressed("player_melee_" + str(id)):
-		is_melee_attacking = true
-		$Shooter.Melee()
-	
+		attack_type = melee_attack_type
+		
+	if attack_type:
+		$Attacker.attack(attack_type, self)
 	# TODO: add melee record
-	movement_records.append(MovementFrame.new(global_transform, is_shooting))
+	movement_records.append(MovementFrame.new(global_transform, attack_type))
 
 
 func receive_damage(damage: float):
