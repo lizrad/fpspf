@@ -1,16 +1,17 @@
 extends RayCast
 
-var _damage
-var _visualization_time
-var _first_frame = true
+var _damage := 10.0
+var _visualization_time := 2.0
+var _first_frame := true
 
 func initialize(visualization_time, speed, damage, bullet_range) ->void:
 	_damage = damage
 	_visualization_time = visualization_time
 	cast_to = Vector3(0,0,-bullet_range)
+	
 	$LineRenderer.points.clear();
 	$LineRenderer.points.append(Vector3.ZERO);
-	$LineRenderer.points.append(-bullet_range*global_transform.basis.z);
+	$LineRenderer.points.append(Vector3(0,0,-bullet_range));
 	
 func _process(delta):
 	if(_visualization_time<=0):

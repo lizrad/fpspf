@@ -13,7 +13,7 @@ var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
 
 export(float) var drag := 0.2
-export(float) var move_acceleration := 1.2
+export(float) var move_acceleration := 1.5
 
 export(float) var inner_deadzone := 0.2
 export(float) var outer_deadzone := 0.8
@@ -72,13 +72,14 @@ func _physics_process(delta):
 	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
 	
 	if rotate_input_vector != Vector3.ZERO:
-		look_at(rotate_input_vector + transform.origin, Vector3.UP)
+		look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
 	
 	movement_records.append(MovementFrame.new(global_transform))
 	
-	if Input.is_action_pressed("ui_accept"):
+	if Input.is_action_pressed("player_shoot"):
 		$Shooter.Shoot()
 
 
 func reset():
 	movement_records = []
+	transform.origin = Vector3.ZERO

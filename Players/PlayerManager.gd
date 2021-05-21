@@ -18,7 +18,9 @@ func _ready():
 
 func convert_active_to_ghost():
 	var movement_record = active_player.movement_records
-	active_player.reset()
+	
+	for child in get_children():
+		child.reset()
 	
 	var new_ghost = ghost_player_scene.instance()
 	new_ghost.movement_record = movement_record
