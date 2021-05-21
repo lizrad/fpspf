@@ -1,21 +1,22 @@
 extends Node
 
-export var cycle_time := 10.0 # total round time in seconds
-export var prep_time := 5.0 # time, before the round starts
-export var win_score := 5
+export var time_cycle := 10.0 # total round time in seconds
+export var time_prep := 5.0 # time, before the round starts
+export var win_score := 5 # needed score to win game
+export var num_cycles := 5 # max cycles for one game
 
-var left_time # round timer in ms
+var time_left # round timer in ms
+var cycle := 0 # number of current cylce
 # TODO: combine into array
 #var player_manager # holds information about active player and ghosts
 
-var active_prep_time := true
+var active_prep_time := true # flag to indicate prep or cycle time
 
 var player1 # first player, used to connect score to players
+var _score1 := 0 # score for player one
+var _score2 := 0 # score for player two
 
-# TODO: combine into UI scene with access functions
-var label_timer # display for remaining round time
-var label_score1 # score for player 1
-var label_score2 # score for player 2
+var hud # view for current cycle, timer and scores
 
 
 func _ready():
@@ -25,24 +26,18 @@ func _ready():
 		player_manager.connect("active_player_died", self, "_on_active_player_died", [player_manager.active_player])
 		player_manager.connect("ghost_player_died", self, "_on_ghost_player_died", [player_manager.active_player])
 
-	label_timer = $Timer
-	label_score1 = $Score
-	label_score2 = $Score2
-
-	left_time = prep_time if active_prep_time else cycle_time
+	time_left = (time_prep if active_prep_time else time_cycle) + 1
+	$HUD.set_time(time_left)
 	#restart()
 
 
 func _process(delta):
-	left_time -= delta
+	time_left -= delta
 	
-	# for UI
-	var seconds = int(left_time)
-	label_timer.set_text("{mm}:{ss}".format({
-						 "mm":"%02d" % (seconds / 60),
-						 "ss":"%02d" % (seconds % 60)}))
-	
-	if left_time <= 0:
+	# update ui
+	$HUD.set_time(time_left)
+
+	if time_left <= 0:
 		restart()
 
 
@@ -55,7 +50,7 @@ func _process(delta):
 func restart():
 	active_prep_time = !active_prep_time
 	print("start " + ("preparation" if active_prep_time else "cycle"))
-	left_time = prep_time if active_prep_time else cycle_time
+	time_left = (time_prep if active_prep_time else time_cycle) + 1
 	if active_prep_time:
 		# TODO: remove, test only
 		_updateScore(player1)
@@ -64,15 +59,20 @@ func restart():
 		for player_manager in $PlayerManagers.get_children():
 			player_manager.convert_active_to_ghost()
 	else:
+		cycle += 1
+		if (cycle > num_cycles)
+			print("game over -> cycles")
+			get_tree().quit()
+		$HUD.set_cycle(cycle)
 		$LevelManager.open_doors()
 
 
 func _updateScore(player):
-	var label_score = label_score1 if (player == player1) else label_score2
-	var val = int(label_score.text) + 1
-	label_score.set_text(str(val))
-	if val == win_score:
-		print("game over")
+	var score = _score1 if player == player1 else _score2
+	score += 1
+	$HUD.set_score(0 if player == player1 else 1, score)
+	if score == win_score:
+		print("game over -> score")
 		get_tree().quit()
 
 
