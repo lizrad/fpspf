@@ -12,11 +12,19 @@ func _ready():
 
 func _physics_process(delta):
 	if current_frame < movement_record.size():
-		global_transform = movement_record[current_frame].transform
+		var frame = movement_record[current_frame]
+		
+		global_transform = frame.transform
+		if frame.is_shooting:
+			$Shooter.Shoot()
+		
 		current_frame += 1
+
 
 func Shot(damage) ->void:
 	pass
+
+
 func reset() -> void:
 	current_frame = 0
 	_set_initial_position()

@@ -1,10 +1,11 @@
 extends RayCast
 
+export var bullet_range := 5.0
 var _damage := 10.0
 var _visualization_time := 2.0
 var _first_frame := true
 
-func initialize(visualization_time, speed, damage, bullet_range) ->void:
+func initialize(visualization_time, damage) ->void:
 	_damage = damage
 	_visualization_time = visualization_time
 	cast_to = Vector3(0,0,-bullet_range)

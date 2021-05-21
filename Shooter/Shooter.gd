@@ -5,10 +5,6 @@ export var visualization_time := 2.0
 var _shooting_deadline := 0.0
 var _hitscan_bullet_scene = preload("res://Shooter/Bullets/HitscanBullet.tscn")
 
-func _ready():
-	#Shoot()
-	pass
-
 func Shoot() -> void:
 	if _shooting_deadline <= 0:
 		_spawn_bullet()
@@ -27,5 +23,5 @@ func _spawn_bullet() -> void:
 		# TODO: create and handle other bullet types
 	get_tree().get_root().add_child(bullet);
 	bullet.global_transform = global_transform
-	bullet.global_transform.origin = $BulletSpawnPosition.global_transform.origin;
-	bullet.initialize(visualization_time, shooter_type.bullet_speed, shooter_type.damage, shooter_type.bullet_range)
+	bullet.global_transform.origin = $AttackOriginPosition.global_transform.origin;
+	bullet.initialize(visualization_time, shooter_type.damage)
