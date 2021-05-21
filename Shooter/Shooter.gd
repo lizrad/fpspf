@@ -26,7 +26,7 @@ func _spawn_bullet() -> void:
 		shooter_type.BulletType.Hitscan:
 			bullet = _hitscan_bullet_scene.instance();
 		# TODO: create and handle other bullet types
-	get_tree().root.add_child(bullet);
-	bullet.global_transform *= global_transform
+	get_tree().get_root().add_child(bullet);
+	bullet.global_transform = global_transform
 	bullet.global_transform.origin = $BulletSpawnPosition.global_transform.origin;
-	bullet.call_deferred("initialize", visualization_time, shooter_type.bullet_speed, shooter_type.damage, shooter_type.bullet_range)
+	bullet.initialize(visualization_time, shooter_type.bullet_speed, shooter_type.damage, shooter_type.bullet_range)

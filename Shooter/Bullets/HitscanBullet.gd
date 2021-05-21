@@ -10,7 +10,7 @@ func initialize(visualization_time, speed, damage, bullet_range) ->void:
 	cast_to = Vector3(0,0,-bullet_range)
 	$LineRenderer.points.clear();
 	$LineRenderer.points.append(Vector3.ZERO);
-	$LineRenderer.points.append(-bullet_range*global_transform.basis.z);
+	$LineRenderer.points.append(Vector3(0,0,-bullet_range));
 	
 func _process(delta):
 	if(_visualization_time<=0):
