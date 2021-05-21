@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "AttackType",
+"language": "GDScript",
+"path": "res://Attacking/AttackType.gd"
+}, {
 "base": "Spatial",
 "class": "Door",
 "language": "GDScript",
@@ -28,18 +33,13 @@ _global_script_classes=[ {
 "class": "PlayerManager",
 "language": "GDScript",
 "path": "res://Players/PlayerManager.gd"
-}, {
-"base": "Resource",
-"class": "ShooterType",
-"language": "GDScript",
-"path": "res://Shooter/ShooterType.gd"
 } ]
 _global_script_class_icons={
+"AttackType": "",
 "Door": "",
 "Player": "",
 "PlayerBase": "",
-"PlayerManager": "",
-"ShooterType": ""
+"PlayerManager": ""
 }
 
 [application]
