@@ -8,6 +8,8 @@
 
 [node name="World" type="Spatial"]
 script = ExtResource( 2 )
+cycle_time = 5.0
+prep_time = 2.0
 
 [node name="Timer" parent="." instance=ExtResource( 3 )]
 text = "00:00"
@@ -25,6 +27,7 @@ text = "0"
 [node name="PlayerManagers" type="Spatial" parent="."]
 
 [node name="PlayerManager" parent="PlayerManagers" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 0 )
 
 [node name="LevelManager" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
