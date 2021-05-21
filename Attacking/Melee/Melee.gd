@@ -9,6 +9,7 @@ func _ready():
 	initialize(100,1);
 
 func initialize(visualization_time, damage) ->void:
+	print("Melee")
 	assert(visualization_time>=active_time) #the attack should not be longer active than it is visualized
 	_damage = damage
 	_visualization_time = visualization_time
@@ -28,6 +29,7 @@ func _on_Melee_body_entered(body):
 	if active_time <= 0:
 		return
 	print(str("Melee attack hit body named ",body.name))
-	if body.is_in_group("Shootable"):
-		assert(body.has_method("Shot"))
-		body.Shot(_damage)
+	if body.is_in_group("Damagable"):
+		assert(body.has_method("receive_damage"))
+		body.receive_damage(_damage)
+		active_time = 0 #only hit max one enemy with each attack

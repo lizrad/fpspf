@@ -89,6 +89,12 @@ func _physics_process(delta):
 		is_shooting = true
 		$Shooter.Shoot()
 	
+	var is_melee_attacking = false
+	if Input.is_action_pressed("player_melee_" + str(id)):
+		is_melee_attacking = true
+		$Shooter.Melee()
+	
+	# TODO: add melee record
 	movement_records.append(MovementFrame.new(global_transform, is_shooting))
 
 
