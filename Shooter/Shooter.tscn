@@ -24,5 +24,5 @@ transform = Transform( 0.23048, 0, 0, 0, 0.198219, 0, 0, 0, 0.551983, 0, 0.32085
 mesh = SubResource( 1 )
 material = SubResource( 2 )
 
-[node name="BulletSpawnPosition" type="Position3D" parent="."]
+[node name="AttackOriginPosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.321, -0.856 )
