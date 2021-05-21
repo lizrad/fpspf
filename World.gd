@@ -12,8 +12,6 @@ var active_prep_time := true # flag to indicate prep or cycle time
 
 var _scores := [] # Scores for each player
 
-var hud # view for current cycle, timer and scores
-
 
 func _ready():
 	# Connect to player events
@@ -21,6 +19,8 @@ func _ready():
 		player_manager.connect("active_player_died", self, "_on_active_player_died", [player_manager])
 		player_manager.connect("ghost_player_died", self, "_on_ghost_player_died", [player_manager])
 		_scores.append(0)
+		var attacker = player_manager.active_player.get_node("Attacker")
+		attacker.connect("shot_bullet", $HUD, "_consume_bullet", [player_manager.player_id])
 
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
 	$HUD.set_time(time_left)
@@ -63,16 +63,23 @@ func restart():
 			player_manager.convert_active_to_ghost()
 	else:
 		$LevelManager.open_doors()
+	
+	for id in _scores.size():
+		_set_score(id, 0)
 
 
 func _update_score(id: int) -> void:
-	_scores[id] += 1
-	var score = _scores[id]
-	$HUD.set_score(id, score)
+	var new_score = _scores[id] + 1
+	_set_score(id, new_score)
 	
-	if score == win_score:
+	if _scores[id] == win_score:
 		print("game over -> score")
-		get_tree().quit()
+		get_tree().quit
+
+
+func _set_score(id: int, score: int) -> void:
+	_scores[id] = score
+	$HUD.set_score(id, score)
 
 
 # one of the current active players died:

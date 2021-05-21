@@ -1,10 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://UI/HUD.gd" type="Script" id=1]
+[ext_resource path="res://UI/BulletAmmo.tscn" type="PackedScene" id=2]
 
 [node name="HUD" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 1.41418
+margin_top = 1.41418
+margin_right = 1.41418
+margin_bottom = 1.41418
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -48,3 +53,13 @@ anchor_right = 1.0
 margin_left = -40.0
 margin_bottom = 14.0
 text = "0"
+
+[node name="BulletAmmo1" parent="." instance=ExtResource( 2 )]
+margin_right = -882.0
+
+[node name="BulletAmmo2" parent="." instance=ExtResource( 2 )]
+anchor_left = 1.0
+anchor_bottom = 0.0
+margin_left = -117.0
+margin_right = 0.0
+margin_bottom = 111.0
