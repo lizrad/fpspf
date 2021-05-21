@@ -63,16 +63,23 @@ func restart():
 			player_manager.convert_active_to_ghost()
 	else:
 		$LevelManager.open_doors()
+	
+	for id in _scores.size():
+		_set_score(id, 0)
 
 
 func _update_score(id: int) -> void:
-	_scores[id] += 1
-	var score = _scores[id]
-	$HUD.set_score(id, score)
+	var new_score = _scores[id] + 1
+	_set_score(id, new_score)
 	
-	if score == win_score:
+	if _scores[id] == win_score:
 		print("game over -> score")
-		get_tree().quit()
+		get_tree().quit
+
+
+func _set_score(id: int, score: int) -> void:
+	_scores[id] = score
+	$HUD.set_score(id, score)
 
 
 # one of the current active players died:
