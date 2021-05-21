@@ -6,7 +6,7 @@ export var win_score := 5 # needed score to win game
 export var num_cycles := 5 # max cycles for one game
 
 var time_left # round timer in ms
-var cycle := 0 # number of current cylce
+var cycle := 1 # number of current cylce
 
 var active_prep_time := true # flag to indicate prep or cycle time
 
@@ -23,6 +23,8 @@ func _ready():
 
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
 	$HUD.set_time(time_left)
+	$HUD.set_cycle(cycle)
+	$HUD.set_num_cycles(num_cycles)
 
 
 func _process(delta):
@@ -46,16 +48,19 @@ func restart():
 	$HUD.set_prep_time(active_prep_time)
 	print("start " + ("preparation" if active_prep_time else "cycle"))
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
-	if active_prep_time:	
-		$LevelManager.close_doors()
-		for player_manager in $PlayerManagers.get_children():
-			player_manager.convert_active_to_ghost()
-	else:
+	if active_prep_time:
+		# update cycle -> game over if reached num_cycles
 		cycle += 1
 		if (cycle > num_cycles):
 			print("game over -> cycles")
 			get_tree().quit()
 		$HUD.set_cycle(cycle)
+		
+		# starting preparation cycle
+		$LevelManager.close_doors()
+		for player_manager in $PlayerManagers.get_children():
+			player_manager.convert_active_to_ghost()
+	else:
 		$LevelManager.open_doors()
 
 
