@@ -12,8 +12,6 @@ var active_prep_time := true # flag to indicate prep or cycle time
 
 var _scores := [] # Scores for each player
 
-var hud # view for current cycle, timer and scores
-
 
 func _ready():
 	# Connect to player events
@@ -21,6 +19,8 @@ func _ready():
 		player_manager.connect("active_player_died", self, "_on_active_player_died", [player_manager])
 		player_manager.connect("ghost_player_died", self, "_on_ghost_player_died", [player_manager])
 		_scores.append(0)
+		var attacker = player_manager.active_player.get_node("Attacker")
+		attacker.connect("shot_bullet", $HUD, "_consume_bullet", [player_manager.player_id])
 
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
 	$HUD.set_time(time_left)
