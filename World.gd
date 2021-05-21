@@ -69,6 +69,7 @@ func _update_score(id: int) -> void:
 	_scores[id] += 1
 	var score = _scores[id]
 	$HUD.set_score(id, score)
+	
 	if score == win_score:
 		print("game over -> score")
 		get_tree().quit()
@@ -80,6 +81,8 @@ func _update_score(id: int) -> void:
 func _on_active_player_died(playerManger: PlayerManager) -> void:
 	print("active player died: " + playerManger.active_player.name)
 	_update_score(playerManger.player_id)
+	
+	restart()
 
 
 # a ghost clone of one player died:
