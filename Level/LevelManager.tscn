@@ -1,15 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Level/Cube.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Level/PlayerBase.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Level/Wall.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Level/LevelManager.gd" type="Script" id=4]
 
+[sub_resource type="Environment" id=1]
+ambient_light_color = Color( 0.168627, 0.168627, 0.168627, 1 )
+
 [node name="LevelManager" type="Spatial"]
 script = ExtResource( 4 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 25, 0 )
+visible = false
 shadow_enabled = true
 directional_shadow_max_distance = 500.0
 
@@ -54,5 +58,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -120 )
 
 [node name="Ground" parent="Level" instance=ExtResource( 1 )]
 transform = Transform( 40, 0, 0, 0, 1, 0, 0, 0, 80, 0, 0, 0 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
 
 [editable path="Level/Ground"]

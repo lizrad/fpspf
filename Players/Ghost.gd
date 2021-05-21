@@ -1,5 +1,5 @@
 extends KinematicBody
-
+class_name Ghost
 
 var movement_record
 

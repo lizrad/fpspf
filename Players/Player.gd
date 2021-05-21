@@ -32,6 +32,37 @@ class MovementFrame extends Spatial:
 		self.attack_type = initial_attack_type
 
 
+
+func _ready():
+	$Area.connect("body_entered", self, "_on_light_cone_entered")
+	$Area.connect("body_exited", self, "_on_light_cone_exited")
+
+
+func _physics_process(delta):
+	var input = get_normalized_input("player_move")
+	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
+	
+	apply_acceleration(movement_input_vector * move_acceleration)
+	move_and_slide(velocity)
+	
+	var rotate_input = get_normalized_input("player_look")
+	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
+	
+	if rotate_input_vector != Vector3.ZERO:
+		look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
+	
+	var attack_type = null
+	if Input.is_action_pressed("player_shoot_" + str(id)):
+		attack_type = ranged_attack_type
+	
+	if Input.is_action_pressed("player_melee_" + str(id)):
+		attack_type = melee_attack_type
+		
+	if attack_type:
+		$Attacker.attack(attack_type, self)
+	# TODO: add melee record
+	movement_records.append(MovementFrame.new(global_transform, attack_type))
+
 func get_normalized_input(type):
 	var id_string = "_" + str(id)
 	var input = Vector2(Input.get_action_strength(type + "_up" + id_string) - 
@@ -77,32 +108,6 @@ func apply_acceleration(acceleration):
 	velocity += acceleration
 
 
-func _physics_process(delta):
-	var input = get_normalized_input("player_move")
-	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
-	
-	apply_acceleration(movement_input_vector * move_acceleration)
-	move_and_slide(velocity)
-	
-	var rotate_input = get_normalized_input("player_look")
-	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
-	
-	if rotate_input_vector != Vector3.ZERO:
-		look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
-	
-	var attack_type = null
-	if Input.is_action_pressed("player_shoot_" + str(id)):
-		attack_type = ranged_attack_type
-	
-	if Input.is_action_pressed("player_melee_" + str(id)):
-		attack_type = melee_attack_type
-		
-	if attack_type:
-		$Attacker.attack(attack_type, self)
-	# TODO: add melee record
-	movement_records.append(MovementFrame.new(global_transform, attack_type))
-
-
 func receive_damage(damage: float):
 	print("received damage: ", damage)
 	current_health -= damage
@@ -115,3 +120,12 @@ func reset():
 	movement_records = []
 	transform.origin = Vector3.ZERO
 	current_health = max_health
+	
+func _on_light_cone_entered(body: Node):
+	print(body.name)
+	if body is Ghost:
+		body.visible = true
+		
+func _on_light_cone_exited(body: Node):
+	if body is Ghost:
+		body.visible = false
