@@ -30,7 +30,7 @@ func convert_active_to_ghost():
 	new_ghost.movement_record = movement_record
 	
 	new_ghost.connect("died", self, "_on_ghost_died")
-		
+
 	add_child(new_ghost)
 
 

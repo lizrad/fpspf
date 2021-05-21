@@ -61,6 +61,8 @@ func restart():
 		$LevelManager.close_doors()
 		for player_manager in $PlayerManagers.get_children():
 			player_manager.convert_active_to_ghost()
+			var attacker = player_manager.active_player.get_node("Attacker")
+			attacker.reload(player_manager.active_player.ranged_attack_type)
 	else:
 		$LevelManager.open_doors()
 	

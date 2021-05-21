@@ -13,6 +13,9 @@ func attack(attack_type, owning_player) -> void:
 		_create_attack(attack_type, owning_player)
 
 
+func reload(attack_type) -> void:
+	_ammunition_tracker[attack_type]=attack_type.ammunition
+
 func _process(delta):
 	if _attack_deadline > 0:
 		_attack_deadline -= delta
@@ -27,7 +30,6 @@ func _handle_ammunition(attack_type) ->bool:
 	elif _ammunition_tracker[attack_type]>0:
 		_ammunition_tracker[attack_type]-=1
 		emit_signal("shot_bullet")
-		
 	return true
 
 
