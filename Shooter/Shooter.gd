@@ -1,15 +1,15 @@
 extends Spatial
 
 export var shooter_type: Resource
-export var visualization_time := 2.0
+export var visualization_time := 0.5
 var _shooting_deadline := 0.0
 var _hitscan_bullet_scene = preload("res://Shooter/Bullets/HitscanBullet.tscn")
 
 func Shoot() -> void:
 	if _shooting_deadline <= 0:
 		_spawn_bullet()
-	
-	
+
+
 func _process(delta):
 	if _shooting_deadline > 0:
 		_shooting_deadline -= delta
