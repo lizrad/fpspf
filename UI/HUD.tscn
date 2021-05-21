@@ -26,9 +26,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -23.0
+margin_left = -57.5
 margin_top = -14.0
-margin_right = 23.0
+margin_right = 57.5
 text = "Preparation phase"
 __meta__ = {
 "_edit_use_anchors_": false

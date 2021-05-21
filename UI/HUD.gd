@@ -1,13 +1,8 @@
 extends Control
 
-var _prep_time = true
+var _prep_time := true
 var _cycle := 0
-#var scores[]
-
-
-func _ready():
-	#$Cycle.visible = false
-	pass
+var _num_cycles := 0
 
 
 func set_time(time):
@@ -18,21 +13,29 @@ func set_time(time):
 
 
 func set_score(idx_player, score):
-	var label_score = $Score1 if idx_player == 0 else $Score1
+	var label_score = $Score1 if idx_player == 0 else $Score2
 	label_score.set_text(str(score))
 
 
 func _update_cycle_text():
-	var text = "Preparation phase " if _prep_time else " "
-	text += "Cycle " + str(_cycle)
+	var text = "Preparation phase " if _prep_time else "Cycle "
+	text += str(_cycle) + " of " + str(_num_cycles)
 	$Cycle.set_text(text)
 
 
 func set_cycle(cycle):
-	_cycle = cycle
-	_update_cycle_text()
+	if _cycle != cycle:
+		_cycle = cycle
+		_update_cycle_text()
+
+
+func set_num_cycles(num_cycles):
+	if _num_cycles != num_cycles:
+		_num_cycles = num_cycles
+		_update_cycle_text()
 
 
 func set_prep_time(active):
-	_prep_time = active
-	_update_cycle_text()
+	if _prep_time != active:
+		_prep_time = active
+		_update_cycle_text()
