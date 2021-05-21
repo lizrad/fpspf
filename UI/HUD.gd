@@ -1,13 +1,13 @@
 extends Control
 
-var score1
-var score2
-
-var cycle
+var _prep_time = true
+var _cycle := 0
+#var scores[]
 
 
 func _ready():
-	$Cycle.visible = false
+	#$Cycle.visible = false
+	pass
 
 
 func set_time(time):
@@ -22,6 +22,17 @@ func set_score(idx_player, score):
 	label_score.set_text(str(score))
 
 
+func _update_cycle_text():
+	var text = "Preparation phase " if _prep_time else " "
+	text += "Cycle " + str(_cycle)
+	$Cycle.set_text(text)
+
+
 func set_cycle(cycle):
-	$Cycle.set_text("Cycle " + str(cycle))
-	$Cycle.visible = cycle != 0
+	_cycle = cycle
+	_update_cycle_text()
+
+
+func set_prep_time(active):
+	_prep_time = active
+	_update_cycle_text()

@@ -29,7 +29,7 @@ anchor_bottom = 1.0
 margin_left = -23.0
 margin_top = -14.0
 margin_right = 23.0
-text = "Cycle 0"
+text = "Preparation phase"
 __meta__ = {
 "_edit_use_anchors_": false
 }

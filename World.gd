@@ -49,6 +49,7 @@ func _process(delta):
 # 	- restarting level time
 func restart():
 	active_prep_time = !active_prep_time
+	$HUD.set_prep_time(active_prep_time)
 	print("start " + ("preparation" if active_prep_time else "cycle"))
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
 	if active_prep_time:
