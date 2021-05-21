@@ -5,6 +5,9 @@ var movement_record
 
 var current_frame := 0
 
+var max_health := 3
+var current_health := 3
+
 signal died
 
 
@@ -23,14 +26,19 @@ func _physics_process(delta):
 		current_frame += 1
 
 
-func receive_damage(damage) ->void:
-	# TODO: Check against health
-	emit_signal("died")
+func receive_damage(damage: float):
+	current_health -= damage
+	
+	if current_health <= 0:
+		emit_signal("died")
+		print("ghost dead")
+		queue_free()
 
 
 func reset() -> void:
 	current_frame = 0
 	_set_initial_position()
+	current_health = max_health
 
 
 func _set_initial_position() -> void:

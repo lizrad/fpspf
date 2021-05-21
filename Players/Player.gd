@@ -7,8 +7,6 @@ export(float) var move_acceleration := 1.5
 export(float) var inner_deadzone := 0.2
 export(float) var outer_deadzone := 0.8
 
-
-
 export var ranged_attack_type: Resource
 export var melee_attack_type: Resource
 
@@ -20,6 +18,11 @@ var current_target_velocity := Vector3.ZERO
 
 var id: int # Id of this player
 
+var max_health := 3
+var current_health := 3
+
+signal died
+
 
 class MovementFrame extends Spatial:
 	var attack_type
@@ -27,8 +30,6 @@ class MovementFrame extends Spatial:
 	func _init(initial_transform, initial_attack_type):
 		self.transform = initial_transform
 		self.attack_type = initial_attack_type
-
-signal died
 
 
 func get_normalized_input(type):
@@ -103,10 +104,14 @@ func _physics_process(delta):
 
 
 func receive_damage(damage: float):
-	# TODO: Check against health
-	emit_signal("died")
+	print("received damage: ", damage)
+	current_health -= damage
+	
+	if current_health <= 0:
+		emit_signal("died")
 
 
 func reset():
 	movement_records = []
 	transform.origin = Vector3.ZERO
+	current_health = max_health

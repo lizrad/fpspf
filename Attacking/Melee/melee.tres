@@ -7,5 +7,5 @@
 script = ExtResource( 1 )
 ammunition = -1
 cooldown = 1.0
-damage = 2.0
+damage = 3.0
 attack = ExtResource( 2 )
