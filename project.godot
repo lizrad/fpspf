@@ -48,6 +48,10 @@ config/name="fpspf"
 run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
 
+[global]
+
+line=false
+
 [input]
 
 move_up={
