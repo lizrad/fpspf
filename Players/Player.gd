@@ -12,7 +12,8 @@ var movement_records = []
 
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
-var id: int
+
+var id: int # Id of this player
 
 
 class MovementFrame extends Spatial:

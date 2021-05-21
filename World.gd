@@ -7,8 +7,6 @@ export var num_cycles := 5 # max cycles for one game
 
 var time_left # round timer in ms
 var cycle := 0 # number of current cylce
-# TODO: combine into array
-#var player_manager # holds information about active player and ghosts
 
 var active_prep_time := true # flag to indicate prep or cycle time
 
