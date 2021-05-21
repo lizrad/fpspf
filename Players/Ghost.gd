@@ -5,6 +5,8 @@ var movement_record
 
 var current_frame := 0
 
+signal died
+
 
 func _ready():
 	reset()
@@ -21,8 +23,9 @@ func _physics_process(delta):
 		current_frame += 1
 
 
-func Shot(damage) ->void:
-	pass
+func receive_damage(damage) ->void:
+	# TODO: Check against health
+	emit_signal("died")
 
 
 func reset() -> void:

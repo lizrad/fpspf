@@ -21,6 +21,8 @@ export(float) var move_acceleration := 1.5
 export(float) var inner_deadzone := 0.2
 export(float) var outer_deadzone := 0.8
 
+signal died
+
 
 func get_normalized_input(type):
 	var input = Vector2(Input.get_action_strength(type + "_up") - Input.get_action_strength(type + "_down"),
@@ -83,6 +85,11 @@ func _physics_process(delta):
 		$Shooter.Shoot()
 	
 	movement_records.append(MovementFrame.new(global_transform, is_shooting))
+
+
+func receive_damage(damage: float):
+	# TODO: Check against health
+	emit_signal("died")
 
 
 func reset():

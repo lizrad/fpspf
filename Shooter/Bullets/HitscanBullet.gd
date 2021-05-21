@@ -38,7 +38,7 @@ func _update_collision():
 		# Update the line renderer no matter what it is
 		$LineRenderer.points[1] = to_local(get_collision_point())
 		
-		# Shoot player if it was shootable
-		if collider.is_in_group("Shootable"):
-			assert(collider.has_method("Shot"))
-			collider.Shot(_damage)
+		# Shoot player if it was damagable
+		if collider.is_in_group("Damagable"):
+			assert(collider.has_method("receive_damage"))
+			collider.receive_damage(_damage)

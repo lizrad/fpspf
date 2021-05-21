@@ -14,6 +14,8 @@ var active_player: Player
 func _ready():
 	active_player = active_player_scene.instance()
 	add_child(active_player)
+	
+	active_player.connect("died", self, "_on_player_died")
 
 
 func convert_active_to_ghost():
@@ -25,4 +27,14 @@ func convert_active_to_ghost():
 	var new_ghost = ghost_player_scene.instance()
 	new_ghost.movement_record = movement_record
 	
+	new_ghost.connect("died", self, "_on_ghost_died")
+		
 	add_child(new_ghost)
+
+
+func _on_player_died():
+	emit_signal("active_player_died")
+
+
+func _on_ghost_died():
+	emit_signal("ghost_player_died")
