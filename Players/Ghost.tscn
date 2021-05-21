@@ -16,4 +16,4 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 1 )
 
-[node name="Shooter" parent="." instance=ExtResource( 3 )]
+[node name="Attacker" parent="." instance=ExtResource( 3 )]

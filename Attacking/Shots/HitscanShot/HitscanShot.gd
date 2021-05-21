@@ -7,7 +7,7 @@ var _visualization_time # Set from the Shooter
 var _damage := 10.0
 var _first_frame := true
 
-func initialize(visualization_time, damage) ->void:
+func initialize(owning_player, visualization_time, damage) ->void:
 	_damage = damage
 	_visualization_time = visualization_time
 	cast_to = Vector3(0,0,-bullet_range)

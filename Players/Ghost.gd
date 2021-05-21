@@ -17,8 +17,8 @@ func _physics_process(delta):
 		var frame = movement_record[current_frame]
 		
 		global_transform = frame.transform
-		if frame.is_shooting:
-			$Shooter.Shoot()
+		if frame.attack_type:
+			$Attacker.attack(frame.attack_type, self)
 		
 		current_frame += 1
 
