@@ -22,16 +22,17 @@ func _physics_process(delta):
 		global_transform = frame.transform
 		if frame.attack_type:
 			$Attacker.attack(frame.attack_type, self)
-		
+
 		current_frame += 1
 
 
 func receive_damage(damage: float):
+	print("Ghost received damage: ", damage)
 	current_health -= damage
 	
 	if current_health <= 0:
+		print("	-> Ghost dead")
 		emit_signal("died")
-		print("ghost dead")
 		queue_free()
 
 

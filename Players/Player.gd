@@ -109,10 +109,11 @@ func apply_acceleration(acceleration):
 
 
 func receive_damage(damage: float):
-	print("received damage: ", damage)
+	print("Player received damage: ", damage)
 	current_health -= damage
 	
 	if current_health <= 0:
+		print("	-> Player dead")
 		emit_signal("died")
 
 

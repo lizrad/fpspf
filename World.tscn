@@ -7,6 +7,8 @@
 
 [node name="World" type="Spatial"]
 script = ExtResource( 2 )
+time_cycle = 90.0
+time_prep = 2.0
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
 
@@ -14,12 +16,12 @@ script = ExtResource( 2 )
 
 [node name="PlayerManager" parent="PlayerManagers" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 0 )
-player_color = Color( 0, 0, 1, 1 )
+player_color = Color( 1, 0, 0, 1 )
 
 [node name="PlayerManager2" parent="PlayerManagers" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0, 0 )
 player_id = 1
-player_color = Color( 1, 0, 0, 1 )
+player_color = Color( 0, 0, 1, 1 )
 
 [node name="LevelManager" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )

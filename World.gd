@@ -75,7 +75,7 @@ func _update_score(id: int) -> void:
 	var new_score = _scores[id] + 1
 	_set_score(id, new_score)
 	
-	if _scores[id] == win_score:
+	if new_score == win_score:
 		print("game over -> score")
 		get_tree().quit
 
@@ -89,7 +89,7 @@ func _set_score(id: int, score: int) -> void:
 #	- add score
 # 	- restart round
 func _on_active_player_died(playerManger: PlayerManager) -> void:
-	print("active player died: " + playerManger.active_player.name)
+	print("active player died: " + str(playerManger.player_id))
 	_update_score(playerManger.player_id)
 	
 	restart()
@@ -98,5 +98,5 @@ func _on_active_player_died(playerManger: PlayerManager) -> void:
 # a ghost clone of one player died:
 # 	- add score
 func _on_ghost_player_died(playerManger: PlayerManager) -> void:
+	print("ghost player died: " + str(playerManger.player_id))
 	_update_score(playerManger.player_id)
-	print("ghost player died")
