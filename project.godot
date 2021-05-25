@@ -38,6 +38,11 @@ _global_script_classes=[ {
 "class": "PlayerManager",
 "language": "GDScript",
 "path": "res://Players/PlayerManager.gd"
+}, {
+"base": "Resource",
+"class": "ShooterType",
+"language": "GDScript",
+"path": "res://Shooter/ShooterType.gd"
 } ]
 _global_script_class_icons={
 "AttackType": "",
@@ -45,7 +50,8 @@ _global_script_class_icons={
 "Ghost": "",
 "Player": "",
 "PlayerBase": "",
-"PlayerManager": ""
+"PlayerManager": "",
+"ShooterType": ""
 }
 
 [application]
@@ -148,6 +154,7 @@ player_shoot_0={
 "deadzone": 0.0,
 "events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":7,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 player_shoot_1={
@@ -161,6 +168,7 @@ player_melee_0={
 "deadzone": 0.5,
 "events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":5,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 player_melee_1={

@@ -19,7 +19,7 @@ func _ready():
 		player_manager.connect("active_player_died", self, "_on_active_player_died", [player_manager])
 		player_manager.connect("ghost_player_died", self, "_on_ghost_player_died", [player_manager])
 		_scores.append(0)
-		var attacker = player_manager.active_player.get_node("Attacker")
+		var attacker = player_manager.active_player.get_node("RotationHelper/Attacker")
 		attacker.connect("shot_bullet", $HUD, "consume_bullet", [player_manager.player_id])
 
 	time_left = (time_prep if active_prep_time else time_cycle) + 1
@@ -62,7 +62,7 @@ func restart():
 		$HUD.reload_ammo()
 		for player_manager in $PlayerManagers.get_children():
 			player_manager.convert_active_to_ghost()
-			var attacker = player_manager.active_player.get_node("Attacker")
+			var attacker = player_manager.active_player.get_node("RotationHelper/Attacker")
 			attacker.reload(player_manager.active_player.ranged_attack_type)
 	else:
 		$LevelManager.open_doors()

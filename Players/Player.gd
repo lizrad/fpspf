@@ -16,6 +16,8 @@ var movement_records = []
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
 
+var VIEW_SENSITIVITY = 2.0
+
 var id: int # Id of this player
 
 var max_health := 3
@@ -34,8 +36,7 @@ class MovementFrame extends Spatial:
 
 
 func _ready():
-	$Area.connect("body_entered", self, "_on_light_cone_entered")
-	$Area.connect("body_exited", self, "_on_light_cone_exited")
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func _physics_process(delta):
@@ -43,13 +44,17 @@ func _physics_process(delta):
 	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
 	
 	apply_acceleration(movement_input_vector * move_acceleration)
-	move_and_slide(velocity)
+	move_and_slide(transform.basis * velocity)
 	
 	var rotate_input = get_normalized_input("player_look")
-	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
 	
-	if rotate_input_vector != Vector3.ZERO:
-		look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
+	if rotate_input != Vector2.ZERO:
+		$RotationHelper.rotate_x(deg2rad(rotate_input.x * VIEW_SENSITIVITY))
+		rotate_y(deg2rad(rotate_input.y * VIEW_SENSITIVITY * -1))
+		
+		var camera_rot = $RotationHelper.rotation_degrees
+		camera_rot.x = clamp(camera_rot.x, -70, 70)
+		$RotationHelper.rotation_degrees = camera_rot
 	
 	var attack_type = null
 	if Input.is_action_pressed("player_shoot_" + str(id)):
@@ -59,9 +64,10 @@ func _physics_process(delta):
 		attack_type = melee_attack_type
 		
 	if attack_type:
-		$Attacker.attack(attack_type, self)
+		$RotationHelper/Attacker.attack(attack_type, self)
 	# TODO: add melee record
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
+
 
 func get_normalized_input(type):
 	var id_string = "_" + str(id)
