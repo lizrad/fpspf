@@ -27,21 +27,29 @@ func _ready():
 func toggle_active_player(active: bool) ->void:
 	active_player.visible = active
 
-func reset_all_children() ->void:
+func set_ghosts_time_scale(time_scale: float) -> void:
 	for child in get_children():
-		child.reset()
+		if child != active_player:
+			child.set_time_scale(time_scale)
+			
+
+func reset_all_children(frame: int) ->void:
+	for child in get_children():
+		if child != active_player:
+			child.reset(frame)
+		else:
+			child.reset()
 
 
-func convert_active_to_ghost():
+
+func convert_active_to_ghost(frame: int):
 	var movement_record = active_player.movement_records
-	
-	reset_all_children()
-	
 	var new_ghost = ghost_player_scene.instance()
 	new_ghost.movement_record = movement_record
 	new_ghost.connect("died", self, "_on_ghost_died")
-
+	new_ghost.died_at_frame = frame
 	add_child(new_ghost)
+	reset_all_children(frame)
 
 
 func _on_player_died():

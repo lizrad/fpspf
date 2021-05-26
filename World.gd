@@ -13,7 +13,7 @@ var _scores := [] # Scores for each player
 
 enum Gamestate {PREP, GAME, REPLAY}
 var _current_gamestate = Gamestate.PREP 
-
+var _current_frame := 0
 func _ready():
 	# Connect to player events
 	for player_manager in $PlayerManagers.get_children():
@@ -30,7 +30,7 @@ func _ready():
 
 
 func _process(delta):
-	time_left -= delta
+	time_left -= (delta *(1 if _current_gamestate != Gamestate.REPLAY else replay_speed))
 	
 	# update ui
 	$HUD.set_time(time_left)
@@ -38,6 +38,9 @@ func _process(delta):
 	if time_left <= 0:
 		next_gamestate()
 
+func _physics_process(delta):
+	if _current_gamestate != Gamestate.REPLAY:
+		_current_frame += 1
 
 # used to restart level: 
 # 	- reverse shift animation
@@ -50,10 +53,12 @@ func next_gamestate():
 	match _current_gamestate:
 		Gamestate.GAME:
 			#prepare for replay
-			time_left = time_cycle +1
 			for player_manager in $PlayerManagers.get_children():
-				player_manager.convert_active_to_ghost()
+				player_manager.convert_active_to_ghost(_current_frame-1)
+				player_manager.set_ghosts_time_scale(-replay_speed)
 				player_manager.toggle_active_player(false)
+			time_left = _current_frame*get_physics_process_delta_time()
+			_current_frame = 0
 			$HUD.set_prep_time(false)
 		Gamestate.PREP:
 			#prepare for play
@@ -75,8 +80,10 @@ func next_gamestate():
 			for player_manager in $PlayerManagers.get_children():
 				var attacker = player_manager.active_player.get_node("Attacker")
 				attacker.reload(player_manager.active_player.ranged_attack_type)
+				print("here")
+				player_manager.set_ghosts_time_scale(1.0)
+				player_manager.reset_all_children(0)
 				player_manager.toggle_active_player(true)
-				player_manager.reset_all_children()
 			time_left = time_prep +1
 			$HUD.set_prep_time(true)
 			

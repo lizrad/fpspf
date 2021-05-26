@@ -10,6 +10,8 @@ export(float) var outer_deadzone := 0.8
 export var ranged_attack_type: Resource
 export var melee_attack_type: Resource
 
+export var dash_speed : float = 5.0
+
 # TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
 var movement_records = []
 
@@ -38,6 +40,9 @@ func _physics_process(delta):
 	
 	var input = get_normalized_input("player_move", inner_deadzone, outer_deadzone)
 	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
+	
+	if Input.is_action_pressed("player_dash_" + str(id)):
+		movement_input_vector *= dash_speed
 	
 	apply_acceleration(movement_input_vector * move_acceleration)
 	move_and_slide(velocity)
