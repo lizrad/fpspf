@@ -1,12 +1,15 @@
 extends KinematicBody
 class_name Ghost
 
-var movement_record
+var movement_record := []
 
-var current_frame := 0
+var current_frame : int = 0
 
-var max_health := 3
-var current_health := 3
+var max_health : int = 3
+var current_health : int = 3
+
+var died_at_frame : int = INF
+var is_dead : bool = false
 
 signal died
 
@@ -16,6 +19,9 @@ func _ready():
 
 
 func _physics_process(delta):
+	if is_dead:
+		return
+	
 	if current_frame < movement_record.size():
 		var frame = movement_record[current_frame]
 		
@@ -31,12 +37,15 @@ func receive_damage(damage: float):
 	current_health -= damage
 	
 	if current_health <= 0:
-		print("	-> Ghost dead")
+		is_dead = true
+		died_at_frame = current_frame
+		print(" -> Ghost dead")
 		emit_signal("died")
-		queue_free()
+		_showDead()
 
 
 func reset() -> void:
+	is_dead = false
 	current_frame = 0
 	_set_initial_position()
 	current_health = max_health
@@ -44,3 +53,12 @@ func reset() -> void:
 
 func _set_initial_position() -> void:
 	global_transform = movement_record[0].transform
+	
+func _showDead():
+	rotation.z = PI / 2
+
+func _showAlive():
+	rotation.z = 0
+
+
+
