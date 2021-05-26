@@ -16,7 +16,7 @@ var movement_records = []
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
 
-var id: int setget set_id, get_id # Id of this player
+var id: int = -1 setget set_id, get_id # Id of this player
 
 var max_health := 3
 var current_health := 3
@@ -31,15 +31,11 @@ class MovementFrame extends Spatial:
 		self.transform = initial_transform
 		self.attack_type = initial_attack_type
 
-var viewport_tex
-
-func _ready():
-	viewport_tex = get_node("CameraManager/LightCamera/Viewport").get_texture()
-
 
 func _physics_process(delta):
 	if not visible:
 		return
+	
 	var input = get_normalized_input("player_move", inner_deadzone, outer_deadzone)
 	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
 	
@@ -71,6 +67,16 @@ func get_id():
 func set_id(new_id):
 	id = new_id
 	set_rendering_for_character_id(id)
+
+
+func set_rendering_for_character_id(id):
+	.set_rendering_for_character_id(id)
+	$CameraManager/ViewCamera/ViewportContainer/Viewport/Camera.cull_mask = 1 + 2 + pow(2, 5 + id)
+	$CameraManager/LightCamera/Viewport/Camera.cull_mask = 1 + pow(2, 5 + id)
+
+
+func get_visibility_mask():
+	return get_node("CameraManager/LightCamera/Viewport").get_texture()
 
 
 func get_normalized_input(type, outer_deadzone, inner_deadzone, min_length = 0.0):
