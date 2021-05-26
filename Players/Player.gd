@@ -125,4 +125,11 @@ func reset():
 	movement_records = []
 	transform.origin = Vector3.ZERO
 	current_health = max_health
-
+	
+func _on_light_cone_entered(body: Node):
+	if body is Ghost:
+		body.visible = true
+		
+func _on_light_cone_exited(body: Node):
+	if body is Ghost:
+		body.visible = false
