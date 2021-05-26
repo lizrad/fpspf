@@ -58,14 +58,14 @@ far = 200.0
 [node name="ViewCamera" type="Node" parent="CameraManager" index="1"]
 
 [node name="ViewportContainer" type="ViewportContainer" parent="CameraManager/ViewCamera" index="0"]
-margin_right = 512.0
+margin_right = 496.0
 margin_bottom = 600.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Viewport" type="Viewport" parent="CameraManager/ViewCamera/ViewportContainer" index="0"]
-size = Vector2( 512, 600 )
+size = Vector2( 496, 600 )
 handle_input_locally = false
 render_target_update_mode = 3
 shadow_atlas_size = 2048
