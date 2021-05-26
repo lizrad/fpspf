@@ -173,6 +173,14 @@ player_melee_1={
  ]
 }
 
+[layer_names]
+
+3d_render/layer_1="Level"
+3d_render/layer_5="Player 1"
+3d_render/layer_6="Player 2"
+3d_render/layer_7="Player 3"
+3d_render/layer_8="Player 4"
+
 [physics]
 
 common/enable_pause_aware_picking=true

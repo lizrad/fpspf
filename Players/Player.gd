@@ -39,13 +39,13 @@ func _ready():
 
 
 func _physics_process(delta):
-	var input = get_normalized_input("player_move")
+	var input = get_normalized_input("player_move", inner_deadzone, outer_deadzone)
 	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
 	
 	apply_acceleration(movement_input_vector * move_acceleration)
 	move_and_slide(velocity)
 	
-	var rotate_input = get_normalized_input("player_look")
+	var rotate_input = get_normalized_input("player_look", 1.0, 0.0, 0.5)
 	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
 	
 	if rotate_input_vector != Vector3.ZERO:
@@ -63,7 +63,8 @@ func _physics_process(delta):
 	# TODO: add melee record
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
 
-func get_normalized_input(type):
+
+func get_normalized_input(type, outer_deadzone, inner_deadzone, min_length = 0.0):
 	var id_string = "_" + str(id)
 	var input = Vector2(Input.get_action_strength(type + "_up" + id_string) - 
 						Input.get_action_strength(type + "_down" + id_string),
@@ -73,6 +74,9 @@ func get_normalized_input(type):
 	# Remove signs to reduce the number of cases
 	var signs = Vector2(sign(input.x), sign(input.y))
 	input = Vector2(abs(input.x), abs(input.y))
+	
+	if input.length() < min_length:
+		return Vector2.ZERO
 	
 	# Deazones for each axis
 	if input.x > outer_deadzone:
