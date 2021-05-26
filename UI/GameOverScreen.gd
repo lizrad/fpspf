@@ -16,12 +16,15 @@ func show():
 func hide():
 	visible = false
 
-func set_winner_text(text : String):
-	$Winner_txt.text = text
 
+func set_winner(idx : int):
+	if idx >= 0 && idx <= 1:
+		$Winner_txt.text = "Player " + str(idx + 1) + " won!"
+		$Winner_txt.add_color_override("font_color", Constants.character_colors[idx])
+		$Winner_txt.add_color_override("font_outline_modulate", Constants.character_colors[idx])
+	else:
+		$Winner_txt.text = "Draw!"
 
-func set_winner_text_color(color : Color):
-	$Winner_txt.add_color_override("font_color", color)
 
 func _on_Restart_btn_pressed():
 	get_tree().reload_current_scene()

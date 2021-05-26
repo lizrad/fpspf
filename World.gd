@@ -3,7 +3,6 @@ extends Node
 export var time_cycle := 10.0 # total round time in seconds
 export var time_prep := 5.0 # time, before the round starts
 export var replay_speed := 1.0 # timescale of the replay
-export var win_score := 5 # needed score to win game
 export var num_cycles := 5 # max cycles for one game
 
 var time_left # round timer in ms
@@ -52,69 +51,84 @@ func next_gamestate():
 	print("Switching gamestate from "+Gamestate.keys()[_current_gamestate]+" to "+Gamestate.keys()[(_current_gamestate+1)%Gamestate.size()])
 	match _current_gamestate:
 		Gamestate.GAME:
-			#prepare for replay
+			# prepare for replay
 			for player_manager in $PlayerManagers.get_children():
-				player_manager.convert_active_to_ghost(_current_frame-1)
+				player_manager.convert_active_to_ghost(_current_frame - 1)
 				player_manager.set_ghosts_time_scale(-replay_speed)
 				player_manager.toggle_active_player(false)
 			time_left = _current_frame*get_physics_process_delta_time()
 			_current_frame = 0
 			$HUD.set_prep_time(false)
 		Gamestate.PREP:
-			#prepare for play
-			time_left = time_cycle +1
+			# prepare for play
+			time_left = time_cycle + 1
 			$HUD.set_prep_time(false)
 			$LevelManager.open_doors()
 		Gamestate.REPLAY:
-			#prepare for prep
+			# prepare for prep
 			# update cycle -> game over if reached num_cycles
 			cycle += 1
 			if (cycle > num_cycles):
+				$HUD.set_winner(_get_winner())
 				$HUD.toggle_game_over_screen(true)
-				#get_tree().quit()
+				set_process(false)
 				return
+
 			# starting preparation cycle
 			$LevelManager.close_doors()
 			$HUD.set_cycle(cycle)
 			$HUD.reload_ammo()
+			$HUD.set_prep_time(true)
 			for player_manager in $PlayerManagers.get_children():
 				var attacker = player_manager.active_player.get_node("Attacker")
 				attacker.reload(player_manager.active_player.ranged_attack_type)
-				print("here")
 				player_manager.set_ghosts_time_scale(1.0)
 				player_manager.reset_all_children(0)
 				player_manager.toggle_active_player(true)
-			time_left = time_prep +1
-			$HUD.set_prep_time(true)
-			
-	_current_gamestate = (_current_gamestate+1)%Gamestate.size();
-	for id in _scores.size():
-		_set_score(id, 0)
+			time_left = time_prep + 1
+			# reset scores
+			for id in _scores.size():
+				_set_score(id, 0)
+
+	_current_gamestate = (_current_gamestate + 1) % Gamestate.size();
 
 
-func _update_score(id: int) -> void:
-	var new_score = _scores[id] + 1
-	_set_score(id, new_score)
-
-	# TODO: remove gamemode
-	if new_score == win_score:
-		print("game over -> score")
-		# TODO: end screen to restart game
-		return
+func _get_winner() -> int:
+	var max_score := 0
+	var winner := 0
+	var idx := 0
+	for score in _scores:
+		if score > max_score:
+			max_score = score
+			winner = idx
+		elif score == max_score:
+			winner = -1
+		idx += 1
+	return winner
 
 
 func _set_score(id: int, score: int) -> void:
 	_scores[id] = score
 	$HUD.set_score(id, score)
 
+func _score_point(id: int):
+	_set_score(id, _scores[id] + 1)
+
+
+# FIXME: this only works for 2 players because the player who shots is never transmitted
+func _get_opponent_player(id: int) -> int:
+	for player_manager in $PlayerManagers.get_children():
+		if player_manager.player_id != id:
+			return player_manager.player_id
+	return -1
 
 # one of the current active players died:
 #	- add score
 # 	- restart round
 func _on_active_player_died(playerManger: PlayerManager) -> void:
 	print("active player died: " + str(playerManger.player_id))
-	_update_score(playerManger.player_id)
-	
+	print("	enemy: " + str(_get_opponent_player(playerManger.player_id)))
+	_score_point(_get_opponent_player(playerManger.player_id))
 	next_gamestate()
 
 
@@ -122,4 +136,5 @@ func _on_active_player_died(playerManger: PlayerManager) -> void:
 # 	- add score
 func _on_ghost_player_died(playerManger: PlayerManager) -> void:
 	print("ghost player died: " + str(playerManger.player_id))
-	_update_score(playerManger.player_id)
+	print("	enemy: " + str(_get_opponent_player(playerManger.player_id)))
+	_score_point(_get_opponent_player(playerManger.player_id))

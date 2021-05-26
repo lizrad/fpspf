@@ -1,15 +1,15 @@
 extends Control
 
-var Player1Color : Resource = preload("res://Players/Player1Material.tres")
-var Player2Color : Resource = preload("res://Players/Player2Material.tres")
-
 var _prep_time := true
 var _cycle := 0
 var _num_cycles := 0
 
 
 func _ready() -> void:
-	pass
+	$Score1.add_color_override("font_color", Constants.character_colors[0])
+	$Score1.add_color_override("font_outline_modulate", Constants.character_colors[0])
+	$Score2.add_color_override("font_color", Constants.character_colors[1])
+	$Score2.add_color_override("font_outline_modulate", Constants.character_colors[1])
 
 
 func set_time(time):
@@ -19,9 +19,8 @@ func set_time(time):
 						 "ss":"%02d" % (seconds % 60)}))
 
 
-# update score for opponent
 func set_score(idx_player, score):
-	var label_score = $Score2 if idx_player == 0 else $Score1
+	var label_score = $Score1 if idx_player == 0 else $Score2
 	label_score.set_text(str(score))
 
 
@@ -31,7 +30,6 @@ func _update_cycle_text():
 	$Cycle.set_text(text)
 
 
-# update ammo for current
 func consume_bullet(idx_player):
 	var bullet_ammo = $BulletAmmo1 if idx_player == 0 else $BulletAmmo2
 	bullet_ammo.remove_bullet()
@@ -59,17 +57,24 @@ func set_prep_time(active):
 		_prep_time = active
 		_update_cycle_text()
 
+
 func _hide_all():
 	for child in get_children():
 		child.visible = false
 
+
 func _show_all():
 	for child in get_children():
 		child.visible = true
-		
+
+
+func set_winner(idx: int):
+	$GameOverScreen.set_winner(idx)
+
+
 func toggle_game_over_screen(active: bool):
 	if not active:
 		_show_all()
 	else:
 		_hide_all()
-	$GameOverScreen.visible=active
+	$GameOverScreen.visible = active

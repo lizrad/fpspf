@@ -7,27 +7,32 @@
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
+outline_size = 1
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 25
+outline_size = 1
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 25
+outline_size = 1
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 25
+outline_size = 1
+outline_color = Color( 0.603922, 0.607843, 1, 1 )
 font_data = ExtResource( 3 )
 
 [node name="HUD" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 1.41418
-margin_top = 1.41418
-margin_right = 1.41418
-margin_bottom = 1.41418
+margin_left = -0.58582
+margin_top = 0.41418
+margin_right = -0.585815
+margin_bottom = 0.414185
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -63,8 +68,9 @@ __meta__ = {
 }
 
 [node name="Score1" type="Label" parent="."]
+margin_left = 5.0
 margin_right = 40.0
-margin_bottom = 14.0
+margin_bottom = 31.0
 custom_fonts/font = SubResource( 3 )
 text = "0"
 __meta__ = {
@@ -75,10 +81,15 @@ __meta__ = {
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -40.0
+margin_right = -5.0
 margin_bottom = 14.0
+rect_scale = Vector2( 0.998554, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "0"
 align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BulletAmmo1" parent="." instance=ExtResource( 2 )]
 margin_right = -1872.0

@@ -2,8 +2,6 @@ extends Spatial
 class_name PlayerManager
 
 export var player_id: int # The id of the player this manager manages
-export var player_material: Resource
-export var ghost_material: Resource
 export var shot_material: Resource
 export var laser_material: Resource
 
@@ -31,7 +29,7 @@ func set_ghosts_time_scale(time_scale: float) -> void:
 	for child in get_children():
 		if child != active_player:
 			child.set_time_scale(time_scale)
-			
+
 
 func reset_all_children(frame: int) ->void:
 	for child in get_children():
@@ -41,7 +39,6 @@ func reset_all_children(frame: int) ->void:
 			child.reset()
 
 
-
 func convert_active_to_ghost(frame: int):
 	var movement_record = active_player.movement_records
 	var new_ghost = ghost_player_scene.instance()
@@ -49,6 +46,8 @@ func convert_active_to_ghost(frame: int):
 	new_ghost.connect("died", self, "_on_ghost_died")
 	new_ghost.died_at_frame = frame
 	new_ghost.id = active_player.id
+	print("TODO: FIXME set ghost color for id " + str(new_ghost.id) + " to color: " + str(Constants.character_colors[active_player.id + 4]))
+	new_ghost.get_node("MeshInstance").material_override.set_shader_param("color", Constants.character_colors[active_player.id + 4])
 	add_child(new_ghost)
 	reset_all_children(frame)
 
