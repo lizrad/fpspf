@@ -17,9 +17,6 @@ visible = false
 shadow_enabled = true
 directional_shadow_max_distance = 500.0
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 0 )
-
 [node name="Level" type="Spatial" parent="."]
 transform = Transform( -2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, 0, 0, 0 )
 
