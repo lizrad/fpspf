@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Level/Door.gd"
 }, {
+"base": "Control",
+"class": "GameOverScreen",
+"language": "GDScript",
+"path": "res://UI/GameOverScreen.gd"
+}, {
 "base": "KinematicBody",
 "class": "Ghost",
 "language": "GDScript",
@@ -42,6 +47,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "AttackType": "",
 "Door": "",
+"GameOverScreen": "",
 "Ghost": "",
 "Player": "",
 "PlayerBase": "",
@@ -172,6 +178,14 @@ player_melee_1={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":16777240,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+3d_render/layer_1="Level"
+3d_render/layer_5="Player 1"
+3d_render/layer_6="Player 2"
+3d_render/layer_7="Player 3"
+3d_render/layer_8="Player 4"
 
 [physics]
 

@@ -71,6 +71,13 @@ func next_gamestate():
 			$HUD.reload_ammo()
 			# starting preparation cycle
 			$LevelManager.close_doors()
+				# TODO: end screen to restart game
+				return
+		
+			# starting preparation cycle
+			$LevelManager.close_doors()
+			$HUD.set_cycle(cycle)
+			$HUD.reload_ammo()
 			for player_manager in $PlayerManagers.get_children():
 				var attacker = player_manager.active_player.get_node("Attacker")
 				attacker.reload(player_manager.active_player.ranged_attack_type)
@@ -80,7 +87,6 @@ func next_gamestate():
 			$HUD.set_prep_time(true)
 			
 	_current_gamestate = (_current_gamestate+1)%Gamestate.size();
-		
 	for id in _scores.size():
 		_set_score(id, 0)
 
@@ -88,10 +94,12 @@ func next_gamestate():
 func _update_score(id: int) -> void:
 	var new_score = _scores[id] + 1
 	_set_score(id, new_score)
-	
+
+	# TODO: remove gamemode
 	if new_score == win_score:
 		print("game over -> score")
-		get_tree().quit
+		# TODO: end screen to restart game
+		return
 
 
 func _set_score(id: int, score: int) -> void:
