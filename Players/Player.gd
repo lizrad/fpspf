@@ -123,7 +123,6 @@ func reset():
 	current_health = max_health
 	
 func _on_light_cone_entered(body: Node):
-	print(body.name)
 	if body is Ghost:
 		body.visible = true
 		

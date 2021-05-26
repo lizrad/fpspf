@@ -54,11 +54,12 @@ func restart():
 		cycle += 1
 		if (cycle > num_cycles):
 			print("game over -> cycles")
-			get_tree().quit()
-		$HUD.set_cycle(cycle)
-		
+			# TODO: end screen to restart game
+			return
+
 		# starting preparation cycle
 		$LevelManager.close_doors()
+		$HUD.set_cycle(cycle)
 		$HUD.reload_ammo()
 		for player_manager in $PlayerManagers.get_children():
 			player_manager.convert_active_to_ghost()
