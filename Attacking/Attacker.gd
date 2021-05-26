@@ -20,7 +20,6 @@ func _process(delta):
 	if _attack_deadline > 0:
 		_attack_deadline -= delta
 
-
 func _handle_ammunition(attack_type) ->bool:
 	if not _ammunition_tracker.has(attack_type):
 		_ammunition_tracker[attack_type]=attack_type.ammunition
