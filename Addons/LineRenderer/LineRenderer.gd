@@ -22,8 +22,10 @@ func _process(delta):
 	
 	camera = get_viewport().get_camera()
 	if camera == null:
-		return
-	cameraOrigin = to_local(camera.get_global_transform().origin)
+		# FIXME: Just a hotfix, but seems to work fine
+		cameraOrigin = Vector3.UP
+	else:
+		cameraOrigin = to_local(camera.get_global_transform().origin)
 	
 	var progressStep = 1.0 / points.size();
 	var progress = 0;

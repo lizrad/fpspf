@@ -71,3 +71,4 @@ shadow_atlas_size = 2048
 [node name="Camera" type="Camera" parent="CameraManager/ViewCamera/ViewportContainer/Viewport" index="0"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 0 )
 environment = SubResource( 4 )
+current = true
