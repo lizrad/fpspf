@@ -10,7 +10,11 @@ export(float) var outer_deadzone := 0.8
 export var ranged_attack_type: Resource
 export var melee_attack_type: Resource
 
-export var dash_speed : float = 5.0
+# Dashing
+export var time_since_dash_start := 0.0
+export var initial_dash_burst := 5.0
+export var dash_exponent := 0.1
+export var dash_cooldown := 1.0
 
 # TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
 var movement_records = []
@@ -18,7 +22,7 @@ var movement_records = []
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
 
-var id: int setget set_id, get_id # Id of this player
+var id: int = -1 setget set_id, get_id # Id of this player
 
 var max_health := 3
 var current_health := 3
@@ -33,20 +37,26 @@ class MovementFrame extends Spatial:
 		self.transform = initial_transform
 		self.attack_type = initial_attack_type
 
-var viewport_tex
-
-func _ready():
-	viewport_tex = get_node("CameraManager/LightCamera/Viewport").get_texture()
-
 
 func _physics_process(delta):
 	if not visible:
 		return
+	
 	var input = get_normalized_input("player_move", inner_deadzone, outer_deadzone)
 	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
 	
 	if Input.is_action_pressed("player_dash_" + str(id)):
-		movement_input_vector *= dash_speed
+		var e_section = max(
+			exp(log(initial_dash_burst - 1 / dash_exponent * time_since_dash_start)),
+			0.0
+		)
+		velocity += movement_input_vector * e_section
+		time_since_dash_start += delta
+	else:
+		if time_since_dash_start > dash_cooldown:
+			time_since_dash_start = 0.0
+		elif time_since_dash_start != 0.0:
+			time_since_dash_start += delta
 	
 	apply_acceleration(movement_input_vector * move_acceleration)
 	move_and_slide(velocity)
@@ -77,6 +87,16 @@ func get_id():
 func set_id(new_id):
 	id = new_id
 	set_rendering_for_character_id(id)
+
+
+func set_rendering_for_character_id(id):
+	.set_rendering_for_character_id(id)
+	$CameraManager/ViewCamera/ViewportContainer/Viewport/Camera.cull_mask = 1 + 2 + pow(2, 5 + id)
+	$CameraManager/LightCamera/Viewport/Camera.cull_mask = 1 + pow(2, 5 + id)
+
+
+func get_visibility_mask():
+	return get_node("CameraManager/LightCamera/Viewport").get_texture()
 
 
 func get_normalized_input(type, outer_deadzone, inner_deadzone, min_length = 0.0):

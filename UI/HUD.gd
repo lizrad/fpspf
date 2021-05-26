@@ -9,8 +9,7 @@ var _num_cycles := 0
 
 
 func _ready() -> void:
-	$Score1.add_color_override("font_color", Player1Color.albedo_color)
-	$Score2.add_color_override("font_color", Player2Color.albedo_color)
+	pass
 
 
 func set_time(time):

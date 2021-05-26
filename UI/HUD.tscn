@@ -1,7 +1,24 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://UI/HUD.gd" type="Script" id=1]
 [ext_resource path="res://UI/BulletAmmo.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Fonts/Roboto-Thin.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 25
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 25
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 25
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 25
+font_data = ExtResource( 3 )
 
 [node name="HUD" type="Control"]
 anchor_right = 1.0
@@ -21,7 +38,9 @@ anchor_right = 0.5
 margin_left = -23.0
 margin_right = 23.0
 margin_bottom = 14.0
+custom_fonts/font = SubResource( 1 )
 text = "00:00"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -31,10 +50,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -57.5
-margin_top = -14.0
-margin_right = 57.5
+margin_left = -98.5
+margin_top = -31.0
+margin_right = 98.5
+custom_fonts/font = SubResource( 2 )
 text = "Preparation phase"
+align = 1
+valign = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -42,6 +64,7 @@ __meta__ = {
 [node name="Score1" type="Label" parent="."]
 margin_right = 40.0
 margin_bottom = 14.0
+custom_fonts/font = SubResource( 3 )
 text = "0"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -52,7 +75,9 @@ anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -40.0
 margin_bottom = 14.0
+custom_fonts/font = SubResource( 4 )
 text = "0"
+align = 2
 
 [node name="BulletAmmo1" parent="." instance=ExtResource( 2 )]
 margin_right = -1872.0
@@ -61,6 +86,6 @@ margin_bottom = -1071.0
 [node name="BulletAmmo2" parent="." instance=ExtResource( 2 )]
 anchor_left = 1.0
 anchor_bottom = 0.0
-margin_left = -117.0
+margin_left = -122.0
 margin_right = 0.0
 margin_bottom = 111.0

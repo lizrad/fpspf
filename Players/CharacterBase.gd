@@ -17,11 +17,23 @@ enum CharacterID {
 	GHOST = 4
 }
 
+const PLAYER_GENERAL = 1
+
+
+func _set_visible_instance_layers(object, id, default=0):
+	object.layers = default
+	object.set_layer_mask_bit(id, true)
+
+
+func set_visibility_mask(mask: ViewportTexture):
+	$MeshInstance.material_override.set_shader_param("visibility_mask", mask)
+
 
 func set_rendering_for_character_id(id):
 	$Attacker.set_render_layer_for_player_id(id)
 	
-	$MeshInstance.layers = 0
-	$MeshInstance.set_layer_mask_bit(5 + id, true)
+	_set_visible_instance_layers($MeshInstance, PLAYER_GENERAL)
+	_set_visible_instance_layers($VisibilityLights/OmniLight, 5 + id)
+	_set_visible_instance_layers($VisibilityLights/SightLight, 5 + id)
 	
 	$MeshInstance.material_override.set_shader_param("color", character_colors[id])

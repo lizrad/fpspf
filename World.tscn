@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Players/PlayerManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World.gd" type="Script" id=2]
+[ext_resource path="res://PlayerManagers.gd" type="Script" id=3]
 [ext_resource path="res://Level/LevelManager.tscn" type="PackedScene" id=5]
 [ext_resource path="res://UI/HUD.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Attacking/Shots/HitscanShot/Shot1Material.tres" type="Material" id=9]
@@ -23,12 +24,9 @@ albedo_color = Color( 1, 0, 0.423529, 1 )
 script = ExtResource( 2 )
 time_cycle = 90.0
 time_prep = 2.0
-win_score = null
-num_cycles = null
-
-[node name="HUD" parent="." instance=ExtResource( 6 )]
 
 [node name="PlayerManagers" type="Spatial" parent="."]
+script = ExtResource( 3 )
 
 [node name="PlayerManager1" parent="PlayerManagers" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0, 0 )
@@ -45,3 +43,5 @@ shot_material = ExtResource( 10 )
 
 [node name="LevelManager" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+
+[node name="HUD" parent="." instance=ExtResource( 6 )]
