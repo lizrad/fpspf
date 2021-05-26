@@ -19,6 +19,8 @@ enum CharacterID {
 
 const PLAYER_GENERAL = 1
 
+func _ready():
+	$Attacker.set_owning_player(self)
 
 func _set_visible_instance_layers(object, id, default=0):
 	object.layers = default

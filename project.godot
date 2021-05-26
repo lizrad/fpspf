@@ -69,6 +69,7 @@ config/icon="res://icon.png"
 [global]
 
 line=false
+frame=false
 
 [input]
 
@@ -199,6 +200,7 @@ player_dash_1={
 
 3d_render/layer_1="Level"
 3d_render/layer_2="All Players"
+3d_render/layer_5="Player 1"
 3d_render/layer_6="Player 1"
 3d_render/layer_7="Player 2"
 3d_render/layer_8="Player 3"
