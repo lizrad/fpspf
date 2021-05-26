@@ -18,10 +18,6 @@ var _previous_attack_frame = -1
 
 signal died
 
-
-func _ready():
-	set_rendering_for_character_id(CharacterID.GHOST)
-
 	
 func set_time_scale(time_scale: float) -> void:
 	_time_scale = time_scale

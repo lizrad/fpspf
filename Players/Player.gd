@@ -22,8 +22,6 @@ var movement_records = []
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
 
-var id: int = -1 setget set_id, get_id # Id of this player
-
 var max_health := 3
 var current_health := 3
 
