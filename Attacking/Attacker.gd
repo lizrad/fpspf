@@ -7,10 +7,18 @@ var _ammunition_tracker = {}
 
 signal shot_bullet
 
+func visualize_attack(attack_type, owning_player) ->void:
+	var attack = attack_type.attack.instance()
+	get_tree().get_root().add_child(attack);
+	attack.global_transform = global_transform
+	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
+	attack.initialize_visual(owning_player, visualization_time)
 
-func attack(attack_type, owning_player) -> void:
+	
+func attack(attack_type, owning_player) -> bool:
 	if _attack_deadline <= 0:
-		_create_attack(attack_type, owning_player)
+		return _create_attack(attack_type, owning_player)
+	return false
 
 
 func set_render_layer_for_player_id(player_id) -> void:
@@ -37,9 +45,9 @@ func _handle_ammunition(attack_type) ->bool:
 	return true
 
 
-func _create_attack(attack_type, owning_player) -> void:
+func _create_attack(attack_type, owning_player) -> bool:
 	if !_handle_ammunition(attack_type):
-		return
+		return false
 	print(str("Ammunition is ",_ammunition_tracker[attack_type], "/",attack_type.ammunition))
 	_attack_deadline = attack_type.cooldown
 	var attack = attack_type.attack.instance()
@@ -47,3 +55,4 @@ func _create_attack(attack_type, owning_player) -> void:
 	attack.global_transform = global_transform
 	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
 	attack.initialize(owning_player, visualization_time, attack_type.damage)
+	return true

@@ -65,7 +65,8 @@ func _physics_process(delta):
 		attack_type = melee_attack_type
 		
 	if attack_type:
-		$Attacker.attack(attack_type, self)
+		if not $Attacker.attack(attack_type, self):
+			attack_type = null
 	# TODO: add melee record
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
 
