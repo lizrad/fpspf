@@ -67,13 +67,7 @@ func next_gamestate():
 			if (cycle > num_cycles):
 				print("game over -> cycles")
 				get_tree().quit()
-			$HUD.set_cycle(cycle)
-			$HUD.reload_ammo()
-			# starting preparation cycle
-			$LevelManager.close_doors()
-				# TODO: end screen to restart game
 				return
-		
 			# starting preparation cycle
 			$LevelManager.close_doors()
 			$HUD.set_cycle(cycle)
