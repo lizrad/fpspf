@@ -28,12 +28,18 @@ func _ready():
 func _set_pawn_material(mesh : MeshInstance, material : Resource) -> void:
 	mesh.set_surface_material(0, material)
 
+func toggle_active_player(active: bool) ->void:
+	active_player.visible = active
+
+func reset_all_children() ->void:
+	for child in get_children():
+		child.reset()
+
 
 func convert_active_to_ghost():
 	var movement_record = active_player.movement_records
 	
-	for child in get_children():
-		child.reset()
+	reset_all_children()
 	
 	var new_ghost = ghost_player_scene.instance()
 	new_ghost.movement_record = movement_record

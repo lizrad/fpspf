@@ -30,8 +30,8 @@ func _physics_process(delta):
 			$Attacker.attack(frame.attack_type, self)
 
 		current_frame += 1
-
-
+		
+		
 func receive_damage(damage: float):
 	print("Ghost received damage: ", damage)
 	current_health -= damage
