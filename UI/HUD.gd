@@ -58,3 +58,18 @@ func set_prep_time(active):
 	if _prep_time != active:
 		_prep_time = active
 		_update_cycle_text()
+
+func _hide_all():
+	for child in get_children():
+		child.visible = false
+
+func _show_all():
+	for child in get_children():
+		child.visible = true
+		
+func toggle_game_over_screen(active: bool):
+	if not active:
+		_show_all()
+	else:
+		_hide_all()
+	$GameOverScreen.visible=active

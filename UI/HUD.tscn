@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://UI/HUD.gd" type="Script" id=1]
 [ext_resource path="res://UI/BulletAmmo.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Fonts/Roboto-Thin.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://UI/GameOverScreen.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
@@ -89,3 +90,6 @@ anchor_bottom = 0.0
 margin_left = -122.0
 margin_right = 0.0
 margin_bottom = 111.0
+
+[node name="GameOverScreen" parent="." instance=ExtResource( 4 )]
+visible = false
