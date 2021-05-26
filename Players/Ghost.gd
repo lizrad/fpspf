@@ -1,4 +1,4 @@
-extends KinematicBody
+extends CharacterBase
 class_name Ghost
 
 var movement_record := []
@@ -15,6 +15,7 @@ signal died
 
 
 func _ready():
+	set_rendering_for_character_id(CharacterID.GHOST)
 	reset()
 
 

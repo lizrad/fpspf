@@ -1,4 +1,4 @@
-extends KinematicBody
+extends CharacterBase
 class_name Player
 
 export(float) var drag := 0.2
@@ -16,7 +16,7 @@ var movement_records = []
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
 
-var id: int # Id of this player
+var id: int setget set_id, get_id # Id of this player
 
 var max_health := 3
 var current_health := 3
@@ -35,7 +35,6 @@ var viewport_tex
 
 func _ready():
 	viewport_tex = get_node("LightCamera/Viewport").get_texture()
-	$PlayerMesh/CharacterMesh.material_override.set_shader_param("visibility_mask", viewport_tex)
 
 
 func _physics_process(delta):
@@ -62,6 +61,14 @@ func _physics_process(delta):
 		$Attacker.attack(attack_type, self)
 	# TODO: add melee record
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
+
+
+func get_id():
+	return id
+
+func set_id(new_id):
+	id = new_id
+	set_rendering_for_character_id(id)
 
 
 func get_normalized_input(type, outer_deadzone, inner_deadzone, min_length = 0.0):
