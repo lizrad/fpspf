@@ -8,10 +8,10 @@ export var num_cycles := 5 # max cycles for one game
 var time_left # round timer in ms
 var cycle := 1 # number of current cylce
 
-var active_prep_time := true # flag to indicate prep or cycle time
-
 var _scores := [] # Scores for each player
 
+enum Gamestate {PREP, GAME, REPLAY}
+var _current_gamestate = Gamestate.PREP
 
 func _ready():
 	# Connect to player events
@@ -21,8 +21,14 @@ func _ready():
 		_scores.append(0)
 		var attacker = player_manager.active_player.get_node("Attacker")
 		attacker.connect("shot_bullet", $HUD, "consume_bullet", [player_manager.player_id])
+	match _current_gamestate:
+		Gamestate.PREP:
+			time_left = time_prep + 1
+		Gamestate.GAME:
+			time_left = time_cycle + 1
+		Gamestate.REPLAY:
+			time_left = time_cycle + 1
 
-	time_left = (time_prep if active_prep_time else time_cycle) + 1
 	$HUD.set_time(time_left)
 	$HUD.set_cycle(cycle)
 	$HUD.set_num_cycles(num_cycles)
@@ -42,31 +48,37 @@ func _process(delta):
 # 	- reverse shift animation
 # 	- storing player movement as ghost
 # 	- reset player move list
-#	- reset player starting point
+# 	- reset player starting point
 # 	- restarting level time
 func restart():
-	active_prep_time = !active_prep_time
-	$HUD.set_prep_time(active_prep_time)
-	print("start " + ("preparation" if active_prep_time else "cycle"))
-	time_left = (time_prep if active_prep_time else time_cycle) + 1
-	if active_prep_time:
-		# update cycle -> game over if reached num_cycles
-		cycle += 1
-		if (cycle > num_cycles):
-			print("game over -> cycles")
-			get_tree().quit()
-		$HUD.set_cycle(cycle)
+	match _current_gamestate:
+		Gamestate.GAME:
+			print("start preparation")
+			_current_gamestate = Gamestate.PREP
+			$HUD.set_prep_time(true)
+			time_left = time_prep +1
+			# update cycle -> game over if reached num_cycles
+			cycle += 1
+			if (cycle > num_cycles):
+				print("game over -> cycles")
+				get_tree().quit()
+			$HUD.set_cycle(cycle)
 		
-		# starting preparation cycle
-		$LevelManager.close_doors()
-		$HUD.reload_ammo()
-		for player_manager in $PlayerManagers.get_children():
-			player_manager.convert_active_to_ghost()
-			var attacker = player_manager.active_player.get_node("Attacker")
-			attacker.reload(player_manager.active_player.ranged_attack_type)
-	else:
-		$LevelManager.open_doors()
-	
+			# starting preparation cycle
+			$LevelManager.close_doors()
+			$HUD.reload_ammo()
+			for player_manager in $PlayerManagers.get_children():
+				player_manager.convert_active_to_ghost()
+				var attacker = player_manager.active_player.get_node("Attacker")
+				attacker.reload(player_manager.active_player.ranged_attack_type)
+		Gamestate.PREP:
+			print("start cycle")
+			_current_gamestate = Gamestate.GAME
+			time_left = time_cycle +1
+			$LevelManager.open_doors()
+		Gamestate.REPLAY:
+			$HUD.set_prep_time(false)
+		
 	for id in _scores.size():
 		_set_score(id, 0)
 
