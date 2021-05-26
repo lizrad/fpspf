@@ -31,11 +31,11 @@ class MovementFrame extends Spatial:
 		self.transform = initial_transform
 		self.attack_type = initial_attack_type
 
-
+var viewport_tex
 
 func _ready():
-	$Area.connect("body_entered", self, "_on_light_cone_entered")
-	$Area.connect("body_exited", self, "_on_light_cone_exited")
+	viewport_tex = get_node("LightCamera/Viewport").get_texture()
+	$PlayerMesh/CharacterMesh.material_override.set_shader_param("visibility_mask", viewport_tex)
 
 
 func _physics_process(delta):
@@ -121,12 +121,4 @@ func reset():
 	movement_records = []
 	transform.origin = Vector3.ZERO
 	current_health = max_health
-	
-func _on_light_cone_entered(body: Node):
-	print(body.name)
-	if body is Ghost:
-		body.visible = true
-		
-func _on_light_cone_exited(body: Node):
-	if body is Ghost:
-		body.visible = false
+
