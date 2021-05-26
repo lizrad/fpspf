@@ -5,6 +5,7 @@ export var player_id: int # The id of the player this manager manages
 export var player_material: Resource
 export var ghost_material: Resource
 export var shot_material: Resource
+export var laser_material: Resource
 
 signal active_player_died
 signal ghost_player_died
@@ -18,7 +19,6 @@ var active_player: Player
 func _ready():
 	active_player = active_player_scene.instance()
 	active_player.id = player_id
-	
 	add_child(active_player)
 	
 	active_player.connect("died", self, "_on_player_died")
