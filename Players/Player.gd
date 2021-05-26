@@ -38,6 +38,8 @@ func _ready():
 
 
 func _physics_process(delta):
+	if not visible:
+		return
 	var input = get_normalized_input("player_move", inner_deadzone, outer_deadzone)
 	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
 	

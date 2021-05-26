@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Level/Door.gd"
 }, {
+"base": "Control",
+"class": "GameOverScreen",
+"language": "GDScript",
+"path": "res://UI/GameOverScreen.gd"
+}, {
 "base": "CharacterBase",
 "class": "Ghost",
 "language": "GDScript",
@@ -48,6 +53,7 @@ _global_script_class_icons={
 "AttackType": "",
 "CharacterBase": "",
 "Door": "",
+"GameOverScreen": "",
 "Ghost": "",
 "Player": "",
 "PlayerBase": "",
