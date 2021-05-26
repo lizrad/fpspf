@@ -34,7 +34,7 @@ class MovementFrame extends Spatial:
 var viewport_tex
 
 func _ready():
-	viewport_tex = get_node("LightCamera/Viewport").get_texture()
+	viewport_tex = get_node("CameraManager/LightCamera/Viewport").get_texture()
 
 
 func _physics_process(delta):
