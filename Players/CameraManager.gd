@@ -7,7 +7,7 @@ func _ready():
 	$LightCamera/Viewport.size = $ViewCamera/ViewportContainer/Viewport.size
 	
 	if get_parent().id == 1:
-		$ViewCamera/ViewportContainer.rect_position.x += 512
+		$ViewCamera/ViewportContainer.rect_position.x += 544
 
 
 func _process(delta):

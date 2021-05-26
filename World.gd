@@ -70,8 +70,8 @@ func next_gamestate():
 			# update cycle -> game over if reached num_cycles
 			cycle += 1
 			if (cycle > num_cycles):
-				print("game over -> cycles")
-				get_tree().quit()
+				$HUD.toggle_game_over_screen(true)
+				#get_tree().quit()
 				return
 			# starting preparation cycle
 			$LevelManager.close_doors()

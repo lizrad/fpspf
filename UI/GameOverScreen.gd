@@ -24,7 +24,9 @@ func set_winner_text_color(color : Color):
 	$Winner_txt.add_color_override("font_color", color)
 
 func _on_Restart_btn_pressed():
+	get_tree().reload_current_scene()
 	emit_signal("restart_pressed")
 
 func _on_Quit_btn_pressed():
+	get_tree().quit()
 	emit_signal("quit_pressed")
