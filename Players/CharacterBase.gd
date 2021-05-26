@@ -1,0 +1,27 @@
+extends KinematicBody
+class_name CharacterBase
+
+export(Array, Color) var character_colors = [
+	Color(1.0, 0.0, 0.0), # Player 1
+	Color(0.0, 0.0, 1.0), # Player 2
+	Color(0.0, 0.0, 1.0), # Player 3
+	Color(0.0, 0.0, 1.0), # Player 4
+	Color(0.2, 0.6, 0.2), # Ghosts
+]
+
+enum CharacterID {
+	PLAYER_1 = 0,
+	PLAYER_2 = 1,
+	PLAYER_3 = 2,
+	PLAYER_4 = 3,
+	GHOST = 4
+}
+
+
+func set_rendering_for_character_id(id):
+	$Attacker.set_render_layer_for_player_id(id)
+	
+	$MeshInstance.layers = 0
+	$MeshInstance.set_layer_mask_bit(5 + id, true)
+	
+	$MeshInstance.material_override.set_shader_param("color", character_colors[id])

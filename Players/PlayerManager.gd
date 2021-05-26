@@ -18,15 +18,11 @@ var active_player: Player
 func _ready():
 	active_player = active_player_scene.instance()
 	active_player.id = player_id
-	_set_pawn_material(active_player.get_node("PlayerMesh/CharacterMesh"), player_material)
 	
 	add_child(active_player)
 	
 	active_player.connect("died", self, "_on_player_died")
 
-
-func _set_pawn_material(mesh : MeshInstance, material : Resource) -> void:
-	mesh.set_surface_material(0, material)
 
 func toggle_active_player(active: bool) ->void:
 	active_player.visible = active

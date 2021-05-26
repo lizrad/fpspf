@@ -13,6 +13,11 @@ func attack(attack_type, owning_player) -> void:
 		_create_attack(attack_type, owning_player)
 
 
+func set_render_layer_for_player_id(player_id) -> void:
+	$AttackOriginPosition/AimVisualization/LineRenderer.layers = 0
+	$AttackOriginPosition/AimVisualization/LineRenderer.set_layer_mask_bit(5 + player_id, true)
+
+
 func reload(attack_type) -> void:
 	_ammunition_tracker[attack_type]=attack_type.ammunition
 
