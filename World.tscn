@@ -23,10 +23,6 @@ albedo_color = Color( 1, 0, 0.423529, 1 )
 script = ExtResource( 2 )
 time_cycle = 90.0
 time_prep = 2.0
-win_score = null
-num_cycles = null
-
-[node name="HUD" parent="." instance=ExtResource( 6 )]
 
 [node name="PlayerManagers" type="Spatial" parent="."]
 
@@ -45,3 +41,5 @@ shot_material = ExtResource( 10 )
 
 [node name="LevelManager" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+
+[node name="HUD" parent="." instance=ExtResource( 6 )]
