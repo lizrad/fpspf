@@ -1,8 +1,16 @@
 extends Control
 
+var Player1Color : Resource = preload("res://Players/Player1Material.tres")
+var Player2Color : Resource = preload("res://Players/Player2Material.tres")
+
 var _prep_time := true
 var _cycle := 0
 var _num_cycles := 0
+
+
+func _ready() -> void:
+	$Score1.add_color_override("font_color", Player1Color.albedo_color)
+	$Score2.add_color_override("font_color", Player2Color.albedo_color)
 
 
 func set_time(time):
@@ -14,7 +22,7 @@ func set_time(time):
 
 # update score for opponent
 func set_score(idx_player, score):
-	var label_score = $Score1 if idx_player == 0 else $Score2
+	var label_score = $Score2 if idx_player == 0 else $Score1
 	label_score.set_text(str(score))
 
 
@@ -26,7 +34,7 @@ func _update_cycle_text():
 
 # update ammo for current
 func consume_bullet(idx_player):
-	var bullet_ammo = $BulletAmmo2 if idx_player == 0 else $BulletAmmo1
+	var bullet_ammo = $BulletAmmo1 if idx_player == 0 else $BulletAmmo2
 	bullet_ammo.remove_bullet()
 
 

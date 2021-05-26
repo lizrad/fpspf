@@ -16,6 +16,8 @@ func initialize(owning_player, visualization_time, damage) ->void:
 	$LineRenderer.points.append(Vector3.ZERO)
 	$LineRenderer.points.append(Vector3.ZERO)
 	
+	$LineRenderer.material_override = owning_player.get_parent().shot_material
+	
 	_update_collision()
 	
 func _physics_process(delta):
