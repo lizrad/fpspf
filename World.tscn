@@ -24,8 +24,6 @@ albedo_color = Color( 1, 0, 0.423529, 1 )
 script = ExtResource( 2 )
 time_cycle = 90.0
 time_prep = 2.0
-win_score = null
-num_cycles = null
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
 
