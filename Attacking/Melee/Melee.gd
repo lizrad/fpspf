@@ -7,7 +7,6 @@ var _visualization_time := 2.00
 var _owning_player
 
 func initialize(owning_player, visualization_time, damage) ->void:
-	print("Melee")
 	assert(visualization_time>=active_time) #the attack should not be longer active than it is visualized
 	_damage = damage
 	_owning_player = owning_player
@@ -15,7 +14,8 @@ func initialize(owning_player, visualization_time, damage) ->void:
 	var sphereShape = SphereShape.new()
 	sphereShape.radius = hit_sphere_radius
 	$CollisionShape.shape = sphereShape
-	$Visualization.scale = Vector3(hit_sphere_radius,hit_sphere_radius,hit_sphere_radius);
+	$Visualization.scale = Vector3(hit_sphere_radius,hit_sphere_radius,hit_sphere_radius)
+	$Visualization.set_surface_material(0, owning_player.get_parent().shot_material)
 	
 func _process(delta):
 	active_time-=delta;

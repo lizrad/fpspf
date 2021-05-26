@@ -4,7 +4,7 @@ class_name PlayerManager
 export var player_id: int # The id of the player this manager manages
 export var player_material: Resource
 export var ghost_material: Resource
-export var shot_material: Resource # or color? TODO: where is this used?
+export var shot_material: Resource
 
 signal active_player_died
 signal ghost_player_died
