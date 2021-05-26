@@ -1,6 +1,9 @@
 extends KinematicBody
 class_name CharacterBase
 
+
+var id: int = -1 setget set_id, get_id
+
 export(Array, Color) var character_colors = [
 	Color(1.0, 0.0, 0.0), # Player 1
 	Color(0.0, 0.0, 1.0), # Player 2
@@ -39,3 +42,11 @@ func set_rendering_for_character_id(id):
 	_set_visible_instance_layers($VisibilityLights/SightLight, 5 + id)
 	
 	$MeshInstance.material_override.set_shader_param("color", character_colors[id])
+
+
+func get_id():
+	return id
+
+func set_id(new_id):
+	id = new_id
+	set_rendering_for_character_id(id)

@@ -48,6 +48,7 @@ func convert_active_to_ghost(frame: int):
 	new_ghost.movement_record = movement_record
 	new_ghost.connect("died", self, "_on_ghost_died")
 	new_ghost.died_at_frame = frame
+	new_ghost.id = active_player.id
 	add_child(new_ghost)
 	reset_all_children(frame)
 
