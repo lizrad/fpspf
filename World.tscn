@@ -11,13 +11,13 @@
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0, 0.27451, 1, 1 )
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=4]
 albedo_color = Color( 0, 0.576471, 1, 1 )
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 1, 0, 0, 1 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=5]
 albedo_color = Color( 1, 0, 0.423529, 1 )
 
 [node name="World" type="Spatial"]
@@ -33,15 +33,17 @@ script = ExtResource( 3 )
 [node name="PlayerManager1" parent="PlayerManagers" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35, 0, 0 )
 player_material = SubResource( 1 )
-ghost_material = SubResource( 2 )
+ghost_material = SubResource( 4 )
 shot_material = ExtResource( 9 )
 
 [node name="PlayerManager2" parent="PlayerManagers" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 0 )
 player_id = 1
 player_material = SubResource( 3 )
-ghost_material = SubResource( 4 )
+ghost_material = SubResource( 5 )
 shot_material = ExtResource( 10 )
 
 [node name="LevelManager" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+
+[node name="HUD" parent="." instance=ExtResource( 6 )]
