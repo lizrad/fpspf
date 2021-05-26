@@ -23,6 +23,8 @@ script = ExtResource( 3 )
 max_distance = 50
 
 [node name="LineRenderer" parent="AttackOriginPosition/AimVisualization" instance=ExtResource( 2 )]
+layers = 0
 material_override = SubResource( 1 )
+cast_shadow = 0
 points = [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -3 ) ]
 globalCoords = false
