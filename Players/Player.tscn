@@ -13,21 +13,24 @@ points = PoolVector3Array( 0, 1, 0.5, 0.0490086, 1, 0.497592, 0.0975452, 1, 0.49
 code = "shader_type spatial;
 
 uniform sampler2D visibility_mask;
+uniform vec4 color: hint_color = vec4(1.0, 0.0, 0.0, 1.0);
 
 varying vec3 world_vertex;
 
 void fragment() {
 	ALPHA = float(length(texture(visibility_mask, SCREEN_UV).rgb) > 0.1);
-	ALBEDO = vec3(1.0, 0.0, 0.0);
+	ALBEDO = color.rgb;
 }"
 
 [sub_resource type="ShaderMaterial" id=7]
 resource_local_to_scene = true
 shader = SubResource( 3 )
+shader_param/color = Color( 1, 0, 0, 1 )
 
 [sub_resource type="ShaderMaterial" id=5]
 resource_local_to_scene = true
 shader = SubResource( 3 )
+shader_param/color = Color( 1, 0, 0, 1 )
 
 [sub_resource type="Environment" id=2]
 
@@ -54,15 +57,22 @@ material/0 = SubResource( 5 )
 
 [node name="Attacker" parent="." instance=ExtResource( 3 )]
 
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+layers = 7
+shadow_enabled = true
+omni_attenuation = 0.0743254
+
 [node name="SightLight" type="SpotLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.9872, 0.159485, 0, -0.159485, 0.9872, 0, 1.80132, 0.791777 )
-layers = 4
+transform = Transform( 1, 0, 0, 0, 0.9872, 0.159485, 0, -0.159485, 0.9872, 0, 2, 0 )
+layers = 7
 light_energy = 5.0
 light_specular = 0.0
-light_cull_mask = 4294967293
 shadow_enabled = true
-spot_range = 223.474
-spot_angle = 26.614
+spot_range = 30.0
+spot_attenuation = 0.00552428
+spot_angle = 35.0
+spot_angle_attenuation = 13308.0
 
 [node name="LightCamera" type="Node" parent="."]
 
