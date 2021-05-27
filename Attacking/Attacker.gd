@@ -11,7 +11,18 @@ signal gain_bullet
 
 func set_owning_player(player)->void:
 	_owning_player = player
-	$AttackOriginPosition/AimVisualization/LineRenderer.material_override.albedo_color = Constants.character_colors[_owning_player.id]
+	$AttackOriginPosition/AimVisualization/LineRenderer.material_override.set_shader_param(
+		"color",
+		Constants.character_colors[_owning_player.id]
+	)
+
+
+func set_visibility_mask(mask):
+	$AttackOriginPosition/AimVisualization/LineRenderer.material_override.set_shader_param(
+		"visibility_mask",
+		mask
+	)
+
 
 func visualize_attack(attack_type, owning_player) -> void:
 	var attack = attack_type.attack.instance()
@@ -36,7 +47,7 @@ func attack(attack_type, owning_player) -> bool:
 
 func set_render_layer_for_player_id(player_id) -> void:
 	$AttackOriginPosition/AimVisualization/LineRenderer.layers = 0
-	$AttackOriginPosition/AimVisualization/LineRenderer.set_layer_mask_bit(5 + player_id, true)
+	$AttackOriginPosition/AimVisualization/LineRenderer.set_layer_mask_bit(Constants.PLAYER_GENERAL, true)
 
 
 func reload(attack_type) -> void:
