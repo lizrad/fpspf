@@ -14,8 +14,7 @@ var _hit_bodies_invincibilty_tracker = {}
 func initialize_visual(owning_player, attack_type) ->void:
 	_attack_time = attack_type.attack_time
 	$Visualization.scale = Vector3(attack_type.attack_range,attack_type.attack_range,attack_type.attack_range)
-	$Visualization.set_surface_material(0, owning_player.get_parent().shot_material)
-	
+	$Visualization.get_surface_material(0).albedo_color = Constants.character_colors[owning_player.id]
 func initialize(owning_player, attack_type) ->void:
 	_damage = attack_type.damage
 	_continuously_damaging = attack_type.continuously_damaging

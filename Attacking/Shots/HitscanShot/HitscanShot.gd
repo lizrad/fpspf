@@ -33,7 +33,7 @@ func initialize(owning_player, attack_type) ->void:
 	$LineRenderer.points = []
 	$LineRenderer.points.append(Vector3.ZERO)
 	$LineRenderer.points.append(Vector3.ZERO)
-	$LineRenderer.material_override = _owning_player.get_parent().shot_material
+	$LineRenderer.material_override.albedo_color = Constants.character_colors[_owning_player.id]
 	_update_collision()
 	
 func _physics_process(delta):
@@ -52,7 +52,8 @@ func _physics_process(delta):
 			$LineRenderer.points[1] = hit_point if hit_point.length()<_bullet_range else Vector3(0,0,-_bullet_range)
 		else:
 			$LineRenderer.points[1] = Vector3(0,0,-_bullet_range)
-		$LineRenderer.material_override = _owning_player.get_parent().shot_material
+			
+		$LineRenderer.material_override.albedo_color = Constants.character_colors[_owning_player.id]
 	elif _continuosly_damaging or _first_frame:
 		_first_frame = false
 		_update_collision()

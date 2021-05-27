@@ -59,12 +59,6 @@ func _physics_process(delta):
 	apply_acceleration(movement_input_vector * move_acceleration)
 	move_and_slide(velocity)
 	
-	var rotate_input = get_normalized_input("player_look", 1.0, 0.0, 0.5)
-	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
-	
-	if rotate_input_vector != Vector3.ZERO:
-		look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
-	
 	var attack_type = null
 	if Input.is_action_pressed("player_shoot_" + str(id)):
 		attack_type = ranged_attack_type
@@ -75,7 +69,14 @@ func _physics_process(delta):
 	if attack_type:
 		if not $Attacker.attack(attack_type, self):
 			attack_type = null
-	# TODO: add melee record
+			
+		
+	var rotate_input = get_normalized_input("player_look", 1.0, 0.0, 0.5)
+	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
+	
+	if rotate_input_vector != Vector3.ZERO:
+		look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
+		
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
 
 
