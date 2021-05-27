@@ -70,14 +70,13 @@ func receive_damage(damage: float):
 
 func reset(start_frame : int) -> void:
 	current_frame = start_frame
-	_frame_timer = 0.0
+	_frame_timer = -get_physics_process_delta_time()
 	if start_frame!=0 :
 		_showDead()
 		_first_alive_frame=true
 		_previous_attack_frame=-1
 	else:
 		_showAlive()
-
 	_set_initial_position()
 	_current_health = Constants.max_health
 
