@@ -85,6 +85,7 @@ Constants="*res://Constants.gd"
 [global]
 
 line=false
+frame=false
 
 [input]
 
@@ -216,10 +217,13 @@ player_dash_1={
 [layer_names]
 
 3d_render/layer_1="Level"
+3d_render/layer_2="All Players"
 3d_render/layer_5="Player 1"
 3d_render/layer_6="Player 2"
 3d_render/layer_7="Player 3"
 3d_render/layer_8="Player 4"
+3d_render/layer_9="Player 4"
+3d_render/layer_10="Ghost"
 
 [physics]
 

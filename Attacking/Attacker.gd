@@ -47,8 +47,6 @@ func reset()->void:
 		attack.queue_free()
 	_spawned_attacks.clear()
 		
-func set_bullet_range(bullet_range) ->void:
-	$AttackOriginPosition/AimVisualization.set_max_distance(bullet_range)
 
 func _process(delta):
 	if _attack_deadline > 0:

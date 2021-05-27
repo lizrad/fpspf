@@ -35,13 +35,11 @@ class MovementFrame extends Spatial:
 		self.transform = initial_transform
 		self.attack_type = initial_attack_type
 
-func _ready():
-	$Attacker.set_bullet_range(ranged_attack_type.attack_range)
+	
 
 func _physics_process(delta):
 	if not visible:
 		return
-	
 	var input = get_normalized_input("player_move", inner_deadzone, outer_deadzone)
 	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
 	
