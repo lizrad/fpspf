@@ -27,33 +27,34 @@ func _physics_process(delta):
 	while _frame_timer>=delta :
 		_frame_timer -= delta
 		current_frame += (sign(_time_scale)*1)
-	
-	if _time_scale>=0:
-		if current_frame < movement_record.size() and not _dead:
-			var frame = movement_record[current_frame]
-			global_transform = frame.transform
-			if frame.attack_type:
-				$Attacker.attack(frame.attack_type, self)
-	else :
-		if current_frame>=0:
-			if current_frame < died_at_frame and current_frame<movement_record.size():
-				if _first_alive_frame:
-					_first_alive_frame=false
-					_showAlive()
-				
-				#looking into the future (== past in this case) to find out if we will attack, so we can spawn the visualization preemptively
-				var attack_future_frame_index = int(current_frame - ($Attacker.visualization_time/ get_physics_process_delta_time()))
-				
-				if attack_future_frame_index!=_previous_attack_frame:
-					_previous_attack_frame = attack_future_frame_index
-					var attack_frame = movement_record[attack_future_frame_index] if attack_future_frame_index>=0 else null
-					if attack_frame:
-						if attack_frame.attack_type:
-							global_transform = attack_frame.transform
-							$Attacker.visualize_attack(attack_frame.attack_type, self)
-				
+		if _time_scale>=0:
+			# normal playback
+			if current_frame < movement_record.size() and not _dead:
 				var frame = movement_record[current_frame]
 				global_transform = frame.transform
+				if frame.attack_type:
+					$Attacker.attack(frame.attack_type, self)
+		else :
+			# replay
+			if current_frame>=0:
+				if current_frame < died_at_frame and current_frame<movement_record.size():
+					if _first_alive_frame:
+						_first_alive_frame=false
+						_showAlive()
+					
+					#looking into the future (== past in this case) to find out if we will attack, so we can spawn the visualization preemptively
+					var attack_future_frame_index = int(current_frame - ($Attacker.visualization_time/ get_physics_process_delta_time()))
+					
+					if attack_future_frame_index!=_previous_attack_frame:
+						_previous_attack_frame = attack_future_frame_index
+						var attack_frame = movement_record[attack_future_frame_index] if attack_future_frame_index>=0 else null
+						if attack_frame:
+							if attack_frame.attack_type:
+								global_transform = attack_frame.transform
+								$Attacker.visualize_attack(attack_frame.attack_type, self)
+					
+					var frame = movement_record[current_frame]
+					global_transform = frame.transform
 				
 
 func receive_damage(damage: float):
