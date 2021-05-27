@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Players/Player.gd"
 }, {
+"base": "Control",
+"class": "PlayerHUD",
+"language": "GDScript",
+"path": "res://UI/PlayerHUD.gd"
+}, {
 "base": "Spatial",
 "class": "PlayerManager",
 "language": "GDScript",
@@ -61,6 +66,7 @@ _global_script_class_icons={
 "GameOverScreen": "",
 "Ghost": "",
 "Player": "",
+"PlayerHUD": "",
 "PlayerManager": "",
 "ReplayManager": "",
 "SpawnArea": ""
@@ -79,7 +85,6 @@ Constants="*res://Constants.gd"
 [global]
 
 line=false
-frame=false
 
 [input]
 
@@ -211,13 +216,10 @@ player_dash_1={
 [layer_names]
 
 3d_render/layer_1="Level"
-3d_render/layer_2="All Players"
 3d_render/layer_5="Player 1"
 3d_render/layer_6="Player 2"
 3d_render/layer_7="Player 3"
 3d_render/layer_8="Player 4"
-3d_render/layer_9="Player 4"
-3d_render/layer_10="Ghost"
 
 [physics]
 

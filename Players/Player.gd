@@ -16,6 +16,8 @@ var initial_dash_burst := Constants.dash_impulse
 var dash_exponent := Constants.dash_exponent
 var dash_cooldown := 1.0
 
+signal died
+
 # TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
 var movement_records = []
 
@@ -24,8 +26,7 @@ var current_target_velocity := Vector3.ZERO
 
 var _current_health := 3
 
-signal died
-
+onready var _player_hud : PlayerHUD = get_node("CameraManager/ViewCamera/ViewportContainer/PlayerHUD")
 
 class MovementFrame extends Spatial:
 	var attack_type
@@ -56,7 +57,8 @@ func _physics_process(delta):
 			time_since_dash_start = 0.0
 		elif time_since_dash_start != 0.0:
 			time_since_dash_start += delta
-	
+	var progress = time_since_dash_start / dash_cooldown
+	_player_hud.set_dash_progress(1.0 if progress == 0.0 else progress)
 	apply_acceleration(movement_input_vector * move_acceleration)
 	move_and_slide(velocity)
 	
