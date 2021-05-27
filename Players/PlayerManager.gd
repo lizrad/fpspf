@@ -2,8 +2,6 @@ extends Spatial
 class_name PlayerManager
 
 export var player_id: int # The id of the player this manager manages
-export var shot_material: Resource
-export var laser_material: Resource
 
 signal active_player_died
 signal ghost_player_died

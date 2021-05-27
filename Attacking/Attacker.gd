@@ -11,7 +11,7 @@ signal gain_bullet
 
 func set_owning_player(player)->void:
 	_owning_player = player
-	$AttackOriginPosition/AimVisualization/LineRenderer.material_override = player.get_parent().laser_material
+	$AttackOriginPosition/AimVisualization/LineRenderer.material_override.albedo_color = Constants.character_colors[_owning_player.id]
 
 func visualize_attack(attack_type, owning_player) -> void:
 	var attack = attack_type.attack.instance()
