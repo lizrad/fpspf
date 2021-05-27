@@ -6,6 +6,8 @@ var id: int = -1 setget set_id, get_id
 var visibility_mask
 var invincible := true # does not loose hp
 
+var _current_health := 3
+
 
 func _ready():
 	$Attacker.set_owning_player(self)
@@ -28,6 +30,7 @@ func set_rendering_for_character_id(id):
 	$Attacker.set_render_layer_for_player_id(id)
 	
 	_set_visible_instance_layers($MeshInstance, Constants.PLAYER_GENERAL)
+	_set_visible_instance_layers($HealthDisplay, 5 + id)
 	_set_visible_instance_layers($VisibilityLights/OmniLight, 5 + id)
 	_set_visible_instance_layers($VisibilityLights/SightLight, 5 + id)
 	
@@ -43,3 +46,14 @@ func is_player() ->bool:
 func set_id(new_id):
 	id = new_id
 	set_rendering_for_character_id(id)
+
+func set_current_health(new_health):
+	_current_health = new_health
+	
+	# Reset health bar
+	for child in $HealthDisplay/Viewport/HealthBar.get_children():
+		child.visible = false
+	
+	# Set appropriate amount of hearts as active
+	for i in range(new_health):
+		$HealthDisplay/Viewport/HealthBar.get_child(i).visible = true
