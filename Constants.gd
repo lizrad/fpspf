@@ -24,3 +24,9 @@ enum CharacterID {
 }
 
 const PLAYER_GENERAL = 1
+
+export var move_acceleration:= 1.2
+export var move_drag := 0.2
+
+export var dash_impulse := 5.0
+export var dash_exponent := 0.1
