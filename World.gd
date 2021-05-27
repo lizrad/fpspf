@@ -58,6 +58,7 @@ func next_gamestate():
 				var attacker = player_manager.last_ghost.get_node("Attacker")
 				attacker.connect("gain_bullet", $HUD, "regain_bullet", [player_manager.player_id])
 
+				player_manager.set_pawns_invincible(true)
 				player_manager.set_ghosts_time_scale(-replay_speed)
 				player_manager.toggle_active_player(false)
 			time_left = _current_frame*get_physics_process_delta_time()
@@ -68,6 +69,9 @@ func next_gamestate():
 			time_left = time_cycle + 1
 			$HUD.set_prep_time(false)
 			$LevelManager.open_doors()
+			for player_manager in $PlayerManagers.get_children():
+				player_manager.set_pawns_invincible(false)
+
 		Gamestate.REPLAY:
 			# prepare for prep
 			# update cycle -> game over if reached num_cycles

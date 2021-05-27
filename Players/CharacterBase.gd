@@ -4,6 +4,7 @@ class_name CharacterBase
 
 var id: int = -1 setget set_id, get_id
 var visibility_mask
+var invincible := true # does not loose hp
 
 
 func _ready():
