@@ -30,3 +30,6 @@ export var move_drag := 0.2
 
 export var dash_impulse := 5.0
 export var dash_exponent := 0.1
+
+export var view_distance := 25.0
+export var circular_view_radius := 7.0
