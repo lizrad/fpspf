@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Level/Cube.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Level/PlayerBase.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Level/SpawnArea.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Level/Wall.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Level/LevelManager.gd" type="Script" id=4]
 
@@ -48,9 +48,9 @@ transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, 28, 4, 0 )
 [node name="Wall4" parent="Level/LevelObstacles" instance=ExtResource( 3 )]
 transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, -28, 4, 0 )
 
-[node name="PlayerBase1" parent="Level" instance=ExtResource( 2 )]
+[node name="SpawnArea1" parent="Level" instance=ExtResource( 2 )]
 
-[node name="PlayerBase2" parent="Level" instance=ExtResource( 2 )]
+[node name="SpawnArea2" parent="Level" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -120 )
 
 [node name="Ground" parent="Level" instance=ExtResource( 1 )]

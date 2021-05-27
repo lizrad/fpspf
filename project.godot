@@ -40,14 +40,14 @@ _global_script_classes=[ {
 "path": "res://Players/Player.gd"
 }, {
 "base": "Spatial",
-"class": "PlayerBase",
-"language": "GDScript",
-"path": "res://Level/PlayerBase.gd"
-}, {
-"base": "Spatial",
 "class": "PlayerManager",
 "language": "GDScript",
 "path": "res://Players/PlayerManager.gd"
+}, {
+"base": "Spatial",
+"class": "SpawnArea",
+"language": "GDScript",
+"path": "res://Level/SpawnArea.gd"
 } ]
 _global_script_class_icons={
 "AttackType": "",
@@ -56,8 +56,8 @@ _global_script_class_icons={
 "GameOverScreen": "",
 "Ghost": "",
 "Player": "",
-"PlayerBase": "",
-"PlayerManager": ""
+"PlayerManager": "",
+"SpawnArea": ""
 }
 
 [application]
