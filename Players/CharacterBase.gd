@@ -29,6 +29,9 @@ func set_rendering_for_character_id(id):
 func get_id():
 	return id
 
+func is_player() ->bool:
+	return id<=Constants.CharacterID.PLAYER_4
+	
 func set_id(new_id):
 	id = new_id
 	set_rendering_for_character_id(id)

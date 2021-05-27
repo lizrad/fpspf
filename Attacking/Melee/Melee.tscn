@@ -15,4 +15,5 @@ shape = SubResource( 1 )
 [node name="Visualization" type="MeshInstance" parent="."]
 mesh = SubResource( 2 )
 material/0 = null
+
 [connection signal="body_entered" from="." to="." method="_on_Melee_body_entered"]
