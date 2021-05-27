@@ -54,6 +54,10 @@ func next_gamestate():
 			# prepare for replay
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.convert_active_to_ghost(_current_frame - 1)
+				# get last created ghost and connect to bullet gain
+				var attacker = player_manager.last_ghost.get_node("Attacker")
+				attacker.connect("gain_bullet", $HUD, "regain_bullet", [player_manager.player_id])
+
 				player_manager.set_ghosts_time_scale(-replay_speed)
 				player_manager.toggle_active_player(false)
 			time_left = _current_frame*get_physics_process_delta_time()
@@ -82,6 +86,9 @@ func next_gamestate():
 			for player_manager in $PlayerManagers.get_children():
 				var attacker = player_manager.active_player.get_node("Attacker")
 				attacker.reload(player_manager.active_player.ranged_attack_type)
+				# disconnect ghosts from bullet refill
+				#attacker.disconnect("gain_bullet", $HUD, "regain_bullet")
+
 				player_manager.set_ghosts_time_scale(1.0)
 				player_manager.reset_all_children(0)
 				player_manager.toggle_active_player(true)

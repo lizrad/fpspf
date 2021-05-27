@@ -17,11 +17,19 @@ func _ready():
 		$HBoxContainer.add_child(rect)
 
 
+func add_bullet():
+	if _num_bullets >= 9:
+		return
+
+	print("regaining bullet[" + str(_num_bullets) + "]")
+	$HBoxContainer.get_child(_num_bullets).visible = true
+	_num_bullets += 1
+
 func remove_bullet():
 	if _num_bullets < 1: 
 		return
 	
-	print("shooting bullet " + str(_num_bullets - 1))
+	print("consuming bullet [" + str(_num_bullets - 1) + "]")
 	$HBoxContainer.get_child(_num_bullets - 1).visible = false
 	_num_bullets -= 1
 

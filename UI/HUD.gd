@@ -30,6 +30,10 @@ func _update_cycle_text():
 	$Cycle.set_text(text)
 
 
+func regain_bullet(idx_player):
+	var bullet_ammo = $BulletAmmo1 if idx_player == 0 else $BulletAmmo2
+	bullet_ammo.add_bullet()
+
 func consume_bullet(idx_player):
 	var bullet_ammo = $BulletAmmo1 if idx_player == 0 else $BulletAmmo2
 	bullet_ammo.remove_bullet()

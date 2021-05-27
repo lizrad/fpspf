@@ -24,6 +24,7 @@ func set_winner(idx : int):
 		$Winner_txt.add_color_override("font_outline_modulate", Constants.character_colors[idx])
 	else:
 		$Winner_txt.text = "Draw!"
+		$Winner_txt.add_color_override("font_color", Color.white)
 
 
 func _on_Restart_btn_pressed():

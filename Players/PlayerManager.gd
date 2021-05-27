@@ -12,6 +12,7 @@ var active_player_scene = preload("res://Players/Player.tscn")
 var ghost_player_scene = preload("res://Players/Ghost.tscn")
 
 var active_player: Player
+var last_ghost: Ghost
 
 
 func _ready():
@@ -40,15 +41,18 @@ func reset_all_children(frame: int) ->void:
 
 
 func convert_active_to_ghost(frame: int):
+	#if last_ghost:
+	#	last_ghost.disconnect("gain_bullet")
+
 	var movement_record = active_player.movement_records
 	var new_ghost = ghost_player_scene.instance()
 	new_ghost.movement_record = movement_record
 	new_ghost.connect("died", self, "_on_ghost_died")
 	new_ghost.died_at_frame = frame
 	new_ghost.id = active_player.id
-	print("TODO: FIXME set ghost color for id " + str(new_ghost.id) + " to color: " + str(Constants.character_colors[active_player.id + 4]))
 	new_ghost.get_node("MeshInstance").material_override.set_shader_param("color", Constants.character_colors[active_player.id + 4])
 	add_child(new_ghost)
+	last_ghost = new_ghost
 	reset_all_children(frame)
 
 
