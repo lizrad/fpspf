@@ -13,6 +13,8 @@ var _scores := [] # Scores for each player
 enum Gamestate {PREP, GAME, REPLAY}
 var _current_gamestate = Gamestate.PREP 
 var _current_frame := 0
+
+
 func _ready():
 	# Connect to player events
 	for player_manager in $PlayerManagers.get_children():
@@ -22,6 +24,7 @@ func _ready():
 		var attacker = player_manager.active_player.get_node("Attacker")
 		attacker.connect("shot_bullet", $HUD, "consume_bullet", [player_manager.player_id])
 		time_left = time_prep + 1
+		$HUD.set_player_attack_type(player_manager.player_id, player_manager.active_player.ranged_attack_type)
 
 	$HUD.set_time(time_left)
 	$HUD.set_cycle(cycle)

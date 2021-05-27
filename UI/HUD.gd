@@ -19,6 +19,12 @@ func set_time(time):
 						 "ss":"%02d" % (seconds % 60)}))
 
 
+func set_player_attack_type(idx_player: int, attack_type: Resource):
+	var bullet_ammo = $BulletAmmo1 if idx_player == 0 else $BulletAmmo2
+	bullet_ammo.attack_type = attack_type
+	bullet_ammo.init()
+
+
 func set_score(idx_player, score):
 	var label_score = $Score1 if idx_player == 0 else $Score2
 	label_score.set_text(str(score))
