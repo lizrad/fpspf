@@ -2,14 +2,16 @@
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
+render_mode unshaded;
 
 uniform sampler2D visibility_mask;
 uniform vec4 color: hint_color = vec4(1.0, 0.0, 0.0, 1.0);
+uniform float visibility_threshold = 0.2;
 
 varying vec3 world_vertex;
 
 void fragment() {
-	ALPHA = float(length(texture(visibility_mask, SCREEN_UV).rgb) > 0.1);
+	ALPHA = float(length(texture(visibility_mask, SCREEN_UV).rgb) > visibility_threshold);
 	ALBEDO = color.rgb;
 }"
 
@@ -17,3 +19,4 @@ void fragment() {
 resource_local_to_scene = true
 shader = SubResource( 1 )
 shader_param/color = Color( 1, 0, 0, 1 )
+shader_param/visibility_threshold = 0.2

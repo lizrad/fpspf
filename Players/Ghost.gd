@@ -6,8 +6,6 @@ var movement_record := []
 var _frame_timer: float = 0.0
 var current_frame : int = 0
 
-var _current_health : int = 3
-
 var died_at_frame : int = INF
 
 var _time_scale := 1.0
@@ -74,7 +72,8 @@ func receive_damage(damage: float):
 		print("	but is invincible!")
 		return
 
-	_current_health -= damage
+	set_current_health(_current_health - damage)
+	
 	if _current_health <= 0:
 		died_at_frame = current_frame
 		print(" -> Ghost dead")
@@ -92,7 +91,7 @@ func reset(start_frame : int) -> void:
 	else:
 		_showAlive()
 	_set_initial_position()
-	_current_health = Constants.max_health
+	set_current_health(Constants.max_health)
 
 
 func _set_initial_position() -> void:

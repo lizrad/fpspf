@@ -24,9 +24,8 @@ var movement_records = []
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
 
-var _current_health := 3
-
 onready var _player_hud : PlayerHUD = get_node("CameraManager/ViewCamera/ViewportContainer/PlayerHUD")
+
 
 class MovementFrame extends Spatial:
 	var attack_type
@@ -152,7 +151,8 @@ func receive_damage(damage: float):
 		print("	but is invincible!")
 		return
 
-	_current_health -= damage
+	set_current_health(_current_health - damage)
+	
 	if _current_health <= 0:
 		print("	-> Player dead")
 		emit_signal("died")
@@ -161,7 +161,7 @@ func receive_damage(damage: float):
 func reset():
 	movement_records = []
 	transform.origin = Vector3.ZERO
-	_current_health = Constants.max_health
+	set_current_health(Constants.max_health)
 
 
 func _on_light_cone_entered(body: Node):
