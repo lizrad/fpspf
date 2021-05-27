@@ -2,6 +2,9 @@ extends RayCast
 
 var _max_distance := Constants.ranged_attack_type.attack_range
 
+func _ready():
+	$LineRenderer.points = [Vector3.ZERO, Vector3.ZERO]
+
 func _physics_process(delta):
 	cast_to= Vector3(0,0,-_max_distance)
 	var collider = get_collider()
