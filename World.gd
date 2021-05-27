@@ -5,7 +5,6 @@ export var time_prep := 5.0 # time, before the round starts
 export var replay_speed := 1.0 # timescale of the replay
 export var num_cycles := 5 # max cycles for one game
 
-enum Gamestate {PREP, GAME, REPLAY}
 
 var time_left # round timer in ms
 var cycle := 1 # number of current cylce
@@ -13,7 +12,7 @@ var cycle := 1 # number of current cylce
 onready var _replay_manager := get_node("ReplayManager")
 
 var _scores := [] # Scores for each player
-var _current_gamestate = Gamestate.PREP 
+var _current_gamestate = Constants.Gamestate.PREP 
 var _current_frame := 0
 
 
@@ -34,7 +33,7 @@ func _ready():
 
 
 func _process(delta):
-	time_left -= (delta *(1 if _current_gamestate != Gamestate.REPLAY else replay_speed))
+	time_left -= (delta *(1 if _current_gamestate != Constants.Gamestate.REPLAY else replay_speed))
 	
 	# update ui
 	$HUD.set_time(time_left)
@@ -43,7 +42,7 @@ func _process(delta):
 		next_gamestate()
 
 func _physics_process(delta):
-	if _current_gamestate != Gamestate.REPLAY:
+	if _current_gamestate != Constants.Gamestate.REPLAY:
 		_current_frame += 1
 
 # used to restart level: 
@@ -53,9 +52,9 @@ func _physics_process(delta):
 # 	- reset player starting point
 # 	- restarting level time
 func next_gamestate():
-	print("Switching gamestate from "+Gamestate.keys()[_current_gamestate]+" to "+Gamestate.keys()[(_current_gamestate+1)%Gamestate.size()])
+	print("Switching gamestate from "+Constants.Gamestate.keys()[_current_gamestate]+" to "+Constants.Gamestate.keys()[(_current_gamestate+1)%Constants.Gamestate.size()])
 	match _current_gamestate:
-		Gamestate.GAME:
+		Constants.Gamestate.GAME:
 			# prepare for replay
 			_replay_manager.show_replay_camera()
 			for player_manager in $PlayerManagers.get_children():
@@ -70,16 +69,14 @@ func next_gamestate():
 				player_manager.toggle_active_player(false)
 			time_left = _current_frame*get_physics_process_delta_time()
 			_current_frame = 0
-			$HUD.set_prep_time(false)
-		Gamestate.PREP:
+		Constants.Gamestate.PREP:
 			# prepare for play
 			time_left = time_cycle + 1
-			$HUD.set_prep_time(false)
 			$LevelManager.open_doors()
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.set_pawns_invincible(false)
 
-		Gamestate.REPLAY:
+		Constants.Gamestate.REPLAY:
 			# prepare for prep
 			_replay_manager.hide_replay_camera()
 			# update cycle -> game over if reached num_cycles
@@ -94,7 +91,6 @@ func next_gamestate():
 			$LevelManager.close_doors()
 			$HUD.set_cycle(cycle)
 			$HUD.reload_ammo()
-			$HUD.set_prep_time(true)
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.last_ghost.get_node("Attacker").reset()
 				var attacker = player_manager.active_player.get_node("Attacker")
@@ -110,7 +106,8 @@ func next_gamestate():
 			for id in _scores.size():
 				_set_score(id, 0)
 
-	_current_gamestate = (_current_gamestate + 1) % Gamestate.size();
+	_current_gamestate = (_current_gamestate + 1) % Constants.Gamestate.size();
+	$HUD.set_game_state(_current_gamestate)
 
 
 func _get_winner() -> int:

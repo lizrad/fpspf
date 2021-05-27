@@ -23,6 +23,8 @@ enum CharacterID {
 	GHOST = 4
 }
 
+enum Gamestate {PREP, GAME, REPLAY}
+
 const PLAYER_GENERAL = 1
 
 export var move_acceleration:= 0.8

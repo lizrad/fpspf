@@ -1,6 +1,6 @@
 extends Control
 
-var _prep_time := true
+var _gamestate = Constants.Gamestate.PREP
 var _cycle := 0
 var _num_cycles := 0
 
@@ -31,8 +31,15 @@ func set_score(idx_player, score):
 
 
 func _update_cycle_text():
-	var text = "Preparation phase " if _prep_time else "Cycle "
-	text += str(_cycle) + " of " + str(_num_cycles)
+	var text
+	match _gamestate:
+		Constants.Gamestate.PREP:
+			text = "Preperation"
+		Constants.Gamestate.GAME:
+			text = "Cycle "
+			text += str(_cycle) + " of " + str(_num_cycles)
+		Constants.Gamestate.REPLAY:
+			text = "Replay"
 	$Cycle.set_text(text)
 
 
@@ -61,11 +68,9 @@ func set_num_cycles(num_cycles):
 		_num_cycles = num_cycles
 		_update_cycle_text()
 
-
-func set_prep_time(active):
-	if _prep_time != active:
-		_prep_time = active
-		_update_cycle_text()
+func set_game_state(gamestate):
+	_gamestate = gamestate
+	_update_cycle_text()
 
 
 func _hide_all():
