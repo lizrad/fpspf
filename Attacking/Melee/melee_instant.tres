@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Attacking/AttackType.gd" type="Script" id=1]
+[ext_resource path="res://Attacking/Melee/Melee.tscn" type="PackedScene" id=2]
+
+[resource]
+script = ExtResource( 1 )
+ammunition = -1
+attack_range = 1.0
+attack_time = 0.1
+continuously_damaging = false
+damage_invincibility_time = 0.0
+cooldown = 1.0
+damage = 3.0
+attack = ExtResource( 2 )
