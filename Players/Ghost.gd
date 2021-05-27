@@ -43,7 +43,7 @@ func _physics_process(delta):
 						_showAlive()
 					
 					#looking into the future (== past in this case) to find out if we will attack, so we can spawn the visualization preemptively
-					var attack_future_frame_index = int(current_frame - ($Attacker.visualization_time/ get_physics_process_delta_time()))
+					var attack_future_frame_index = int(current_frame - ($Attacker.attack_time/ get_physics_process_delta_time()))
 					
 					if attack_future_frame_index!=_previous_attack_frame:
 						_previous_attack_frame = attack_future_frame_index
