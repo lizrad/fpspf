@@ -36,6 +36,6 @@ export var view_angle := 30.0
 export var circular_view_radius := 3.0
 export var player_camera_height := 40.0
 
-var ranged_attack_type := preload("res://Attacking/Shots/HitscanShot/hitscan_shot_barrier.tres")
+var ranged_attack_type := preload("res://Attacking/Shots/HitscanShot/hitscan_shot_instant_burst.tres")
 var melee_attack_type := preload("res://Attacking/Melee/melee_instant.tres")
 

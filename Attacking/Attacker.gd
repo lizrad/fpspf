@@ -26,7 +26,11 @@ func visualize_attack(attack_type, owning_player) -> void:
 	
 func attack(attack_type, owning_player) -> bool:
 	if _attack_deadline <= 0:
-		return _create_attack(attack_type, owning_player)
+			if !_handle_ammunition(attack_type):
+				return false
+			for i in range(attack_type.burst_amount):
+				_create_attack(i*attack_type.burst_delay,attack_type, owning_player)
+			return true
 	return false
 
 
@@ -65,9 +69,8 @@ func _handle_ammunition(attack_type) ->bool:
 	return true
 
 
-func _create_attack(attack_type, owning_player) -> bool:
-	if !_handle_ammunition(attack_type):
-		return false
+func _create_attack(wait_time, attack_type, owning_player) ->void:
+	yield(get_tree().create_timer(wait_time), "timeout")
 	_attack_deadline = attack_type.cooldown
 	var attack = attack_type.attack.instance()
 	_spawned_attacks.append(attack)
@@ -76,7 +79,6 @@ func _create_attack(attack_type, owning_player) -> bool:
 	attack.global_transform = global_transform
 	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
 	attack.initialize(owning_player, attack_type)
-	return true
 
 
 func _attack_tree_exiting(attack) ->void:
