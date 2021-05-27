@@ -5,6 +5,8 @@ export var time_prep := 5.0 # time, before the round starts
 export var replay_speed := 1.0 # timescale of the replay
 export var num_cycles := 5 # max cycles for one game
 
+export var use_total_kills : bool = false
+
 
 var time_left # round timer in ms
 var cycle := 1 # number of current cylce
@@ -15,6 +17,8 @@ var _scores := [] # Scores for each player
 var _current_gamestate = Constants.Gamestate.PREP 
 var _current_frame := 0
 
+var _scores_total := [] # Total amount of kills
+
 
 func _ready():
 	# Connect to player events
@@ -22,6 +26,7 @@ func _ready():
 		player_manager.connect("active_player_died", self, "_on_active_player_died", [player_manager])
 		player_manager.connect("ghost_player_died", self, "_on_ghost_player_died", [player_manager])
 		_scores.append(0)
+		_scores_total.append(0)
 		var attacker = player_manager.active_player.get_node("Attacker")
 		attacker.connect("shot_bullet", $HUD, "consume_bullet", [player_manager.player_id])
 		time_left = time_prep + 1
@@ -103,8 +108,9 @@ func next_gamestate():
 				player_manager.toggle_active_player(true)
 			time_left = time_prep + 1
 			# reset scores
-			for id in _scores.size():
-				_set_score(id, 0)
+			if not use_total_kills:
+				for id in _scores.size():
+					_set_score(id, 0)
 
 	_current_gamestate = (_current_gamestate + 1) % Constants.Gamestate.size();
 	$HUD.set_game_state(_current_gamestate)
@@ -114,7 +120,7 @@ func _get_winner() -> int:
 	var max_score := 0
 	var winner := 0
 	var idx := 0
-	for score in _scores:
+	for score in _scores_total if use_total_kills else _scores:
 		if score > max_score:
 			max_score = score
 			winner = idx
@@ -129,7 +135,8 @@ func _set_score(id: int, score: int) -> void:
 	$HUD.set_score(id, score)
 
 func _score_point(id: int):
-	_set_score(id, _scores[id] + 1)
+	_scores_total[id] += 1
+	_set_score(id, _scores_total[id] if use_total_kills else _scores[id] + 1)
 
 
 # FIXME: this only works for 2 players because the player who shots is never transmitted
