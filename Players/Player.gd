@@ -34,6 +34,8 @@ class MovementFrame extends Spatial:
 		self.transform = initial_transform
 		self.attack_type = initial_attack_type
 
+func _ready():
+	$Attacker.set_bullet_range(ranged_attack_type.attack_range)
 
 func _physics_process(delta):
 	if not visible:

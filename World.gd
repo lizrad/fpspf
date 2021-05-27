@@ -53,11 +53,12 @@ func next_gamestate():
 		Gamestate.GAME:
 			# prepare for replay
 			for player_manager in $PlayerManagers.get_children():
+				player_manager.active_player.get_node("Attacker").reset()
 				player_manager.convert_active_to_ghost(_current_frame - 1)
 				# get last created ghost and connect to bullet gain
 				var attacker = player_manager.last_ghost.get_node("Attacker")
 				attacker.connect("gain_bullet", $HUD, "regain_bullet", [player_manager.player_id])
-
+				
 				player_manager.set_pawns_invincible(true)
 				player_manager.set_ghosts_time_scale(-replay_speed)
 				player_manager.toggle_active_player(false)
@@ -88,8 +89,9 @@ func next_gamestate():
 			$HUD.reload_ammo()
 			$HUD.set_prep_time(true)
 			for player_manager in $PlayerManagers.get_children():
+				player_manager.last_ghost.get_node("Attacker").reset()
 				var attacker = player_manager.active_player.get_node("Attacker")
-				attacker.reload(player_manager.active_player.ranged_attack_type)
+				attacker.reload_all()
 				# disconnect ghosts from bullet refill
 				attacker.disconnect("gain_bullet", $HUD, "regain_bullet")
 
