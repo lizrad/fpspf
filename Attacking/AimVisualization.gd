@@ -1,13 +1,9 @@
 extends RayCast
 
-var _max_distance =0
+var _max_distance := Constants.ranged_attack_type.attack_range
 
-
-func set_max_distance(max_distance) ->void:
-	_max_distance = max_distance
-	cast_to= Vector3(0,0,-_max_distance)
-	
 func _physics_process(delta):
+	cast_to= Vector3(0,0,-_max_distance)
 	var collider = get_collider()
 	var hitpoint = get_collision_point()
 	var distance = _max_distance;

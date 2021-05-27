@@ -7,6 +7,9 @@
 script = ExtResource( 1 )
 ammunition = -1
 attack_range = 1.0
+attack_time = 1.0
+continuously_damaging = true
+damage_invincibility_time = 0.3
 cooldown = 1.0
-damage = 3.0
+damage = 1.0
 attack = ExtResource( 2 )

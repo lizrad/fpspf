@@ -3,8 +3,8 @@
 [ext_resource path="res://Players/Player.gd" type="Script" id=1]
 [ext_resource path="res://Players/CharacterBase.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Players/CameraManager.gd" type="Script" id=3]
+[ext_resource path="res://UI/PlayerHUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Players/ViewEnvironment.tres" type="Environment" id=6]
-[ext_resource path="res://UI/PlayerHUD.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
@@ -76,4 +76,4 @@ environment = ExtResource( 6 )
 current = true
 far = 200.0
 
-[node name="PlayerHUD" parent="CameraManager/ViewCamera/ViewportContainer" index="1" instance=ExtResource( 7 )]
+[node name="PlayerHUD" parent="CameraManager/ViewCamera/ViewportContainer" index="1" instance=ExtResource( 4 )]
