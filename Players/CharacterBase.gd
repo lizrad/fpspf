@@ -3,6 +3,8 @@ class_name CharacterBase
 
 
 var id: int = -1 setget set_id, get_id
+var visibility_mask
+
 
 func _ready():
 	$Attacker.set_owning_player(self)
@@ -13,7 +15,12 @@ func _set_visible_instance_layers(object, id, default=0):
 
 
 func set_visibility_mask(mask: ViewportTexture):
+	visibility_mask = mask
 	$MeshInstance.material_override.set_shader_param("visibility_mask", mask)
+
+
+func get_used_visibility_mask():
+	return visibility_mask
 
 
 func set_rendering_for_character_id(id):
