@@ -14,7 +14,8 @@ var _time_scale := 1.0
 
 var _dead = false
 var _first_alive_frame = true
-var _previous_attack_frame = -1
+var _ranged_previous_ranged_attack_frame = -1
+var _melee_previous_melee_attack_frame = -1
 
 signal died
 
@@ -42,16 +43,26 @@ func _physics_process(delta):
 						_first_alive_frame=false
 						_showAlive()
 					
-					#looking into the future (== past in this case) to find out if we will attack, so we can spawn the visualization preemptively
-					var attack_future_frame_index = int(current_frame - ($Attacker.attack_time/ get_physics_process_delta_time()))
 					
-					if attack_future_frame_index!=_previous_attack_frame:
-						_previous_attack_frame = attack_future_frame_index
-						var attack_frame = movement_record[attack_future_frame_index] if attack_future_frame_index>=0 else null
-						if attack_frame:
-							if attack_frame.attack_type:
-								global_transform = attack_frame.transform
-								$Attacker.visualize_attack(attack_frame.attack_type, self)
+					#looking into the future (== past in this case) to find out if we will attack, so we can spawn the visualization preemptively
+					# TODO: this is a acky fix - doing this seperatelly for both attack types
+					var ranged_attack_future_frame_index = int(current_frame - (Constants.ranged_attack_type.attack_time/ get_physics_process_delta_time()))
+					if ranged_attack_future_frame_index!=_ranged_previous_ranged_attack_frame:
+						_ranged_previous_ranged_attack_frame = ranged_attack_future_frame_index
+						var ranged_attack_frame = movement_record[ranged_attack_future_frame_index] if ranged_attack_future_frame_index>=0 else null
+						if ranged_attack_frame:
+							if ranged_attack_frame.attack_type == Constants.ranged_attack_type:
+								global_transform = ranged_attack_frame.transform
+								$Attacker.visualize_attack(ranged_attack_frame.attack_type, self)
+								
+					var melee_attack_future_frame_index = int(current_frame - (Constants.melee_attack_type.attack_time/ get_physics_process_delta_time()))
+					if melee_attack_future_frame_index!=_melee_previous_melee_attack_frame:
+						_melee_previous_melee_attack_frame = melee_attack_future_frame_index
+						var melee_attack_frame = movement_record[melee_attack_future_frame_index] if melee_attack_future_frame_index>=0 else null
+						if melee_attack_frame:
+							if melee_attack_frame.attack_type == Constants.melee_attack_type:
+								global_transform = melee_attack_frame.transform
+								$Attacker.visualize_attack(melee_attack_frame.attack_type, self)
 					
 					var frame = movement_record[current_frame]
 					global_transform = frame.transform
@@ -77,7 +88,7 @@ func reset(start_frame : int) -> void:
 	if start_frame!=0 :
 		_showDead()
 		_first_alive_frame=true
-		_previous_attack_frame=-1
+		_ranged_previous_ranged_attack_frame=-1
 	else:
 		_showAlive()
 	_set_initial_position()

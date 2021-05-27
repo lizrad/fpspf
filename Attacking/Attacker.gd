@@ -1,6 +1,5 @@
 extends Spatial
 
-export var attack_time := 0.5
 var _attack_deadline := 0.0
 var _spawned_attacks = []
 
@@ -21,7 +20,7 @@ func visualize_attack(attack_type, owning_player) -> void:
 	get_tree().get_root().add_child(attack);
 	attack.global_transform = global_transform
 	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
-	attack.initialize_visual(owning_player, attack_time, attack_type.attack_range)
+	attack.initialize_visual(owning_player, attack_type)
 	emit_signal("gain_bullet")
 
 	
@@ -48,8 +47,6 @@ func reset()->void:
 		attack.queue_free()
 	_spawned_attacks.clear()
 		
-func set_bullet_range(bullet_range) ->void:
-	$AttackOriginPosition/AimVisualization.set_max_distance(bullet_range)
 
 func _process(delta):
 	if _attack_deadline > 0:
@@ -78,7 +75,7 @@ func _create_attack(attack_type, owning_player) -> bool:
 	get_tree().get_root().add_child(attack);
 	attack.global_transform = global_transform
 	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
-	attack.initialize(owning_player, attack_time,attack_type.attack_range, attack_type.damage)
+	attack.initialize(owning_player, attack_type)
 	return true
 
 

@@ -5,37 +5,50 @@ var _damage := 10.0
 var _attack_time := 2.00
 var _owning_player
 var _hit_something = false
-func initialize_visual(owning_player, attack_time, attack_range) ->void:
-	_attack_time = attack_time
-	$Visualization.scale = Vector3(attack_range,attack_range,attack_range)
+var _continuously_damaging
+var _damage_invincibility_time
+
+
+var _hit_bodies_invincibilty_tracker = {}
+
+func initialize_visual(owning_player, attack_type) ->void:
+	_attack_time = attack_type.attack_time
+	$Visualization.scale = Vector3(attack_type.attack_range,attack_type.attack_range,attack_type.attack_range)
 	$Visualization.set_surface_material(0, owning_player.get_parent().shot_material)
 	
-func initialize(owning_player, attack_time, attack_range, damage) ->void:
-	_damage = damage
+func initialize(owning_player, attack_type) ->void:
+	_damage = attack_type.damage
+	_continuously_damaging = attack_type.continuously_damaging
+	_damage_invincibility_time = attack_type.damage_invincibility_time
 	_owning_player = owning_player
 	var sphereShape = SphereShape.new()
-	sphereShape.radius = attack_range
+	sphereShape.radius = attack_type.attack_range
 	$CollisionShape.shape = sphereShape
-	initialize_visual(owning_player, attack_time, attack_range)
+	initialize_visual(owning_player, attack_type)
 	
 func _process(delta):
 	if(_attack_time<=0):
 		queue_free()
 		return
+	for i in _hit_bodies_invincibilty_tracker:
+		_hit_bodies_invincibilty_tracker[i]-=delta
+		_hit_bodies_invincibilty_tracker[i] = clamp(_hit_bodies_invincibilty_tracker[i],0,_damage_invincibility_time)
 	_attack_time-=delta
 
 func _hit_body(body) ->void:
 	if body.is_in_group("Damagable"):
 			assert(body.has_method("receive_damage"))
-			print(str("Melee attack hit body named ",body.name))
-			_hit_something = true
-			body.receive_damage(_damage)
+			if (not _hit_bodies_invincibilty_tracker.has(body) or _hit_bodies_invincibilty_tracker[body] <=0):
+				_hit_bodies_invincibilty_tracker[body]=_damage_invincibility_time
+				print(str("Melee attack hit body named ",body.name))
+				_hit_something = true
+				body.receive_damage(_damage)
 
 func _physics_process(delta):
 	var bodies =  get_overlapping_bodies()
 	if bodies.size() == 0:
 		return
-	if only_hit_one_body:
+	if not _continuously_damaging:
 		if _hit_something:
 			return
 		var nearest_body
