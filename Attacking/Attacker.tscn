@@ -3,10 +3,7 @@
 [ext_resource path="res://Attacking/Attacker.gd" type="Script" id=1]
 [ext_resource path="res://Addons/LineRenderer/LineRenderer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Attacking/AimVisualization.gd" type="Script" id=3]
-
-[sub_resource type="SpatialMaterial" id=1]
-flags_unshaded = true
-albedo_color = Color( 0.690196, 1, 0.54902, 1 )
+[ext_resource path="res://Players/VisibilityMaterial.tres" type="Material" id=4]
 
 [node name="Attacker" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.208776, 0.0781412, -0.156078 )
@@ -23,7 +20,7 @@ script = ExtResource( 3 )
 
 [node name="LineRenderer" parent="AttackOriginPosition/AimVisualization" instance=ExtResource( 2 )]
 layers = 0
-material_override = SubResource( 1 )
+material_override = ExtResource( 4 )
 cast_shadow = 0
 points = [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -3 ) ]
 globalCoords = false
