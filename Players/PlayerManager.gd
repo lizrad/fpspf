@@ -58,6 +58,11 @@ func convert_active_to_ghost(frame: int):
 	reset_all_children(frame)
 
 
+func set_pawns_invincible(invincible : bool):
+	for child in get_children():
+		child.invincible = invincible
+
+
 func _on_player_died():
 	emit_signal("active_player_died")
 

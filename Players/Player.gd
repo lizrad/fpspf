@@ -146,8 +146,11 @@ func apply_acceleration(acceleration):
 
 func receive_damage(damage: float):
 	print("Player received damage: ", damage)
+	if invincible:
+		print("	but is invincible!")
+		return
+
 	_current_health -= damage
-	
 	if _current_health <= 0:
 		print("	-> Player dead")
 		emit_signal("died")
