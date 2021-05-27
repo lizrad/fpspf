@@ -46,6 +46,7 @@ func _handle_ammunition(attack_type) ->bool:
 		
 	if _ammunition_tracker[attack_type]==0:
 		return false
+
 	elif _ammunition_tracker[attack_type]>0:
 		_ammunition_tracker[attack_type]-=1
 		emit_signal("shot_bullet")
@@ -55,6 +56,7 @@ func _handle_ammunition(attack_type) ->bool:
 func _create_attack(attack_type, owning_player) -> bool:
 	if !_handle_ammunition(attack_type):
 		return false
+
 	print(str("Ammunition is ",_ammunition_tracker[attack_type], "/",attack_type.ammunition))
 	_attack_deadline = attack_type.cooldown
 	var attack = attack_type.attack.instance()

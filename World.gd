@@ -87,7 +87,7 @@ func next_gamestate():
 				var attacker = player_manager.active_player.get_node("Attacker")
 				attacker.reload(player_manager.active_player.ranged_attack_type)
 				# disconnect ghosts from bullet refill
-				#attacker.disconnect("gain_bullet", $HUD, "regain_bullet")
+				attacker.disconnect("gain_bullet", $HUD, "regain_bullet")
 
 				player_manager.set_ghosts_time_scale(1.0)
 				player_manager.reset_all_children(0)
