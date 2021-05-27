@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Players/PlayerManager.gd"
 }, {
+"base": "Node",
+"class": "ReplayManager",
+"language": "GDScript",
+"path": "res://ReplayManager.gd"
+}, {
 "base": "Spatial",
 "class": "SpawnArea",
 "language": "GDScript",
@@ -57,6 +62,7 @@ _global_script_class_icons={
 "Ghost": "",
 "Player": "",
 "PlayerManager": "",
+"ReplayManager": "",
 "SpawnArea": ""
 }
 

@@ -5,6 +5,7 @@
 [ext_resource path="res://Players/CameraManager.gd" type="Script" id=3]
 [ext_resource path="res://Attacking/Shots/HitscanShot/hitscan_shot.tres" type="Resource" id=4]
 [ext_resource path="res://Attacking/Melee/melee.tres" type="Resource" id=5]
+[ext_resource path="res://Players/ViewEnvironment.tres" type="Environment" id=6]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
@@ -26,9 +27,6 @@ shader_param/color = Color( 1, 0, 0, 1 )
 
 [sub_resource type="Environment" id=3]
 
-[sub_resource type="Environment" id=4]
-ambient_light_color = Color( 0.72549, 0.72549, 0.72549, 1 )
-
 [node name="Player" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 ranged_attack_type = ExtResource( 4 )
@@ -45,7 +43,6 @@ script = ExtResource( 3 )
 [node name="Viewport" type="Viewport" parent="CameraManager/LightCamera" index="0"]
 size = Vector2( 512, 600 )
 handle_input_locally = false
-render_target_update_mode = 3
 shadow_atlas_size = 2048
 
 [node name="Camera" type="Camera" parent="CameraManager/LightCamera/Viewport" index="0"]
@@ -67,11 +64,10 @@ __meta__ = {
 [node name="Viewport" type="Viewport" parent="CameraManager/ViewCamera/ViewportContainer" index="0"]
 size = Vector2( 496, 600 )
 handle_input_locally = false
-render_target_update_mode = 3
 shadow_atlas_size = 2048
 
 [node name="Camera" type="Camera" parent="CameraManager/ViewCamera/ViewportContainer/Viewport" index="0"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 0 )
-environment = SubResource( 4 )
+environment = ExtResource( 6 )
 current = true
 far = 200.0

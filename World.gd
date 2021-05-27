@@ -5,12 +5,14 @@ export var time_prep := 5.0 # time, before the round starts
 export var replay_speed := 1.0 # timescale of the replay
 export var num_cycles := 5 # max cycles for one game
 
+enum Gamestate {PREP, GAME, REPLAY}
+
 var time_left # round timer in ms
 var cycle := 1 # number of current cylce
 
-var _scores := [] # Scores for each player
+onready var _replay_manager := get_node("ReplayManager")
 
-enum Gamestate {PREP, GAME, REPLAY}
+var _scores := [] # Scores for each player
 var _current_gamestate = Gamestate.PREP 
 var _current_frame := 0
 
@@ -55,6 +57,7 @@ func next_gamestate():
 	match _current_gamestate:
 		Gamestate.GAME:
 			# prepare for replay
+			_replay_manager.show_replay_camera()
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.convert_active_to_ghost(_current_frame - 1)
 				# get last created ghost and connect to bullet gain
@@ -77,6 +80,7 @@ func next_gamestate():
 
 		Gamestate.REPLAY:
 			# prepare for prep
+			_replay_manager.hide_replay_camera()
 			# update cycle -> game over if reached num_cycles
 			cycle += 1
 			if (cycle > num_cycles):
