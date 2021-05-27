@@ -5,6 +5,7 @@ export var active_time = 0.1
 var _damage := 10.0
 var _visualization_time := 2.00
 var _owning_player
+var _hit_something = false
 func initialize_visual(owning_player, visualization_time) ->void:
 	_visualization_time = visualization_time
 	$Visualization.scale = Vector3(hit_sphere_radius,hit_sphere_radius,hit_sphere_radius)
@@ -28,11 +29,12 @@ func _process(delta):
 
 
 func _on_Melee_body_entered(body):
-	if active_time <= 0:
+	if active_time <= 0 or _hit_something:
 		return
 	if body != _owning_player: 
 		if body.is_in_group("Damagable"):
 			assert(body.has_method("receive_damage"))
 			print(str("Melee attack hit body named ",body.name))
+			_hit_something = true
 			body.receive_damage(_damage)
 			active_time = 0 #only hit max one enemy with each attack
