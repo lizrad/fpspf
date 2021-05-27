@@ -12,6 +12,7 @@ var died_at_frame : int = INF
 
 var _time_scale := 1.0
 
+var _dead = false
 var _first_alive_frame = true
 var _previous_attack_frame = -1
 
@@ -28,7 +29,7 @@ func _physics_process(delta):
 		current_frame += (sign(_time_scale)*1)
 	
 	if _time_scale>=0:
-		if current_frame < movement_record.size():
+		if current_frame < movement_record.size() and not _dead:
 			var frame = movement_record[current_frame]
 			global_transform = frame.transform
 			if frame.attack_type:
@@ -86,12 +87,14 @@ func _set_initial_position() -> void:
 
 
 func _showDead():
+	_dead = true
 	rotation.z = PI / 2
 	$CollisionShape.disabled = true
 	$Attacker.visible = false
 
 
 func _showAlive():
+	_dead = false
 	rotation.z = 0
 	$CollisionShape.disabled = false
 	$Attacker.visible = true
