@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Players/Player.gd" type="Script" id=1]
 [ext_resource path="res://Players/CharacterBase.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Players/CameraManager.gd" type="Script" id=3]
-[ext_resource path="res://Attacking/Shots/HitscanShot/hitscan_shot.tres" type="Resource" id=4]
-[ext_resource path="res://Attacking/Melee/melee.tres" type="Resource" id=5]
 [ext_resource path="res://Players/ViewEnvironment.tres" type="Environment" id=6]
+[ext_resource path="res://UI/PlayerHUD.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type spatial;
@@ -29,8 +28,6 @@ shader_param/color = Color( 1, 0, 0, 1 )
 
 [node name="Player" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
-ranged_attack_type = ExtResource( 4 )
-melee_attack_type = ExtResource( 5 )
 
 [node name="MeshInstance" parent="." index="1"]
 material_override = SubResource( 2 )
@@ -78,3 +75,5 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 
 environment = ExtResource( 6 )
 current = true
 far = 200.0
+
+[node name="PlayerHUD" parent="CameraManager/ViewCamera/ViewportContainer" index="1" instance=ExtResource( 7 )]
