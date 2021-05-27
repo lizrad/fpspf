@@ -25,11 +25,13 @@ enum CharacterID {
 
 const PLAYER_GENERAL = 1
 
-export var move_acceleration:= 1.2
+export var move_acceleration:= 0.8
 export var move_drag := 0.2
 
 export var dash_impulse := 5.0
 export var dash_exponent := 0.1
 
-export var view_distance := 25.0
-export var circular_view_radius := 7.0
+export var view_distance := 20.0
+export var view_angle := 30.0
+export var circular_view_radius := 3.0
+export var player_camera_height := 40.0
