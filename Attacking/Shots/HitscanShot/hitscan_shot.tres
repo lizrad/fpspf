@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource( 2 )
 ammunition = 9
+attack_range = 15.0
 cooldown = 0.5
 damage = 1.0
 img_bullet = ExtResource( 3 )

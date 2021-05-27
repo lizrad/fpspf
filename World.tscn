@@ -34,6 +34,6 @@ laser_material = ExtResource( 4 )
 [node name="LevelManager" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
 
-[node name="HUD" parent="." instance=ExtResource( 6 )]
-
 [node name="ReplayManager" parent="." instance=ExtResource( 8 )]
+
+[node name="HUD" parent="." instance=ExtResource( 6 )]

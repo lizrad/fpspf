@@ -35,6 +35,12 @@ melee_attack_type = ExtResource( 5 )
 [node name="MeshInstance" parent="." index="1"]
 material_override = SubResource( 2 )
 
+[node name="OmniLight" parent="VisibilityLights" index="0"]
+omni_attenuation = 1e-05
+
+[node name="SightLight" parent="VisibilityLights" index="1"]
+spot_attenuation = 2.01341e-05
+
 [node name="CameraManager" type="Spatial" parent="." index="4"]
 script = ExtResource( 3 )
 
@@ -64,6 +70,7 @@ __meta__ = {
 [node name="Viewport" type="Viewport" parent="CameraManager/ViewCamera/ViewportContainer" index="0"]
 size = Vector2( 496, 600 )
 handle_input_locally = false
+render_target_update_mode = 3
 shadow_atlas_size = 2048
 
 [node name="Camera" type="Camera" parent="CameraManager/ViewCamera/ViewportContainer/Viewport" index="0"]

@@ -1,32 +1,28 @@
 extends Area
 
-export var hit_sphere_radius := 1.0
-export var active_time = 0.1
 export var only_hit_one_body = true
 var _damage := 10.0
-var _visualization_time := 2.00
+var _attack_time := 2.00
 var _owning_player
 var _hit_something = false
-func initialize_visual(owning_player, visualization_time) ->void:
-	_visualization_time = visualization_time
-	$Visualization.scale = Vector3(hit_sphere_radius,hit_sphere_radius,hit_sphere_radius)
+func initialize_visual(owning_player, attack_time, attack_range) ->void:
+	_attack_time = attack_time
+	$Visualization.scale = Vector3(attack_range,attack_range,attack_range)
 	$Visualization.set_surface_material(0, owning_player.get_parent().shot_material)
 	
-func initialize(owning_player, visualization_time, damage) ->void:
-	assert(visualization_time>=active_time) #the attack should not be longer active than it is visualized
+func initialize(owning_player, attack_time, attack_range, damage) ->void:
 	_damage = damage
 	_owning_player = owning_player
 	var sphereShape = SphereShape.new()
-	sphereShape.radius = hit_sphere_radius
+	sphereShape.radius = attack_range
 	$CollisionShape.shape = sphereShape
-	initialize_visual(owning_player, visualization_time)
+	initialize_visual(owning_player, attack_time, attack_range)
 	
 func _process(delta):
-	active_time-=delta;
-	if(_visualization_time<=0):
+	if(_attack_time<=0):
 		queue_free()
 		return
-	_visualization_time-=delta
+	_attack_time-=delta
 
 func _hit_body(body) ->void:
 	if body.is_in_group("Damagable"):
@@ -36,8 +32,6 @@ func _hit_body(body) ->void:
 			body.receive_damage(_damage)
 
 func _physics_process(delta):
-	if active_time <= 0:
-		return
 	var bodies =  get_overlapping_bodies()
 	if bodies.size() == 0:
 		return

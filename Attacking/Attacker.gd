@@ -1,7 +1,8 @@
 extends Spatial
 
-export var visualization_time := 0.5
+export var attack_time := 0.5
 var _attack_deadline := 0.0
+var _spawned_attacks = []
 
 var _ammunition_tracker = {}
 var _owning_player
@@ -15,10 +16,12 @@ func set_owning_player(player)->void:
 
 func visualize_attack(attack_type, owning_player) -> void:
 	var attack = attack_type.attack.instance()
+	_spawned_attacks.append(attack)
+	attack.connect("tree_exiting", self, "_attack_tree_exiting", [attack])
 	get_tree().get_root().add_child(attack);
 	attack.global_transform = global_transform
 	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
-	attack.initialize_visual(owning_player, visualization_time)
+	attack.initialize_visual(owning_player, attack_time, attack_type.attack_range)
 	emit_signal("gain_bullet")
 
 	
@@ -35,6 +38,18 @@ func set_render_layer_for_player_id(player_id) -> void:
 
 func reload(attack_type) -> void:
 	_ammunition_tracker[attack_type]=attack_type.ammunition
+
+func reload_all() ->void:
+	for attack_type in _ammunition_tracker:
+		reload(attack_type)
+
+func reset()->void:
+	for attack in _spawned_attacks:
+		attack.queue_free()
+	_spawned_attacks.clear()
+		
+func set_bullet_range(bullet_range) ->void:
+	$AttackOriginPosition/AimVisualization.set_max_distance(bullet_range)
 
 func _process(delta):
 	if _attack_deadline > 0:
@@ -56,12 +71,16 @@ func _handle_ammunition(attack_type) ->bool:
 func _create_attack(attack_type, owning_player) -> bool:
 	if !_handle_ammunition(attack_type):
 		return false
-
-	print(str("Ammunition is ",_ammunition_tracker[attack_type], "/",attack_type.ammunition))
 	_attack_deadline = attack_type.cooldown
 	var attack = attack_type.attack.instance()
+	_spawned_attacks.append(attack)
+	attack.connect("tree_exiting", self, "_attack_tree_exiting", [attack])
 	get_tree().get_root().add_child(attack);
 	attack.global_transform = global_transform
 	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
-	attack.initialize(owning_player, visualization_time, attack_type.damage)
+	attack.initialize(owning_player, attack_time,attack_type.attack_range, attack_type.damage)
 	return true
+
+
+func _attack_tree_exiting(attack) ->void:
+	_spawned_attacks.remove(_spawned_attacks.find(attack))
