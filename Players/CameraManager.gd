@@ -1,6 +1,6 @@
 extends Spatial
 
-export var height := 50.0
+export var height := Constants.player_camera_height
 
 
 func _ready():

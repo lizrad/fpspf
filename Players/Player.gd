@@ -1,20 +1,20 @@
 extends CharacterBase
 class_name Player
 
-export(float) var drag := 0.2
-export(float) var move_acceleration := 1.5
+var drag := Constants.move_drag
+var move_acceleration := Constants.move_acceleration
 
 export(float) var inner_deadzone := 0.2
 export(float) var outer_deadzone := 0.8
 
-export var ranged_attack_type: Resource
-export var melee_attack_type: Resource
+var ranged_attack_type := Constants.ranged_attack_type
+var melee_attack_type := Constants.melee_attack_type
 
 # Dashing
-export var time_since_dash_start := 0.0
-export var initial_dash_burst := 5.0
-export var dash_exponent := 0.1
-export var dash_cooldown := 1.0
+var time_since_dash_start := 0.0
+var initial_dash_burst := Constants.dash_impulse
+var dash_exponent := Constants.dash_exponent
+var dash_cooldown := 1.0
 
 # TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
 var movement_records = []

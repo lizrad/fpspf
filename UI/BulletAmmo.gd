@@ -1,16 +1,17 @@
 extends Control
 
-# TODO: define in constants for ammotypes
-#export var num_bullets : int
-#var _num_bullets := num_bullets
-var _num_bullets := 9
-var _img_bullet = load("res://Attacking/Shots/bullet.png")
+var attack_type: Resource
+
+var _num_bullets
+var _img_bullet
 
 
-func _ready():
+#func _ready():
+func init():
+	_num_bullets = attack_type.ammunition
 	for i in range(_num_bullets):
 		var rect = TextureRect.new()
-		rect.texture = _img_bullet
+		rect.texture = attack_type.img_bullet
 		rect.expand = true
 		rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT
 		rect.rect_min_size = Vector2(10, 50)
@@ -18,7 +19,7 @@ func _ready():
 
 
 func add_bullet():
-	if _num_bullets >= 9:
+	if _num_bullets >= attack_type.ammunition:
 		return
 
 	#print("regaining bullet[" + str(_num_bullets) + "]")
@@ -36,7 +37,6 @@ func remove_bullet():
 
 func reload():
 	print("reloading all bullets")
-	# TODO: FIXME get max bullets from constants for current attack_type
-	_num_bullets = 9
+	_num_bullets = attack_type.ammunition
 	for i in range(_num_bullets):
 		$HBoxContainer.get_child(i).visible = true
