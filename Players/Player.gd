@@ -22,8 +22,7 @@ var movement_records = []
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
 
-var max_health := 3
-var current_health := 3
+var _current_health := 3
 
 signal died
 
@@ -147,9 +146,9 @@ func apply_acceleration(acceleration):
 
 func receive_damage(damage: float):
 	print("Player received damage: ", damage)
-	current_health -= damage
+	_current_health -= damage
 	
-	if current_health <= 0:
+	if _current_health <= 0:
 		print("	-> Player dead")
 		emit_signal("died")
 
@@ -157,12 +156,14 @@ func receive_damage(damage: float):
 func reset():
 	movement_records = []
 	transform.origin = Vector3.ZERO
-	current_health = max_health
-	
+	_current_health = Constants.max_health
+
+
 func _on_light_cone_entered(body: Node):
 	if body is Ghost:
 		body.visible = true
-		
+
+
 func _on_light_cone_exited(body: Node):
 	if body is Ghost:
 		body.visible = false

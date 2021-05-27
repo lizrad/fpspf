@@ -4,19 +4,22 @@ export var visualization_time := 0.5
 var _attack_deadline := 0.0
 
 var _ammunition_tracker = {}
-var _owning_player;
+var _owning_player
+
 signal shot_bullet
+signal gain_bullet
 
 func set_owning_player(player)->void:
 	_owning_player = player
 	$AttackOriginPosition/AimVisualization/LineRenderer.material_override = player.get_parent().laser_material
 
-func visualize_attack(attack_type, owning_player) ->void:
+func visualize_attack(attack_type, owning_player) -> void:
 	var attack = attack_type.attack.instance()
 	get_tree().get_root().add_child(attack);
 	attack.global_transform = global_transform
 	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
 	attack.initialize_visual(owning_player, visualization_time)
+	emit_signal("gain_bullet")
 
 	
 func attack(attack_type, owning_player) -> bool:

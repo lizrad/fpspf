@@ -6,8 +6,7 @@ var movement_record := []
 var _frame_timer: float = 0.0
 var current_frame : int = 0
 
-var max_health : int = 3
-var current_health : int = 3
+var _current_health : int = 3
 
 var died_at_frame : int = INF
 
@@ -19,7 +18,7 @@ var _previous_attack_frame = -1
 
 signal died
 
-	
+
 func set_time_scale(time_scale: float) -> void:
 	_time_scale = time_scale
 
@@ -59,9 +58,9 @@ func _physics_process(delta):
 
 func receive_damage(damage: float):
 	print("Ghost received damage: ", damage)
-	current_health -= damage
+	_current_health -= damage
 	
-	if current_health <= 0:
+	if _current_health <= 0:
 		died_at_frame = current_frame
 		print(" -> Ghost dead")
 		emit_signal("died")
@@ -77,19 +76,22 @@ func reset(start_frame : int) -> void:
 		_previous_attack_frame=-1
 	else:
 		_showAlive()
+
 	_set_initial_position()
-	current_health = max_health
+	_current_health = Constants.max_health
 
 
 func _set_initial_position() -> void:
 	var start_frame = current_frame if current_frame < movement_record.size() else movement_record.size()-1
 	global_transform = movement_record[start_frame].transform
-	
+
+
 func _showDead():
 	_dead = true
 	rotation.z = PI / 2
 	$CollisionShape.disabled = true
 	$Attacker.visible = false
+
 
 func _showAlive():
 	_dead = false

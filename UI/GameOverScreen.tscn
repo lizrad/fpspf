@@ -5,10 +5,12 @@
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
+outline_size = 1
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 40
+outline_size = 1
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
@@ -46,6 +48,7 @@ margin_left = -171.5
 margin_top = -35.5
 margin_right = 171.5
 margin_bottom = 35.5
+rect_scale = Vector2( 1.00827, 1 )
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0.635294, 1, 1 )
 text = "Player -1 won!"
