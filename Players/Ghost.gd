@@ -75,6 +75,8 @@ func receive_damage(damage: float):
 		return
 	if _dead:
 		return
+	
+	$HitParticles.emitting=true
 	set_current_health(_current_health - damage)
 	
 	if _current_health <= 0:

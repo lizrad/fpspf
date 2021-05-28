@@ -167,7 +167,7 @@ func receive_damage(damage: float):
 		return
 
 	set_current_health(_current_health - damage)
-	
+	$HitParticles.emitting=true
 	if _current_health <= 0:
 		die()
 
