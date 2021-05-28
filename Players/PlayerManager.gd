@@ -64,7 +64,7 @@ func set_pawns_invincible(invincible : bool):
 
 func _on_player_died():
 	emit_signal("active_player_died")
-
+	active_player.add_to_kill_dashboard("Player died")
 
 func _on_ghost_died(ghost_index : int):
 	emit_signal("ghost_player_died")

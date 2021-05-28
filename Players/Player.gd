@@ -19,7 +19,6 @@ var initial_dash_burst := Constants.dash_impulse
 var dash_exponent := Constants.dash_exponent
 var dash_cooldown := 1.0
 
-var input_enabled : bool = true
 
 # TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
 var movement_records = []
@@ -27,6 +26,8 @@ var movement_records = []
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
 var _rotate_input_vector:= Vector3.ZERO
+
+var input_enabled : bool = true
 
 onready var _player_hud : PlayerHUD = get_node("CameraManager/ViewCamera/ViewportContainer/PlayerHUD")
 
@@ -174,9 +175,11 @@ func receive_damage(damage: float):
 func die():
 	print("	-> Player dead")
 	emit_signal("died")
+	_show_dead()
 
 
 func reset():
+	_show_alive()
 	movement_records = []
 	transform.origin = Vector3.ZERO
 	set_current_health(Constants.max_health)
@@ -194,3 +197,17 @@ func _on_light_cone_entered(body: Node):
 func _on_light_cone_exited(body: Node):
 	if body is Ghost:
 		body.visible = false
+
+
+func _show_dead():
+	input_enabled = false
+	rotation.z = PI / 2
+	$CollisionShape.disabled = true
+	$Attacker.visible = false
+
+
+func _show_alive():
+	input_enabled = true
+	rotation.z = 0
+	$CollisionShape.disabled = false
+	$Attacker.visible = true

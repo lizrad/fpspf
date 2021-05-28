@@ -93,6 +93,7 @@ func next_gamestate():
 
 		Constants.Gamestate.REPLAY:
 			# prepare for prep
+			_an_active_player_died = false
 			_replay_manager.hide_replay_camera()
 			# update cycle -> game over if reached num_cycles
 			cycle += 1
@@ -121,9 +122,6 @@ func next_gamestate():
 			if not use_total_kills:
 				for id in _scores.size():
 					_set_score(id, 0)
-			
-			for player_manager in _player_managers:
-				player_manager.active_player.input_enabled = true
 
 	_current_gamestate = (_current_gamestate + 1) % Constants.Gamestate.size();
 	$HUD.set_game_state(_current_gamestate)
@@ -165,6 +163,8 @@ func _on_active_player_died(playerManger: PlayerManager) -> void:
 	_score_point(_get_opponent_player(playerManger.player_id))
 	
 	_an_active_player_died = true
+	_replay_manager.show_replay_camera()
+		
 	for player_manager in _player_managers:
 		player_manager.active_player.input_enabled = false
 	
