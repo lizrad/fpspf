@@ -169,6 +169,10 @@ func reset():
 	movement_records = []
 	transform.origin = Vector3.ZERO
 	set_current_health(Constants.max_health)
+	_player_hud.reset_kill_dashboard()
+
+func add_to_kill_dashboard(text : String) ->void:
+	_player_hud.add_to_kill_dashboard(text)
 
 
 func _on_light_cone_entered(body: Node):

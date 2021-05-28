@@ -5,6 +5,8 @@ export var time_prep := 5.0 # time, before the round starts
 export var replay_speed := 1.0 # timescale of the replay
 export var num_cycles := 5 # max cycles for one game
 
+export var use_total_kills : bool = false
+
 
 var time_left # round timer in ms
 var cycle := 1 # number of current cylce
@@ -103,8 +105,9 @@ func next_gamestate():
 				player_manager.toggle_active_player(true)
 			time_left = time_prep + 1
 			# reset scores
-			for id in _scores.size():
-				_set_score(id, 0)
+			if not use_total_kills:
+				for id in _scores.size():
+					_set_score(id, 0)
 
 	_current_gamestate = (_current_gamestate + 1) % Constants.Gamestate.size();
 	$HUD.set_game_state(_current_gamestate)

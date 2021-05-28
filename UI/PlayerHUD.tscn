@@ -42,3 +42,22 @@ tint_progress = Color( 0, 0.823529, 1, 0.392157 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="KillDashboard_pc" type="PanelContainer" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -14.0
+margin_right = 14.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KillDashboard_txt" type="Label" parent="KillDashboard_pc"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 7.0
+margin_bottom = 21.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
