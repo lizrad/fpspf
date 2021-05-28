@@ -12,11 +12,13 @@ func set_dash_progress(value : float) -> void:
 	else:
 		_dash_icon_bar.tint_progress.a = 0.5
 
-func add_to_kill_dashboard(text : String) ->void:
+func add_to_kill_dashboard(text : String) -> void:
 	if not _kill_db_txt.text.empty():
 		_kill_db_txt.text += "\n"
 	_kill_db_txt.text += text
+	_kill_dashboard.visible = true
 
-func reset_kill_dashboard() ->void:
+func reset_kill_dashboard() -> void:
 	_kill_db_txt.text = ""
 	_kill_dashboard.rect_size = Vector2.ZERO
+	_kill_dashboard.visible = false
