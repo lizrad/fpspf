@@ -82,7 +82,6 @@ func _show_dead():
 	rotation.z = PI / 2
 	$CollisionShape.disabled = true
 	$Attacker.visible = false
-	$VisibilityLights.set_enabled(false)
 	$DeathSound.play()
 
 func set_current_health(new_health):

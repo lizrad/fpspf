@@ -92,4 +92,7 @@ func toggle_game_over_screen(active: bool):
 		_show_all()
 	else:
 		_hide_all()
-	$GameOverScreen.visible = active
+	if active:
+		$GameOverScreen.show()
+	else:
+		$GameOverScreen.hide()

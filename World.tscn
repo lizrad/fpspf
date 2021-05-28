@@ -12,7 +12,6 @@ script = ExtResource( 2 )
 time_cycle = 90.0
 time_prep = 2.0
 replay_speed = 5.0
-use_continuous_mode = true
 
 [node name="PlayerManagers" type="Spatial" parent="."]
 script = ExtResource( 3 )
