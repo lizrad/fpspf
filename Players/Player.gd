@@ -171,6 +171,8 @@ func receive_damage(damage: float):
 
 	set_current_health(_current_health - damage)
 	$HitParticles.emitting=true
+	$HitSound.play()
+	
 	if _current_health <= 0:
 		die()
 
@@ -207,6 +209,7 @@ func _show_dead():
 	rotation.z = PI / 2
 	$CollisionShape.disabled = true
 	$Attacker.visible = false
+	$DeathSound.play()
 
 
 func _show_alive():
