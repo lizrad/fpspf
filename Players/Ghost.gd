@@ -73,7 +73,8 @@ func receive_damage(damage: float):
 	if invincible:
 		print("	but is invincible!")
 		return
-
+	if _dead:
+		return
 	set_current_health(_current_health - damage)
 	
 	if _current_health <= 0:
