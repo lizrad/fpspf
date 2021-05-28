@@ -1,6 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
 [sub_resource type="Shader" id=1]
+resource_local_to_scene = true
 code = "shader_type spatial;
 render_mode unshaded;
 
@@ -10,9 +11,19 @@ uniform float visibility_threshold = 0.2;
 
 varying vec3 world_vertex;
 
+void vertex() {
+	world_vertex = (WORLD_MATRIX * vec4(VERTEX, 1.0)).xyz;
+}
+
 void fragment() {
-	ALPHA = float(length(texture(visibility_mask, SCREEN_UV).rgb) > visibility_threshold);
+	vec2 uv = world_vertex.xz;
+	uv += vec2(50.0, 50.0);
+	uv /= 100.0;
+	uv.y = 1.0 - uv.y;
+	
+	ALPHA = float(length(texture(visibility_mask, uv).rgb) > visibility_threshold);
 	ALBEDO = color.rgb;
+	//ALBEDO = vec3(uv.x);
 }"
 
 [resource]

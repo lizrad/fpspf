@@ -15,6 +15,10 @@ func set_owning_player(player)->void:
 		"color",
 		Constants.character_colors[_owning_player.id]
 	)
+	$AttackOriginPosition/AimVisualization/LineRenderer2.material_override.set_shader_param(
+		"color",
+		Constants.character_colors[_owning_player.id]
+	)
 
 
 func set_visibility_mask(mask):
@@ -22,6 +26,20 @@ func set_visibility_mask(mask):
 		"visibility_mask",
 		mask
 	)
+	
+	# White mask for own mesh
+	var own_mask = Image.new()
+	own_mask.create(1, 1, false, Image.FORMAT_RGBA8)
+	own_mask.lock()
+	own_mask.set_pixel(0, 0, Color(1.0, 1.0, 1.0, 1.0))
+	own_mask.unlock()
+	var tex = ImageTexture.new()
+	tex.create_from_image(own_mask)
+	
+#	$AttackOriginPosition/AimVisualization/LineRenderer2.material_override.set_shader_param(
+#		"visibility_mask",
+#		tex
+#	)
 
 
 func visualize_attack(attack_type, owning_player) -> void:
@@ -49,6 +67,8 @@ func attack(attack_type, owning_player) -> bool:
 func set_render_layer_for_player_id(player_id) -> void:
 	$AttackOriginPosition/AimVisualization/LineRenderer.layers = 0
 	$AttackOriginPosition/AimVisualization/LineRenderer.set_layer_mask_bit(Constants.PLAYER_GENERAL, true)
+	$AttackOriginPosition/AimVisualization/LineRenderer2.layers = 0
+	$AttackOriginPosition/AimVisualization/LineRenderer2.set_layer_mask_bit(5 + player_id, true)
 
 
 func reload(attack_type) -> void:

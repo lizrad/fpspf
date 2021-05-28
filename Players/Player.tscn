@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Players/Player.gd" type="Script" id=1]
 [ext_resource path="res://Players/CharacterBase.tscn" type="PackedScene" id=2]
@@ -6,31 +6,56 @@
 [ext_resource path="res://UI/PlayerHUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Players/ViewEnvironment.tres" type="Environment" id=6]
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="Shader" id=6]
+resource_local_to_scene = true
 code = "shader_type spatial;
+render_mode unshaded;
 
 uniform sampler2D visibility_mask;
 uniform vec4 color: hint_color = vec4(1.0, 0.0, 0.0, 1.0);
+uniform float visibility_threshold = 0.2;
 
 varying vec3 world_vertex;
 
+void vertex() {
+	world_vertex = (WORLD_MATRIX * vec4(VERTEX, 1.0)).xyz;
+}
+
 void fragment() {
-	ALPHA = float(length(texture(visibility_mask, SCREEN_UV).rgb) > 0.1);
+	vec2 uv = world_vertex.xz;
+	uv += vec2(50.0, 50.0);
+	uv /= 100.0;
+	uv.y = 1.0 - uv.y;
+	
+	ALPHA = float(length(texture(visibility_mask, uv).rgb) > visibility_threshold);
 	ALBEDO = color.rgb;
+	//ALBEDO = vec3(uv.x);
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
+[sub_resource type="ShaderMaterial" id=7]
 resource_local_to_scene = true
-shader = SubResource( 1 )
+shader = SubResource( 6 )
 shader_param/color = Color( 1, 0, 0, 1 )
+shader_param/visibility_threshold = 0.2
 
 [sub_resource type="Environment" id=3]
+
+[sub_resource type="ViewportTexture" id=4]
+viewport_path = NodePath("HealthDisplay/Viewport")
+
+[sub_resource type="SpatialMaterial" id=5]
+resource_local_to_scene = true
+flags_unshaded = true
+params_billboard_mode = 1
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.32
+albedo_texture = SubResource( 4 )
 
 [node name="Player" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
 
 [node name="MeshInstance" parent="." index="1"]
-material_override = SubResource( 2 )
+material_override = SubResource( 7 )
 
 [node name="OmniLight" parent="VisibilityLights" index="0"]
 omni_attenuation = 1e-05
@@ -44,7 +69,7 @@ script = ExtResource( 3 )
 [node name="LightCamera" type="Node" parent="CameraManager" index="0"]
 
 [node name="Viewport" type="Viewport" parent="CameraManager/LightCamera" index="0"]
-size = Vector2( 512, 600 )
+size = Vector2( 1000, 1000 )
 handle_input_locally = false
 shadow_atlas_size = 2048
 
@@ -52,7 +77,9 @@ shadow_atlas_size = 2048
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 0 )
 cull_mask = 1
 environment = SubResource( 3 )
+projection = 1
 current = true
+size = 100.0
 far = 200.0
 
 [node name="ViewCamera" type="Node" parent="CameraManager" index="1"]
@@ -72,8 +99,16 @@ shadow_atlas_size = 2048
 
 [node name="Camera" type="Camera" parent="CameraManager/ViewCamera/ViewportContainer/Viewport" index="0"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 0 )
+cull_mask = 1047555
 environment = ExtResource( 6 )
 current = true
+fov = 90.0
 far = 200.0
 
 [node name="PlayerHUD" parent="CameraManager/ViewCamera/ViewportContainer" index="1" instance=ExtResource( 4 )]
+
+[node name="HealthDisplay" parent="." index="5"]
+material_override = SubResource( 5 )
+
+[node name="OwnMeshInstance" parent="." index="6"]
+material_override = SubResource( 7 )
