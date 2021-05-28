@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource( 2 )
 ammunition = 9
-burst_amount = 0
+burst_amount = 1
 burst_delay = 0.0
 attack_range = 15.0
 attack_time = 2.0
