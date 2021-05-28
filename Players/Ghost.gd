@@ -64,7 +64,9 @@ func _physics_process(delta):
 					
 					var frame = movement_record[current_frame]
 					global_transform = frame.transform
-				
+				else:
+					var frame = movement_record[died_at_frame]
+					global_transform = frame.transform
 
 func receive_damage(damage: float):
 	print("Ghost received damage: ", damage)
