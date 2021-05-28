@@ -1,5 +1,5 @@
-extends Spatial
 class_name SpawnArea
+extends Spatial
 
 func open_doors():
 	for child in self.get_children():
