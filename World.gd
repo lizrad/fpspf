@@ -6,21 +6,28 @@ export var replay_speed := 1.0 # timescale of the replay
 export var num_cycles := 5 # max cycles for one game
 
 export var use_total_kills : bool = false
+export var use_continuous_mode : bool = false
 
 
 var time_left # round timer in ms
 var cycle := 1 # number of current cylce
 
 onready var _replay_manager := get_node("ReplayManager")
+onready var _player_managers := []
 
 var _scores := [] # Scores for each player
 var _current_gamestate = Constants.Gamestate.PREP 
 var _current_frame := 0
 
+# The maximum number of frame a cycle took
+var _max_frames : int = 0
+var _an_active_player_died : bool = false
+
 
 func _ready():
 	# Connect to player events
 	for player_manager in $PlayerManagers.get_children():
+		_player_managers.append(player_manager)
 		player_manager.connect("active_player_died", self, "_on_active_player_died", [player_manager])
 		player_manager.connect("ghost_player_died", self, "_on_ghost_player_died", [player_manager])
 		_scores.append(0)
@@ -39,13 +46,19 @@ func _process(delta):
 	
 	# update ui
 	$HUD.set_time(time_left)
-
 	if time_left <= 0:
 		next_gamestate()
 
 func _physics_process(delta):
 	if _current_gamestate != Constants.Gamestate.REPLAY:
 		_current_frame += 1
+	
+	# If an active player died and all ghosts are finished playing, go to next
+	# gamestate
+	if use_continuous_mode:
+		if _an_active_player_died and _current_frame >= _max_frames:
+			next_gamestate()
+
 
 # used to restart level: 
 # 	- reverse shift animation
@@ -108,6 +121,9 @@ func next_gamestate():
 			if not use_total_kills:
 				for id in _scores.size():
 					_set_score(id, 0)
+			
+			for player_manager in _player_managers:
+				player_manager.active_player.input_enabled = true
 
 	_current_gamestate = (_current_gamestate + 1) % Constants.Gamestate.size();
 	$HUD.set_game_state(_current_gamestate)
@@ -144,17 +160,25 @@ func _get_opponent_player(id: int) -> int:
 
 # one of the current active players died:
 #	- add score
-# 	- restart round
+# 	- restart round if cycle 1
 func _on_active_player_died(playerManger: PlayerManager) -> void:
-	print("active player died: " + str(playerManger.player_id))
-	print("	enemy: " + str(_get_opponent_player(playerManger.player_id)))
 	_score_point(_get_opponent_player(playerManger.player_id))
-	next_gamestate()
+	
+	_an_active_player_died = true
+	for player_manager in _player_managers:
+		player_manager.active_player.input_enabled = false
+	
+	if _max_frames < _current_frame:
+		_max_frames = _current_frame
+	
+	# Always stop on cycle 1 if active player dies	
+	if not use_continuous_mode:
+		next_gamestate()
+	elif cycle == 1:
+		next_gamestate()
 
 
 # a ghost clone of one player died:
 # 	- add score
 func _on_ghost_player_died(playerManger: PlayerManager) -> void:
-	print("ghost player died: " + str(playerManger.player_id))
-	print("	enemy: " + str(_get_opponent_player(playerManger.player_id)))
 	_score_point(_get_opponent_player(playerManger.player_id))

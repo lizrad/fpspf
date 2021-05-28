@@ -8,6 +8,8 @@ export(float) var inner_deadzone := 0.2
 export(float) var outer_deadzone := 0.8
 export(float) var rotate_threshold := 0.05
 
+signal died
+
 var ranged_attack_type := Constants.ranged_attack_type
 var melee_attack_type := Constants.melee_attack_type
 
@@ -17,7 +19,8 @@ var initial_dash_burst := Constants.dash_impulse
 var dash_exponent := Constants.dash_exponent
 var dash_cooldown := 1.0
 
-signal died
+var input_enabled : bool = true
+
 
 # TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
 var movement_records = []
@@ -40,44 +43,46 @@ class MovementFrame extends Spatial:
 func _physics_process(delta):
 	if not visible:
 		return
-	var input = get_normalized_input("player_move", outer_deadzone, inner_deadzone)
-	var movement_input_vector = Vector3(input.y, 0.0, -input.x)
 	
-	if Input.is_action_pressed("player_dash_" + str(id)):
-		var e_section = max(
-			exp(log(initial_dash_burst - 1 / dash_exponent * time_since_dash_start)),
-			0.0
-		)
-		velocity += movement_input_vector * e_section
-		time_since_dash_start += delta
-	else:
-		if time_since_dash_start > dash_cooldown:
-			time_since_dash_start = 0.0
-		elif time_since_dash_start != 0.0:
-			time_since_dash_start += delta
-	var progress = time_since_dash_start / dash_cooldown
-	_player_hud.set_dash_progress(1.0 if progress == 0.0 else progress)
-	apply_acceleration(movement_input_vector * move_acceleration)
-	move_and_slide(velocity)
-
 	var attack_type = null
-	if Input.is_action_pressed("player_shoot_" + str(id)):
-		attack_type = ranged_attack_type
+	if input_enabled:
+		var input = get_normalized_input("player_move", outer_deadzone, inner_deadzone)
+		var movement_input_vector = Vector3(input.y, 0.0, -input.x)
+		
+		if Input.is_action_pressed("player_dash_" + str(id)):
+			var e_section = max(
+				exp(log(initial_dash_burst - 1 / dash_exponent * time_since_dash_start)),
+				0.0
+			)
+			velocity += movement_input_vector * e_section
+			time_since_dash_start += delta
+		else:
+			if time_since_dash_start > dash_cooldown:
+				time_since_dash_start = 0.0
+			elif time_since_dash_start != 0.0:
+				time_since_dash_start += delta
+		var progress = time_since_dash_start / dash_cooldown
+		_player_hud.set_dash_progress(1.0 if progress == 0.0 else progress)
+		apply_acceleration(movement_input_vector * move_acceleration)
+		move_and_slide(velocity)
 
-	if Input.is_action_pressed("player_melee_" + str(id)):
-		attack_type = melee_attack_type
+		if Input.is_action_pressed("player_shoot_" + str(id)):
+			attack_type = ranged_attack_type
 
-	if attack_type:
-		if not $Attacker.attack(attack_type, self):
-			attack_type = null
+		if Input.is_action_pressed("player_melee_" + str(id)):
+			attack_type = melee_attack_type
 
-	var rotate_input = get_normalized_input("player_look", 1.0, 0.0, 0.5)
-	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
-	if rotate_input_vector.distance_to(_rotate_input_vector) > rotate_threshold:
-		_rotate_input_vector = rotate_input_vector
-	
-		if rotate_input_vector != Vector3.ZERO:
-			look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
+		if attack_type:
+			if not $Attacker.attack(attack_type, self):
+				attack_type = null
+
+		var rotate_input = get_normalized_input("player_look", 1.0, 0.0, 0.5)
+		var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
+		if rotate_input_vector.distance_to(_rotate_input_vector) > rotate_threshold:
+			_rotate_input_vector = rotate_input_vector
+		
+			if rotate_input_vector != Vector3.ZERO:
+				look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
 
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
 
