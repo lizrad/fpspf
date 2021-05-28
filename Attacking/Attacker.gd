@@ -52,14 +52,15 @@ func visualize_attack(attack_type, owning_player) -> void:
 	attack.initialize_visual(owning_player, attack_type)
 	emit_signal("gain_bullet")
 
-	
+
 func attack(attack_type, owning_player) -> bool:
 	if _attack_deadline <= 0:
-			if !_handle_ammunition(attack_type):
-				return false
-			for i in range(attack_type.burst_amount):
-				_create_attack(i*attack_type.burst_delay,attack_type, owning_player)
-			return true
+		if !_handle_ammunition(attack_type):
+			return false
+
+		for i in range(attack_type.burst_amount):
+			_create_attack(i*attack_type.burst_delay,attack_type, owning_player)
+		return true
 	return false
 
 
@@ -87,15 +88,16 @@ func _process(delta):
 	if _attack_deadline > 0:
 		_attack_deadline -= delta
 
-func _handle_ammunition(attack_type) ->bool:
+
+func _handle_ammunition(attack_type) -> bool:
 	if not _ammunition_tracker.has(attack_type):
-		_ammunition_tracker[attack_type]=attack_type.ammunition
-		
-	if _ammunition_tracker[attack_type]==0:
+		_ammunition_tracker[attack_type] = attack_type.ammunition
+
+	if _ammunition_tracker[attack_type] == 0:
 		return false
 
-	elif _ammunition_tracker[attack_type]>0:
-		_ammunition_tracker[attack_type]-=1
+	elif _ammunition_tracker[attack_type] > 0:
+		_ammunition_tracker[attack_type] -= 1
 		emit_signal("shot_bullet")
 	return true
 

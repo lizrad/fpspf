@@ -57,8 +57,6 @@ func _physics_process(delta):
 			time_since_dash_start += delta
 	var progress = time_since_dash_start / dash_cooldown
 	_player_hud.set_dash_progress(1.0 if progress == 0.0 else progress)
-	apply_acceleration(movement_input_vector * move_acceleration)
-	move_and_slide(velocity)
 
 	var attack_type = null
 	if Input.is_action_pressed("player_shoot_" + str(id)):
@@ -70,15 +68,21 @@ func _physics_process(delta):
 	if attack_type:
 		if not $Attacker.attack(attack_type, self):
 			attack_type = null
-
 	var rotate_input = get_normalized_input("player_look", 1.0, 0.0, 0.5)
 	var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
 	if rotate_input_vector.distance_to(_rotate_input_vector) > rotate_threshold:
-		_rotate_input_vector = rotate_input_vector
-	
 		if rotate_input_vector != Vector3.ZERO:
+			_rotate_input_vector = rotate_input_vector
 			look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
 
+	# if an attack was executed, apply recoil knockback
+	if attack_type:
+			# TODO: lerp like dash?
+			velocity += -_rotate_input_vector * attack_type.recoil * 10
+
+	apply_acceleration(movement_input_vector * move_acceleration)
+	move_and_slide(velocity)
+	
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
 
 
@@ -165,6 +169,10 @@ func reset():
 	movement_records = []
 	transform.origin = Vector3.ZERO
 	set_current_health(Constants.max_health)
+	_player_hud.reset_kill_dashboard()
+
+func add_to_kill_dashboard(text : String) ->void:
+	_player_hud.add_to_kill_dashboard(text)
 
 
 func _on_light_cone_entered(body: Node):

@@ -11,6 +11,7 @@ burst_amount = 0
 burst_delay = 0.0
 attack_range = 15.0
 attack_time = 2.0
+recoil = 1.0
 continuously_damaging = true
 damage_invincibility_time = 0.3
 cooldown = 0.5
