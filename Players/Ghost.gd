@@ -36,7 +36,7 @@ func _physics_process(delta):
 		else :
 			# replay
 			if current_frame>=0:
-				if current_frame < died_at_frame and current_frame<movement_record.size():
+				if current_frame < died_at_frame and current_frame < movement_record.size():
 					if _first_alive_frame:
 						_first_alive_frame=false
 						_show_alive()
@@ -65,7 +65,7 @@ func _physics_process(delta):
 					var frame = movement_record[current_frame]
 					global_transform = frame.transform
 				else:
-					var frame = movement_record[died_at_frame]
+					var frame = movement_record[died_at_frame if died_at_frame < movement_record.size() else movement_record.size() - 1]
 					global_transform = frame.transform
 
 func receive_damage(damage: float):
