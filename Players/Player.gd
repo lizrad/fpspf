@@ -90,8 +90,8 @@ func _physics_process(delta):
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
 
 
-func _apply_recoil():
-	velocity += -_rotate_input_vector * ranged_attack_type.recoil
+func _apply_recoil(attack_type):
+	velocity += -_rotate_input_vector * attack_type.recoil
 
 
 func get_id():

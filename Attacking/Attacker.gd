@@ -114,7 +114,7 @@ func _create_attack(wait_time, attack_type, owning_player) ->void:
 	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
 	attack.initialize(owning_player, attack_type)
 	
-	emit_signal("fired_burst_shot")
+	emit_signal("fired_burst_shot", attack_type)
 
 
 func _attack_tree_exiting(attack) ->void:
