@@ -25,4 +25,11 @@ cast_shadow = 0
 points = [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -3 ) ]
 globalCoords = false
 
+[node name="LineRenderer2" parent="AttackOriginPosition/AimVisualization" instance=ExtResource( 2 )]
+layers = 0
+material_override = ExtResource( 4 )
+cast_shadow = 0
+points = [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -3 ) ]
+globalCoords = false
+
 [connection signal="tree_exiting" from="." to="." method="_on_Attacker_tree_exiting"]

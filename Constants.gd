@@ -27,7 +27,7 @@ enum Gamestate {PREP, GAME, REPLAY}
 
 const PLAYER_GENERAL = 1
 
-export var move_acceleration:= 0.8
+export var move_acceleration:= 8.0
 export var move_drag := 0.2
 
 export var dash_impulse := 5.0
