@@ -17,7 +17,11 @@ var _melee_previous_melee_attack_frame = -1
 
 signal died
 
+func set_correct_colors() -> void:
+	$MeshInstance.material_override.set_shader_param("color", Constants.character_colors[id+4])
+	$OwnMeshInstance.material_override.set_shader_param("color", Constants.character_colors[id+4])
 
+	
 func set_time_scale(time_scale: float) -> void:
 	_time_scale = time_scale
 
