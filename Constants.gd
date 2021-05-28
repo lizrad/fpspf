@@ -39,6 +39,8 @@ export var circular_view_radius := 3.0
 export var player_camera_height := 18.0
 export var player_camera_fov := 110.0
 
+export var scale_movement_to_view_direction := true
+
 var ranged_attack_type := preload("res://Attacking/Shots/HitscanShot/hitscan_shot_instant_burst.tres")
 var melee_attack_type := preload("res://Attacking/Melee/melee_instant.tres")
 
