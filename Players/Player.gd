@@ -39,6 +39,10 @@ class MovementFrame extends Spatial:
 		self.attack_type = initial_attack_type
 
 
+func _ready():
+	$Attacker.connect("fired_burst_shot", self, "_apply_recoil")
+
+
 func _physics_process(delta):
 	if not visible:
 		return
@@ -79,15 +83,14 @@ func _physics_process(delta):
 				_rotate_input_vector = rotate_input_vector
 				look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
 
-		# if an attack was executed, apply recoil knockback
-		if attack_type:
-				# TODO: lerp like dash?
-				velocity += -_rotate_input_vector * attack_type.recoil * 10
-
 		apply_acceleration(movement_input_vector * move_acceleration)
 		move_and_slide(velocity)
 	
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
+
+
+func _apply_recoil():
+	velocity += -_rotate_input_vector * ranged_attack_type.recoil
 
 
 func get_id():

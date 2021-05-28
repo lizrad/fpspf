@@ -8,6 +8,7 @@ var _owning_player
 
 signal shot_bullet
 signal gain_bullet
+signal fired_burst_shot
 
 func set_owning_player(player)->void:
 	_owning_player = player
@@ -112,6 +113,8 @@ func _create_attack(wait_time, attack_type, owning_player) ->void:
 	attack.global_transform = global_transform
 	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
 	attack.initialize(owning_player, attack_type)
+	
+	emit_signal("fired_burst_shot")
 
 
 func _attack_tree_exiting(attack) ->void:
