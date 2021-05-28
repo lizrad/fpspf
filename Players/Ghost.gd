@@ -104,6 +104,7 @@ func _showDead():
 	rotation.z = PI / 2
 	$CollisionShape.disabled = true
 	$Attacker.visible = false
+	$VisibilityLights.set_enabled(false)
 
 
 func _showAlive():
@@ -111,3 +112,4 @@ func _showAlive():
 	rotation.z = 0
 	$CollisionShape.disabled = false
 	$Attacker.visible = true
+	$VisibilityLights.set_enabled(true)

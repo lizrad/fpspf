@@ -168,8 +168,12 @@ func receive_damage(damage: float):
 	set_current_health(_current_health - damage)
 	
 	if _current_health <= 0:
-		print("	-> Player dead")
-		emit_signal("died")
+		die()
+
+
+func die():
+	print("	-> Player dead")
+	emit_signal("died")
 
 
 func reset():
