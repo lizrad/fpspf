@@ -39,7 +39,7 @@ func _physics_process(delta):
 				if current_frame < died_at_frame and current_frame<movement_record.size():
 					if _first_alive_frame:
 						_first_alive_frame=false
-						_showAlive()
+						_show_alive()
 					
 					
 					#looking into the future (== past in this case) to find out if we will attack, so we can spawn the visualization preemptively
@@ -78,18 +78,18 @@ func receive_damage(damage: float):
 		died_at_frame = current_frame
 		print(" -> Ghost dead")
 		emit_signal("died")
-		_showDead()
+		_show_dead()
 
 
 func reset(start_frame : int) -> void:
 	current_frame = start_frame
 	_frame_timer = -get_physics_process_delta_time()
 	if start_frame!=0 :
-		_showDead()
+		_show_dead()
 		_first_alive_frame=true
 		_ranged_previous_ranged_attack_frame=-1
 	else:
-		_showAlive()
+		_show_alive()
 	_set_initial_position()
 	set_current_health(Constants.max_health)
 
@@ -99,14 +99,14 @@ func _set_initial_position() -> void:
 	global_transform = movement_record[start_frame].transform
 
 
-func _showDead():
+func _show_dead():
 	_dead = true
 	rotation.z = PI / 2
 	$CollisionShape.disabled = true
 	$Attacker.visible = false
 
 
-func _showAlive():
+func _show_alive():
 	_dead = false
 	rotation.z = 0
 	$CollisionShape.disabled = false
