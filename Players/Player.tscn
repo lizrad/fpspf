@@ -102,6 +102,7 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 
 cull_mask = 1047555
 environment = ExtResource( 6 )
 current = true
+fov = 90.0
 far = 200.0
 
 [node name="PlayerHUD" parent="CameraManager/ViewCamera/ViewportContainer" index="1" instance=ExtResource( 4 )]

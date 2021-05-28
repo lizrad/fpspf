@@ -1,6 +1,7 @@
 extends Spatial
 
 export var height := Constants.player_camera_height
+var fov := Constants.player_camera_fov
 
 
 func _ready():
@@ -14,3 +15,4 @@ func _process(delta):
 	# TODO: Nice lerped movement
 	$LightCamera/Viewport/Camera.global_transform.origin = Vector3.ZERO
 	$ViewCamera/ViewportContainer/Viewport/Camera.global_transform.origin = new_origin
+	$ViewCamera/ViewportContainer/Viewport/Camera.fov = fov

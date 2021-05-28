@@ -27,7 +27,7 @@ enum Gamestate {PREP, GAME, REPLAY}
 
 const PLAYER_GENERAL = 1
 
-export var move_acceleration:= 8.0
+export var move_acceleration:= 0.8
 export var move_drag := 0.2
 
 export var dash_impulse := 5.0
@@ -36,7 +36,8 @@ export var dash_exponent := 0.1
 export var view_distance := 20.0
 export var view_angle := 30.0
 export var circular_view_radius := 3.0
-export var player_camera_height := 40.0
+export var player_camera_height := 18.0
+export var player_camera_fov := 110.0
 
 var ranged_attack_type := preload("res://Attacking/Shots/HitscanShot/hitscan_shot_instant_burst.tres")
 var melee_attack_type := preload("res://Attacking/Melee/melee_instant.tres")
