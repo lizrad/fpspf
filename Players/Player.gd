@@ -164,14 +164,14 @@ func apply_acceleration(acceleration):
 
 
 func receive_damage(damage: float):
+	.receive_damage(damage)
+	
 	print("Player received damage: ", damage)
 	if invincible:
 		print("	but is invincible!")
 		return
 
 	set_current_health(_current_health - damage)
-	$HitParticles.emitting=true
-	$HitSound.play()
 	
 	if _current_health <= 0:
 		die()
@@ -202,14 +202,6 @@ func _on_light_cone_entered(body: Node):
 func _on_light_cone_exited(body: Node):
 	if body is Ghost:
 		body.visible = false
-
-
-func _show_dead():
-	input_enabled = false
-	rotation.z = PI / 2
-	$CollisionShape.disabled = true
-	$Attacker.visible = false
-	$DeathSound.play()
 
 
 func _show_alive():

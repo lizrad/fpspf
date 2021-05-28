@@ -10,7 +10,6 @@ var died_at_frame : int = INF
 
 var _time_scale := 1.0
 
-var _dead = false
 var _first_alive_frame = true
 var _ranged_previous_ranged_attack_frame = -1
 var _melee_previous_melee_attack_frame = -1
@@ -73,6 +72,8 @@ func _physics_process(delta):
 					global_transform = frame.transform
 
 func receive_damage(damage: float):
+	.receive_damage(damage)
+	
 	print("Ghost received damage: ", damage)
 	if invincible:
 		print("	but is invincible!")
@@ -106,14 +107,6 @@ func reset(start_frame : int) -> void:
 func _set_initial_position() -> void:
 	var start_frame = current_frame if current_frame < movement_record.size() else movement_record.size()-1
 	global_transform = movement_record[start_frame].transform
-
-
-func _show_dead():
-	_dead = true
-	rotation.z = PI / 2
-	$CollisionShape.disabled = true
-	$Attacker.visible = false
-	$VisibilityLights.set_enabled(false)
 
 
 func _show_alive():
