@@ -45,13 +45,13 @@ func convert_active_to_ghost(frame: int):
 	var movement_record = active_player.movement_records
 	var new_ghost = ghost_player_scene.instance()
 	new_ghost.movement_record = movement_record
-	new_ghost.connect("died", self, "_on_ghost_died")
 	new_ghost.died_at_frame = frame
 	new_ghost.id = active_player.id
 	new_ghost.get_node("MeshInstance").material_override.set_shader_param("color", Constants.character_colors[active_player.id + 4])
 	new_ghost.set_visibility_mask(active_player.get_used_visibility_mask())
 	
 	add_child(new_ghost)
+	new_ghost.connect("died", self, "_on_ghost_died", [new_ghost.get_index()])
 	last_ghost = new_ghost
 	reset_all_children(frame)
 
@@ -65,5 +65,6 @@ func _on_player_died():
 	emit_signal("active_player_died")
 
 
-func _on_ghost_died():
+func _on_ghost_died(ghost_index : int):
 	emit_signal("ghost_player_died")
+	active_player.add_to_kill_dashboard("Ghost " + str(ghost_index) + " died")
