@@ -161,7 +161,7 @@ func apply_acceleration(acceleration):
 
 
 func receive_damage(damage: float):
-	print("Player received damage: ", damage)
+	print(name + " received damage: ", damage)
 	if invincible:
 		print("	but is invincible!")
 		return
@@ -173,7 +173,7 @@ func receive_damage(damage: float):
 
 
 func die():
-	print("	-> Player dead")
+	print("	-> " + name + " died")
 	emit_signal("died")
 	_show_dead()
 

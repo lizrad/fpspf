@@ -39,9 +39,6 @@ func reset_all_children(frame: int) ->void:
 
 
 func convert_active_to_ghost(frame: int):
-	#if last_ghost:
-	#	last_ghost.disconnect("gain_bullet")
-
 	var movement_record = active_player.movement_records
 	var new_ghost = ghost_player_scene.instance()
 	add_child(new_ghost)

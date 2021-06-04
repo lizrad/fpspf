@@ -69,7 +69,7 @@ func _physics_process(delta):
 					global_transform = frame.transform
 
 func receive_damage(damage: float):
-	print("Ghost received damage: ", damage)
+	print(name + " received damage: ", damage)
 	if invincible:
 		print("	but is invincible!")
 		return
@@ -79,7 +79,7 @@ func receive_damage(damage: float):
 	
 	if _current_health <= 0:
 		died_at_frame = current_frame
-		print(" -> Ghost dead")
+		print("	-> " + name + " died")
 		emit_signal("died")
 		_show_dead()
 
