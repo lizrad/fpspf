@@ -1,8 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Level/Cube.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Level/SpawnArea.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Level/Wall.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Level/Level_2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Level/LevelManager.gd" type="Script" id=4]
 
 [sub_resource type="Environment" id=1]
@@ -10,6 +8,7 @@ ambient_light_color = Color( 0.168627, 0.168627, 0.168627, 1 )
 
 [node name="LevelManager" type="Spatial"]
 script = ExtResource( 4 )
+current_level = NodePath("Level_2")
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 25, 0 )
@@ -17,46 +16,8 @@ visible = false
 shadow_enabled = true
 directional_shadow_max_distance = 500.0
 
-[node name="Level" type="Spatial" parent="."]
-transform = Transform( -2.18557e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.18557e-08, 0, 0, 0 )
-
-[node name="Border" type="Spatial" parent="Level"]
-
-[node name="Wall" parent="Level/Border" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 80, 39, 4, 0 )
-
-[node name="Wall2" parent="Level/Border" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 80, -39, 4, 0 )
-
-[node name="Wall3" parent="Level/Border" instance=ExtResource( 3 )]
-transform = Transform( 38, 0, 0, 0, 3, 0, 0, 0, 1, 0, 4, -79 )
-
-[node name="Wall4" parent="Level/Border" instance=ExtResource( 3 )]
-transform = Transform( 38, 0, 0, 0, 3, 0, 0, 0, 1, 0, 4, 79 )
-
-[node name="LevelObstacles" type="Spatial" parent="Level"]
-
-[node name="Wall" parent="Level/LevelObstacles" instance=ExtResource( 3 )]
-transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 1, 0, 4, 30 )
-
-[node name="Wall2" parent="Level/LevelObstacles" instance=ExtResource( 3 )]
-transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 1, 0, 4, -30 )
-
-[node name="Wall3" parent="Level/LevelObstacles" instance=ExtResource( 3 )]
-transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, 28, 4, 0 )
-
-[node name="Wall4" parent="Level/LevelObstacles" instance=ExtResource( 3 )]
-transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, -28, 4, 0 )
-
-[node name="SpawnArea1" parent="Level" instance=ExtResource( 2 )]
-
-[node name="SpawnArea2" parent="Level" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -120 )
-
-[node name="Ground" parent="Level" instance=ExtResource( 1 )]
-transform = Transform( 40, 0, 0, 0, 1, 0, 0, 0, 80, 0, 0, 0 )
+[node name="Level_2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
-
-[editable path="Level/Ground"]

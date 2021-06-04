@@ -1,12 +1,11 @@
 extends Spatial
 
-var _player_base_1
-var _player_base_2
+export (NodePath) var current_level
+
+onready var _level : Level = get_node(current_level)
 
 func open_doors():
-	$Level/SpawnArea1.open_doors()
-	$Level/SpawnArea2.open_doors()
+	_level.open_doors()
 	
 func close_doors():
-	($Level/SpawnArea1 as SpawnArea).close_doors()
-	($Level/SpawnArea2 as SpawnArea).close_doors()
+	_level.close_doors()

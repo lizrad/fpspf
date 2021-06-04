@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Attacking/Attacker.gd" type="Script" id=1]
 [ext_resource path="res://Addons/LineRenderer/LineRenderer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Attacking/AimVisualization.gd" type="Script" id=3]
 [ext_resource path="res://Players/VisibilityMaterial.tres" type="Material" id=4]
+[ext_resource path="res://Resources/Sounds/pew.wav" type="AudioStream" id=5]
 
 [node name="Attacker" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.208776, 0.0781412, -0.156078 )
@@ -30,5 +31,9 @@ material_override = ExtResource( 4 )
 cast_shadow = 0
 points = [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -3 ) ]
 globalCoords = false
+
+[node name="PewSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+unit_size = 50.0
 
 [connection signal="tree_exiting" from="." to="." method="_on_Attacker_tree_exiting"]

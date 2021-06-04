@@ -10,14 +10,17 @@ var died_at_frame : int = INF
 
 var _time_scale := 1.0
 
-var _dead = false
 var _first_alive_frame = true
 var _ranged_previous_ranged_attack_frame = -1
 var _melee_previous_melee_attack_frame = -1
 
 signal died
 
+func set_correct_colors() -> void:
+	$MeshInstance.material_override.set_shader_param("color", Constants.character_colors[id+4])
+	$OwnMeshInstance.material_override.set_shader_param("color", Constants.character_colors[id+4])
 
+	
 func set_time_scale(time_scale: float) -> void:
 	_time_scale = time_scale
 
@@ -75,6 +78,8 @@ func receive_damage(damage: float):
 		return
 	if _dead:
 		return
+	
+	$HitParticles.emitting=true
 	set_current_health(_current_health - damage)
 	
 	if _current_health <= 0:
@@ -103,10 +108,7 @@ func _set_initial_position() -> void:
 
 
 func _show_dead():
-	_dead = true
-	rotation.z = PI / 2
-	$CollisionShape.disabled = true
-	$Attacker.visible = false
+	._show_dead()
 	$VisibilityLights.set_enabled(false)
 
 

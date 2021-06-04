@@ -98,6 +98,8 @@ __meta__ = {
 size = Vector2( 496, 600 )
 handle_input_locally = false
 render_target_update_mode = 3
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
 shadow_atlas_size = 2048
 
 [node name="Camera" type="Camera" parent="CameraManager/ViewCamera/ViewportContainer/Viewport" index="0"]
@@ -107,6 +109,9 @@ environment = ExtResource( 6 )
 current = true
 fov = 90.0
 far = 200.0
+
+[node name="Listener" type="Listener" parent="CameraManager/ViewCamera/ViewportContainer/Viewport/Camera" index="0"]
+current = true
 
 [node name="PlayerHUD" parent="CameraManager/ViewCamera/ViewportContainer" index="1" instance=ExtResource( 4 )]
 

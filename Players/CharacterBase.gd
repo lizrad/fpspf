@@ -7,6 +7,7 @@ var visibility_mask: ViewportTexture
 var invincible := true # does not loose hp
 
 var _current_health := 3
+var _dead = false
 
 var _health_position : Vector3
 
@@ -71,6 +72,17 @@ func is_player() ->bool:
 func set_id(new_id):
 	id = new_id
 	set_rendering_for_character_id(id)
+
+func receive_damage(damage: float):
+	$HitParticles.emitting=true
+	$HitSound.play()
+
+func _show_dead():
+	_dead = true
+	rotation.z = PI / 2
+	$CollisionShape.disabled = true
+	$Attacker.visible = false
+	$DeathSound.play()
 
 func set_current_health(new_health):
 	_current_health = new_health

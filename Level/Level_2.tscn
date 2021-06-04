@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Level/Door.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Level/Cube.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Level/Wall.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Level/Level.gd" type="Script" id=4]
+[ext_resource path="res://Level/SpawnArea.gd" type="Script" id=5]
+
+[node name="Level_2" type="Spatial"]
+script = ExtResource( 4 )
+spawn_areas = [ NodePath("SpawnArea"), NodePath("SpawnArea2") ]
+
+[node name="Ground" parent="." instance=ExtResource( 2 )]
+transform = Transform( 120, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
+
+[node name="Obstacles" type="Spatial" parent="."]
+
+[node name="Wall2" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 10, 101, 4, 90 )
+
+[node name="Wall" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 5, 61, 4, 95 )
+
+[node name="Wall3" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 25, 0, 0, 0, 3, 0, 0, 0, 10, 16, 4, 90 )
+
+[node name="Wall4" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 5, -29, 4, 95 )
+
+[node name="Wall5" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 35, 0, 0, 0, 3, 0, 0, 0, 20, -84, 4, 80 )
+
+[node name="Wall6" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 25, 0, 0, 0, 3, 0, 0, 0, 15, -94, 4, 45 )
+
+[node name="Wall7" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 5, 0, 0, 0, 3, 0, 0, 0, 65, -114, 4, -35 )
+
+[node name="Wall8" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 45, 0, 0, 0, 3, 0, 0, 0, 10, -64, 4, -90 )
+
+[node name="Wall9" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 5, 0, 0, 0, 3, 0, 0, 0, 15, -14, 4, -85 )
+
+[node name="Wall10" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 5, 1, 4, -95 )
+
+[node name="Wall11" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 15, 0, 0, 0, 3, 0, 0, 0, 10, 26, 4, -90 )
+
+[node name="Wall12" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 40, 0, 0, 0, 3, 0, 0, 0, 5, 81, 4, -95 )
+
+[node name="Wall13" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 5, 0, 0, 0, 3, 0, 0, 0, 15, 116, 4, -75 )
+
+[node name="Wall14" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 20, 111, 4, -40 )
+
+[node name="Wall15" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 15, 0, 0, 0, 3, 0, 0, 0, 10, 106, 4, -10 )
+
+[node name="Wall16" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 10, 101, 4, 10 )
+
+[node name="Wall17" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 10, 111, 4, 30 )
+
+[node name="Wall18" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 5, 0, 0, 0, 3, 0, 0, 0, 20, 116, 4, 60 )
+
+[node name="Wall19" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 15, 0, 0, 0, 3, 0, 0, 0, 15, 26, 4, -50 )
+
+[node name="Wall20" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 20, 51, 4, -35 )
+
+[node name="Wall21" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 15, 31, 4, -20 )
+
+[node name="Wall22" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 5, 0, 0, 0, 3, 0, 0, 0, 15, -14, 4, -40 )
+
+[node name="Wall23" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 15, -19, 4, -10 )
+
+[node name="Wall24" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 10, -39, 4, -35 )
+
+[node name="Wall25" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 10, -59, 4, -15 )
+
+[node name="Wall26" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 5, -59, 4, 15 )
+
+[node name="Wall27" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 5, -9, 4, 35 )
+
+[node name="Wall28" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 10, 21, 4, 50 )
+
+[node name="Wall29" parent="Obstacles" instance=ExtResource( 3 )]
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 10, 51, 4, 20 )
+
+[node name="SpawnArea" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 95, 0, 70 )
+script = ExtResource( 5 )
+
+[node name="Door" parent="SpawnArea" instance=ExtResource( 1 )]
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, 5, 4, -11 )
+
+[node name="Door2" parent="SpawnArea" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 10, -5, 4, -1 )
+
+[node name="SpawnArea2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -105, 0, -70 )
+script = ExtResource( 5 )
+
+[node name="Door" parent="SpawnArea2" instance=ExtResource( 1 )]
+transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, 5, 4, 9 )
+
+[node name="Door2" parent="SpawnArea2" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 10, 15, 4, -1 )

@@ -48,7 +48,7 @@ func convert_active_to_ghost(frame: int):
 	new_ghost.id = active_player.id
 	new_ghost.get_node("MeshInstance").material_override.set_shader_param("color", Constants.character_colors[active_player.id + 4])
 	new_ghost.set_visibility_mask(active_player.get_used_visibility_mask())
-	
+	new_ghost.set_correct_colors()
 	new_ghost.connect("died", self, "_on_ghost_died", [new_ghost.get_index()])
 	last_ghost = new_ghost
 	reset_all_children(frame)

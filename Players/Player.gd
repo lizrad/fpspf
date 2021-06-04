@@ -83,8 +83,11 @@ func _physics_process(delta):
 			if rotate_input_vector != Vector3.ZERO:
 				_rotate_input_vector = rotate_input_vector
 				look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
+		
+		var move_direction_scale = (3.0 + movement_input_vector.dot(rotate_input_vector)) / 4.0 \
+				if Constants.scale_movement_to_view_direction else 1.0
 
-		apply_acceleration(movement_input_vector * move_acceleration)
+		apply_acceleration(movement_input_vector * move_acceleration * move_direction_scale)
 		move_and_slide(velocity)
 	
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
@@ -165,6 +168,8 @@ func receive_damage(damage: float):
 	if invincible:
 		print("	but is invincible!")
 		return
+	if _dead:
+		return
 
 	set_current_health(_current_health - damage)
 	
@@ -197,13 +202,6 @@ func _on_light_cone_entered(body: Node):
 func _on_light_cone_exited(body: Node):
 	if body is Ghost:
 		body.visible = false
-
-
-func _show_dead():
-	input_enabled = false
-	rotation.z = PI / 2
-	$CollisionShape.disabled = true
-	$Attacker.visible = false
 
 
 func _show_alive():

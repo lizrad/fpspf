@@ -16,6 +16,7 @@ func _ready():
 
 func show():
 	visible = true
+	$GameOverSound.play()
 
 func hide():
 	visible = false

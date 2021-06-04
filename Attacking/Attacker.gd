@@ -115,6 +115,7 @@ func _create_attack(wait_time, attack_type, owning_player) ->void:
 	attack.initialize(owning_player, attack_type)
 	
 	emit_signal("fired_burst_shot", attack_type)
+	$PewSound.play()
 
 
 func _attack_tree_exiting(attack) ->void:
