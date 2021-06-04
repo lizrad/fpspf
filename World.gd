@@ -84,10 +84,12 @@ func next_gamestate():
 				player_manager.toggle_active_player(false)
 			time_left = _current_frame*get_physics_process_delta_time()
 			_current_frame = 0
+
 		Constants.Gamestate.PREP:
 			# prepare for play
 			time_left = time_cycle + 1
 			$LevelManager.open_doors()
+			$LevelManager.play_sound_loop()
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.set_pawns_invincible(false)
 
@@ -105,6 +107,7 @@ func next_gamestate():
 
 			# starting preparation cycle
 			$LevelManager.close_doors()
+			$LevelManager.stop_sound_loop()
 			$HUD.set_cycle(cycle)
 			$HUD.reload_ammo()
 			for player_manager in $PlayerManagers.get_children():

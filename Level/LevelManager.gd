@@ -9,3 +9,9 @@ func open_doors():
 	
 func close_doors():
 	_level.close_doors()
+
+func play_sound_loop() -> void:
+	_level.get_node("AudioStreamPlayer").play()
+
+func stop_sound_loop() -> void:
+	_level.get_node("AudioStreamPlayer").stop()
