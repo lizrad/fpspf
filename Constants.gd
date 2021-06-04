@@ -12,6 +12,7 @@ export(Array, Color) var character_colors = [
 	Color("#9a9bff"), # Ghost 2
 	Color("#9a9bff"), # Ghost 3
 	Color("#9a9bff"), # Ghost 4
+	Color("#ffff00"), # yellow, pawn selection
 	Color(0.2, 0.6, 0.2), # Ghosts
 ]
 

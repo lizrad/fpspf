@@ -12,6 +12,12 @@ var _dead = false
 var _health_position : Vector3
 
 
+
+func set_correct_colors(color_id: int) -> void:
+	$MeshInstance.material_override.set_shader_param("color", Constants.character_colors[color_id])
+	$OwnMeshInstance.material_override.set_shader_param("color", Constants.character_colors[color_id])
+
+
 func _ready():
 	$Attacker.set_owning_player(self)
 	_health_position = $HealthDisplay.translation
@@ -44,7 +50,7 @@ func set_visibility_mask(mask: ViewportTexture):
 	
 	$OwnMeshInstance.material_override = load("res://Players/VisibilityMaterial.tres").duplicate()
 	$OwnMeshInstance.material_override.set_shader_param("visibility_mask", tex)
-	$OwnMeshInstance.material_override.set_shader_param("color", Constants.character_colors[id])
+	set_correct_colors(id)
 
 
 func get_used_visibility_mask():
@@ -60,7 +66,7 @@ func set_rendering_for_character_id(id):
 	_set_visible_instance_layers($VisibilityLights/OmniLight, 5 + id)
 	_set_visible_instance_layers($VisibilityLights/SightLight, 5 + id)
 	
-	$MeshInstance.material_override.set_shader_param("color", Constants.character_colors[id])
+	set_correct_colors(id)
 
 
 func get_id():

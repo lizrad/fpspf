@@ -9,6 +9,7 @@ export(float) var outer_deadzone := 0.8
 export(float) var rotate_threshold := 0.05
 
 signal died
+signal switched_pawn
 
 var ranged_attack_type := Constants.ranged_attack_type
 var melee_attack_type := Constants.melee_attack_type
@@ -22,6 +23,8 @@ var dash_cooldown := 1.0
 
 # TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
 var movement_records = []
+
+var selected_pawn : int = 0 # 0 is active player, > 0 ghost
 
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
@@ -59,6 +62,8 @@ func _physics_process(delta):
 				0.0
 			)
 			velocity += movement_input_vector * e_section
+			if time_since_dash_start == 0: 
+				$DashSound.play()
 			time_since_dash_start += delta
 		else:
 			if time_since_dash_start > dash_cooldown:
@@ -73,6 +78,10 @@ func _physics_process(delta):
 
 		if Input.is_action_pressed("player_melee_" + str(id)):
 			attack_type = melee_attack_type
+
+		# TODO: only allow switch in prep phase
+		if invincible && Input.is_action_pressed("player_switch_" + str(id)):
+			emit_signal("switched_pawn", selected_pawn + 1)
 
 		if attack_type:
 			if not $Attacker.attack(attack_type, self):
@@ -169,6 +178,7 @@ func receive_damage(damage: float):
 		print("	but is invincible!")
 		return
 	if _dead:
+		print("	but is dead!")
 		return
 
 	set_current_health(_current_health - damage)
@@ -205,6 +215,7 @@ func _on_light_cone_exited(body: Node):
 
 
 func _show_alive():
+	_dead = false
 	input_enabled = true
 	rotation.z = 0
 	$CollisionShape.disabled = false

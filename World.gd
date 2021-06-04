@@ -71,6 +71,7 @@ func next_gamestate():
 	match _current_gamestate:
 		Constants.Gamestate.GAME:
 			# prepare for replay
+			$LevelManager.stop_sound_loop() # TODO: play loop in reverse?
 			_replay_manager.show_replay_camera()
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.active_player.get_node("Attacker").reset()
@@ -107,7 +108,6 @@ func next_gamestate():
 
 			# starting preparation cycle
 			$LevelManager.close_doors()
-			$LevelManager.stop_sound_loop()
 			$HUD.set_cycle(cycle)
 			$HUD.reload_ammo()
 			for player_manager in $PlayerManagers.get_children():
