@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://Attacking/AttackType.gd" type="Script" id=1]
 [ext_resource path="res://Attacking/Melee/Melee.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Resources/Sounds/wham.wav" type="AudioStream" id=3]
 
 [resource]
 script = ExtResource( 1 )
@@ -15,4 +16,5 @@ continuously_damaging = false
 damage_invincibility_time = 0.0
 cooldown = 1.0
 damage = 3.0
+sound = ExtResource( 3 )
 attack = ExtResource( 2 )

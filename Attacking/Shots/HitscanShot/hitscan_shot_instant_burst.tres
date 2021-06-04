@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Attacking/AttackType.gd" type="Script" id=1]
 [ext_resource path="res://Attacking/Shots/bullet.png" type="Texture" id=2]
 [ext_resource path="res://Attacking/Shots/HitscanShot/HitscanShot.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Resources/Sounds/pew.wav" type="AudioStream" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -16,5 +17,6 @@ continuously_damaging = false
 damage_invincibility_time = 1.1
 cooldown = 0.75
 damage = 1.0
+sound = ExtResource( 4 )
 img_bullet = ExtResource( 2 )
 attack = ExtResource( 3 )

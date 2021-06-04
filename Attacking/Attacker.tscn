@@ -36,4 +36,6 @@ globalCoords = false
 stream = ExtResource( 5 )
 unit_size = 50.0
 
+[node name="SoundPlayer" type="AudioStreamPlayer3D" parent="."]
+unit_size = 50.0
 [connection signal="tree_exiting" from="." to="." method="_on_Attacker_tree_exiting"]
