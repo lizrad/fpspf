@@ -19,13 +19,13 @@ var _scores := [] # Scores for each player
 var _current_gamestate = Constants.Gamestate.PREP 
 var _current_frame := 0
 
-# The maximum number of frame a cycle took
+# the maximum number of frames a cycle took
 var _max_frames : int = 0
 var _an_active_player_died : bool = false
 
 
 func _ready():
-	# Connect to player events
+	# connect to player events
 	for player_manager in $PlayerManagers.get_children():
 		_player_managers.append(player_manager)
 		player_manager.connect("active_player_died", self, "_on_active_player_died", [player_manager])
@@ -53,8 +53,7 @@ func _physics_process(delta):
 	if _current_gamestate != Constants.Gamestate.REPLAY:
 		_current_frame += 1
 	
-	# If an active player died and all ghosts are finished playing, go to next
-	# gamestate
+	# if an active player died and all ghosts are finished playing, go to next gamestate
 	if use_continuous_mode:
 		if _an_active_player_died and _current_frame >= _max_frames:
 			next_gamestate()
@@ -79,7 +78,7 @@ func next_gamestate():
 				# get last created ghost and connect to bullet gain
 				var attacker = player_manager.last_ghost.get_node("Attacker")
 				attacker.connect("gain_bullet", $HUD, "regain_bullet", [player_manager.player_id])
-				
+
 				player_manager.set_pawns_invincible(true)
 				player_manager.set_ghosts_time_scale(-replay_speed)
 				player_manager.toggle_active_player(false)
@@ -93,6 +92,7 @@ func next_gamestate():
 			$LevelManager.play_sound_loop()
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.set_pawns_invincible(false)
+				player_manager.replace_ghost()
 
 		Constants.Gamestate.REPLAY:
 			# prepare for prep

@@ -9,6 +9,7 @@ signal ghost_player_died
 var active_player_scene = preload("res://Players/Player.tscn")
 var ghost_player_scene = preload("res://Players/Ghost.tscn")
 
+export(int) var max_ghosts := 3
 var active_player: Player
 var last_ghost: Ghost
 
@@ -57,8 +58,20 @@ func convert_active_to_ghost(frame: int):
 	reset_all_children(frame)
 
 
-# denies killing in spawning area,
-# also reset colors
+func replace_ghost() -> void:
+	# only replace if enough ghosts are available
+	if get_children().size() <= max_ghosts:
+		return
+
+	# if no ghost is selected, remove first created ghost
+	var ghost_index = max(active_player.selected_pawn, 1)
+
+	# remove selected ghost
+	var ghost = get_child(ghost_index)
+	active_player.global_transform.origin = ghost.global_transform.origin
+	ghost.queue_free()
+
+# denies killing in spawning area, also reset colors
 func set_pawns_invincible(invincible : bool):
 	for child in get_children():
 		child.invincible = invincible
@@ -81,16 +94,19 @@ func _on_ghost_died(ghost_index : int):
 
 
 func _on_pawn_switched(idx : int) -> void:
-	var allowed = get_children().size()
-	#print(name, " switched pawn: ", idx, " of ", allowed)
-	idx = idx % allowed
-	if idx < allowed:
-		for cand in allowed:
-			var pawn = get_child(cand)
-			if cand == idx:
-				pawn.set_correct_colors(8) # currently selected
-			elif cand == 0: # active player
-				pawn.set_correct_colors(player_id)  # active player
-			else:
-				pawn.set_correct_colors(player_id + 4)  # ghost
+	var candidates = get_children().size()
+	# only allow swap after max ghosts are reached
+	if candidates <= max_ghosts:
+		return
+
+	idx = idx % candidates
+	print(name, " switched pawn: ", idx, " of ", candidates)
+	for cand in candidates:
+		var pawn = get_child(cand)
+		if cand == idx:
+			pawn.set_correct_colors(8) # currently selected
+		elif cand == 0: # active player
+			pawn.set_correct_colors(player_id)  # active player
+		else:
+			pawn.set_correct_colors(player_id + 4)  # ghost
 	active_player.selected_pawn = idx

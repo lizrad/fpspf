@@ -14,7 +14,7 @@ signal switched_pawn
 var ranged_attack_type := Constants.ranged_attack_type
 var melee_attack_type := Constants.melee_attack_type
 
-# Dashing
+# dashing
 var time_since_dash_start := 0.0
 var initial_dash_burst := Constants.dash_impulse
 var dash_exponent := Constants.dash_exponent
@@ -24,6 +24,9 @@ var dash_cooldown := 1.0
 # TODO: Consider giving this an initial size -- it'll probably hold over 1000 entries
 var movement_records = []
 
+# pawn selection
+var _last_swap := 0
+export(int) var swap_cooldown := 500
 var selected_pawn : int = 0 # 0 is active player, > 0 ghost
 
 var velocity := Vector3.ZERO
@@ -37,7 +40,7 @@ onready var _player_hud : PlayerHUD = get_node("CameraManager/ViewCamera/Viewpor
 
 class MovementFrame extends Spatial:
 	var attack_type
-	
+
 	func _init(initial_transform, initial_attack_type):
 		self.transform = initial_transform
 		self.attack_type = initial_attack_type
@@ -50,7 +53,7 @@ func _ready():
 func _physics_process(delta):
 	if not visible:
 		return
-	
+
 	var attack_type = null
 	if input_enabled:
 		var input = get_normalized_input("player_move", outer_deadzone, inner_deadzone)
@@ -80,7 +83,9 @@ func _physics_process(delta):
 			attack_type = melee_attack_type
 
 		# TODO: only allow switch in prep phase
-		if invincible && Input.is_action_pressed("player_switch_" + str(id)):
+		var timestamp = OS.get_ticks_msec()
+		if invincible && Input.is_action_pressed("player_switch_" + str(id)) && timestamp > _last_swap + swap_cooldown:
+			_last_swap = timestamp
 			emit_signal("switched_pawn", selected_pawn + 1)
 
 		if attack_type:
