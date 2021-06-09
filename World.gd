@@ -4,6 +4,7 @@ export var time_cycle := 10.0 # total round time in seconds
 export var time_prep := 5.0 # time, before the round starts
 export var replay_speed := 1.0 # timescale of the replay
 export var num_cycles := 5 # max cycles for one game
+export var music_enabled := true
 
 export var use_total_kills : bool = false
 export var use_continuous_mode : bool = false
@@ -70,7 +71,8 @@ func next_gamestate():
 	match _current_gamestate:
 		Constants.Gamestate.GAME:
 			# prepare for replay
-			$LevelManager.stop_sound_loop() # TODO: play loop in reverse?
+			if music_enabled:
+				$LevelManager.stop_sound_loop() # TODO: play loop in reverse?
 			_replay_manager.show_replay_camera()
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.active_player.get_node("Attacker").reset()
@@ -89,7 +91,8 @@ func next_gamestate():
 			# prepare for play
 			time_left = time_cycle + 1
 			$LevelManager.open_doors()
-			$LevelManager.play_sound_loop()
+			if music_enabled:
+				$LevelManager.play_sound_loop()
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.set_pawns_invincible(false)
 				player_manager.replace_ghost()
