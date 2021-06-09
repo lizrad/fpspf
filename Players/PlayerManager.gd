@@ -68,7 +68,9 @@ func replace_ghost() -> void:
 
 	# remove selected ghost
 	var ghost = get_child(ghost_index)
-	active_player.global_transform.origin = ghost.global_transform.origin
+	if active_player.selected_pawn != 0:
+		active_player.global_transform.origin = ghost.global_transform.origin
+		active_player.selected_pawn = 0
 	ghost.queue_free()
 
 # denies killing in spawning area, also reset colors
