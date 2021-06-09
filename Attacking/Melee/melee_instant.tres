@@ -16,5 +16,6 @@ continuously_damaging = false
 damage_invincibility_time = 0.0
 cooldown = 1.0
 damage = 3.0
+bounce_strength = 250.0
 sound = ExtResource( 3 )
 attack = ExtResource( 2 )

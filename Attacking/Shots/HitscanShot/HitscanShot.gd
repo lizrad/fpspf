@@ -6,6 +6,7 @@ var _bullet_range
 var _attack_time # Set from the Shooter
 var _owning_player;
 var _damage := 10.0
+var _bounce_strength := 50.0
 var _visual := false
 var _first_frame := true
 
@@ -24,6 +25,7 @@ func initialize_visual(owning_player, attack_type) ->void:
 	
 func initialize(owning_player, attack_type) ->void:
 	_damage = attack_type.damage
+	_bounce_strength = attack_type.bounce_strength
 	_bullet_range = attack_type.attack_range
 	_continuosly_damaging = attack_type.continuously_damaging
 	_damage_invincibility_time = attack_type.damage_invincibility_time
@@ -70,9 +72,9 @@ func _update_collision():
 		
 		# Shoot player if it was damagable
 		if collider.is_in_group("Damagable"):
-			assert(collider.has_method("receive_damage"))
+			assert(collider.has_method("receive_hit"))
 			if (not _hit_bodies_invincibilty_tracker.has(collider) or _hit_bodies_invincibilty_tracker[collider] <=0):
 				_hit_bodies_invincibilty_tracker[collider]=_damage_invincibility_time
-				collider.receive_damage(_damage)
+				collider.receive_hit(_damage,-transform.basis.z*_bounce_strength)
 	else:
 			$LineRenderer.points[1] = Vector3(0,0,-_bullet_range)

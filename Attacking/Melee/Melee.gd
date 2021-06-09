@@ -2,6 +2,7 @@ extends Area
 
 export var only_hit_one_body = true
 var _damage := 10.0
+var _bounce_strength = 50.0
 var _attack_time := 2.00
 var _owning_player
 var _hit_something = false
@@ -17,6 +18,7 @@ func initialize_visual(owning_player, attack_type) ->void:
 	$Visualization.get_surface_material(0).albedo_color = Constants.character_colors[owning_player.id]
 func initialize(owning_player, attack_type) ->void:
 	_damage = attack_type.damage
+	_bounce_strength = attack_type.bounce_strength
 	_continuously_damaging = attack_type.continuously_damaging
 	_damage_invincibility_time = attack_type.damage_invincibility_time
 	_owning_player = owning_player
@@ -36,12 +38,12 @@ func _process(delta):
 
 func _hit_body(body) ->void:
 	if body.is_in_group("Damagable"):
-			assert(body.has_method("receive_damage"))
+			assert(body.has_method("receive_hit"))
 			if (not _hit_bodies_invincibilty_tracker.has(body) or _hit_bodies_invincibilty_tracker[body] <=0):
 				_hit_bodies_invincibilty_tracker[body]=_damage_invincibility_time
 				print(str("Melee attack hit body named ",body.name))
 				_hit_something = true
-				body.receive_damage(_damage)
+				body.receive_hit(_damage, (body.global_transform.origin-global_transform.origin).normalized()*_bounce_strength)
 
 func _physics_process(delta):
 	var bodies =  get_overlapping_bodies()

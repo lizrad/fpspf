@@ -177,7 +177,8 @@ func apply_acceleration(acceleration):
 	velocity += acceleration
 
 
-func receive_damage(damage: float):
+func receive_hit(damage: float, bounce: Vector3):
+	
 	print(name + " received damage: ", damage)
 	if invincible:
 		print("	but is invincible!")
@@ -186,8 +187,10 @@ func receive_damage(damage: float):
 		print("	but is dead!")
 		return
 
-	set_current_health(_current_health - damage)
-	
+	if Constants.player_only_bounce:
+		velocity += bounce
+	else:
+		set_current_health(_current_health - damage)
 	if _current_health <= 0:
 		die()
 

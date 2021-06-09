@@ -15,4 +15,5 @@ continuously_damaging = true
 damage_invincibility_time = 0.3
 cooldown = 1.0
 damage = 1.0
+bounce_strength = 50.0
 attack = ExtResource( 2 )

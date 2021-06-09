@@ -11,6 +11,7 @@ export var continuously_damaging: bool
 export var damage_invincibility_time: float
 export var cooldown: float
 export var damage: float
+export var bounce_strength: float
 export (AudioStreamSample) var sound
 export (StreamTexture) var img_bullet
 export (PackedScene) var attack

@@ -67,7 +67,7 @@ func _physics_process(delta):
 					var frame = movement_record[died_at_frame if died_at_frame < movement_record.size() else movement_record.size() - 1]
 					global_transform = frame.transform
 
-func receive_damage(damage: float):
+func receive_hit(damage: float, bounce: Vector3):
 	print(name + " received damage: ", damage)
 	if invincible:
 		print("	but is invincible!")

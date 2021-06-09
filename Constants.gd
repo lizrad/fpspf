@@ -2,6 +2,7 @@ extends Node
 
 # Player constants
 var max_health := 3
+var player_only_bounce := true
 
 export(Array, Color) var character_colors = [
 	Color(1.0, 0.0, 0.0), # Player 1

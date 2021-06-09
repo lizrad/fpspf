@@ -79,9 +79,6 @@ func set_id(new_id):
 	id = new_id
 	set_rendering_for_character_id(id)
 
-func receive_damage(damage: float):
-	$HitParticles.emitting=true
-	$HitSound.play()
 
 func _show_dead():
 	_dead = true
