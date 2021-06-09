@@ -33,13 +33,13 @@ func _process(delta):
 	if _being_captured:
 		if _current_capture_team == _capture_team:
 			# Current team increases the capture process
-			_capture(delta)
+			_capture(delta / Constants.capture_time)
 		else:
 			# Enemy team decreases capture process and takes over point
-			_recapture(delta)
+			_recapture(delta / Constants.capture_time)
 	else:
 		# No team is capturing -> progress decreases
-		_release(delta)
+		_release(delta / Constants.capture_time)
 
 
 func get_capture_progress() -> float:
@@ -59,7 +59,8 @@ func stop_capturing(team_id : int):
 
 func _capture(delta : float):
 	_capture_progress = min(1, _capture_progress + delta * Constants.capture_speed)
-	if _capture_progress == 1:
+	if _capture_progress == 1 and not _is_captured:
+		_is_captured = true
 		emit_signal("captured", _capture_team)
 		_set_capture_color(true)
 
@@ -73,6 +74,7 @@ func _recapture(delta : float):
 func _release(delta : float):
 	if _capture_progress > 0:
 		if _capture_progress == 1:
+			_is_captured = false
 			emit_signal("capture_lost", _capture_team)
 		_capture_progress = max(0, _capture_progress - delta * Constants.capture_release_speed)
 	elif _capture_team != -1:

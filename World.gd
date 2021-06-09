@@ -109,6 +109,9 @@ func next_gamestate():
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.set_pawns_invincible(false)
 				player_manager.replace_ghost()
+			# Reset captured point score
+			_captured_points[0] = 0
+			_captured_points[1] = 0
 
 		Constants.Gamestate.REPLAY:
 			# prepare for prep
@@ -116,11 +119,6 @@ func next_gamestate():
 			_replay_manager.hide_replay_camera()
 			# update cycle -> game over if reached num_cycles
 			cycle += 1
-			if (cycle > num_cycles):
-				$HUD.set_winner(_get_winner())
-				$HUD.toggle_game_over_screen(true)
-				set_process(false)
-				return
 
 			# starting preparation cycle
 			_level_manager.close_doors()
@@ -216,12 +214,17 @@ func _on_capture_team_changed(team_id : int, capture_point_id : int):
 		Constants.character_colors[team_id] if team_id != -1 \
 		else Constants.capture_point_color_neutral)
 
-func _on_capture_completed(capture_point_id : int, team_id : int):
-	_captured_points[capture_point_id] = team_id
-		
+func _on_capture_completed(team_id : int, capture_point_id : int):
+	print("Point: " + str(capture_point_id) + " | TeamID: " + str(team_id))
+	_captured_points[team_id] += 1 
+	if _captured_points[team_id] == 2:
+		$HUD.set_winner(team_id)
+		$HUD.toggle_game_over_screen(true)
+		set_process(false)
 
-func _on_capture_lost(capture_point_id : int, team_id : int):
-	_captured_points[capture_point_id] = -1
+
+func _on_capture_lost(team_id : int, capture_point_id : int):
+	_captured_points[team_id] -= 1
 
 
 

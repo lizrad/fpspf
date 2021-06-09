@@ -11,7 +11,7 @@
 [node name="Level_2" type="Spatial"]
 script = ExtResource( 4 )
 spawn_areas = [ NodePath("SpawnArea"), NodePath("SpawnArea2") ]
-capture_points = [ NodePath("CapturePoint"), NodePath("CapturePoint2"), NodePath("CapturePoint3") ]
+capture_points = [ NodePath("CapturePoint3"), NodePath("CapturePoint2"), NodePath("CapturePoint") ]
 
 [node name="Ground" parent="." instance=ExtResource( 2 )]
 transform = Transform( 120, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
@@ -128,11 +128,11 @@ transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 10, 15, 4, -1 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 
-[node name="CapturePoint" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 1, -5 )
-
-[node name="CapturePoint2" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, -20 )
-
 [node name="CapturePoint3" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -95, 1, 10 )
+
+[node name="CapturePoint2" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, -15 )
+
+[node name="CapturePoint" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 1, -5 )
