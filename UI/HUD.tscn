@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://UI/HUD.gd" type="Script" id=1]
 [ext_resource path="res://UI/BulletAmmo.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Fonts/Roboto-Thin.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://UI/GameOverScreen.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Resources/Icons/circle_white_256x256.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
@@ -37,6 +38,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+capture_points = [ NodePath("CenterContainer/HBoxContainer/TextureProgress"), NodePath("CenterContainer/HBoxContainer/TextureProgress2"), NodePath("CenterContainer/HBoxContainer/TextureProgress3") ]
 
 [node name="Timer" type="Label" parent="."]
 anchor_left = 0.5
@@ -104,3 +106,52 @@ margin_bottom = 111.0
 
 [node name="GameOverScreen" parent="." instance=ExtResource( 4 )]
 visible = false
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -28.4832
+margin_top = 35.5957
+margin_right = 747.517
+margin_bottom = 291.596
+rect_scale = Vector2( 0.1, 0.1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+margin_right = 776.0
+margin_bottom = 256.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureProgress" type="TextureProgress" parent="CenterContainer/HBoxContainer"]
+margin_right = 256.0
+margin_bottom = 256.0
+value = 70.0
+texture_under = ExtResource( 5 )
+texture_progress = ExtResource( 5 )
+fill_mode = 4
+tint_under = Color( 0.423529, 0.423529, 0.423529, 1 )
+
+[node name="TextureProgress2" type="TextureProgress" parent="CenterContainer/HBoxContainer"]
+margin_left = 260.0
+margin_right = 516.0
+margin_bottom = 256.0
+value = 70.0
+texture_under = ExtResource( 5 )
+texture_progress = ExtResource( 5 )
+fill_mode = 4
+tint_under = Color( 0.423529, 0.423529, 0.423529, 1 )
+
+[node name="TextureProgress3" type="TextureProgress" parent="CenterContainer/HBoxContainer"]
+margin_left = 520.0
+margin_right = 776.0
+margin_bottom = 256.0
+value = 70.0
+texture_under = ExtResource( 5 )
+texture_progress = ExtResource( 5 )
+fill_mode = 4
+tint_under = Color( 0.423529, 0.423529, 0.423529, 1 )

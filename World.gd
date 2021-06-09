@@ -14,6 +14,7 @@ var time_left # round timer in ms
 var cycle := 1 # number of current cylce
 
 onready var _replay_manager := get_node("ReplayManager")
+onready var _level_manager := get_node("LevelManager")
 onready var _player_managers := []
 
 var _scores := [] # Scores for each player
@@ -23,6 +24,8 @@ var _current_frame := 0
 # the maximum number of frames a cycle took
 var _max_frames : int = 0
 var _an_active_player_died : bool = false
+
+var _captured_points := [0,0]
 
 
 func _ready():
@@ -40,7 +43,14 @@ func _ready():
 	$HUD.set_time(time_left)
 	$HUD.set_cycle(cycle)
 	$HUD.set_num_cycles(num_cycles)
-
+	
+	# Subscribe to capture point signals
+	var index = 0
+	for capture_point in _level_manager.get_capture_points():
+		capture_point.connect("capture_team_changed", self, "_on_capture_team_changed", [index])
+		capture_point.connect("captured", self, "_on_capture_completed", [index])
+		capture_point.connect("capture_lost", self, "_on_capture_lost", [index])
+		index += 1
 
 func _process(delta):
 	time_left -= (delta *(1 if _current_gamestate != Constants.Gamestate.REPLAY else replay_speed))
@@ -49,6 +59,9 @@ func _process(delta):
 	$HUD.set_time(time_left)
 	if time_left <= 0:
 		next_gamestate()
+	
+	# Update Capture UI
+	_update_capture_ui()
 
 func _physics_process(delta):
 	if _current_gamestate != Constants.Gamestate.REPLAY:
@@ -72,7 +85,7 @@ func next_gamestate():
 		Constants.Gamestate.GAME:
 			# prepare for replay
 			if music_enabled:
-				$LevelManager.stop_sound_loop() # TODO: play loop in reverse?
+				_level_manager.stop_sound_loop() # TODO: play loop in reverse?
 			_replay_manager.show_replay_camera()
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.active_player.get_node("Attacker").reset()
@@ -90,9 +103,9 @@ func next_gamestate():
 		Constants.Gamestate.PREP:
 			# prepare for play
 			time_left = time_cycle + 1
-			$LevelManager.open_doors()
+			_level_manager.open_doors()
 			if music_enabled:
-				$LevelManager.play_sound_loop()
+				_level_manager.play_sound_loop()
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.set_pawns_invincible(false)
 				player_manager.replace_ghost()
@@ -110,7 +123,7 @@ func next_gamestate():
 				return
 
 			# starting preparation cycle
-			$LevelManager.close_doors()
+			_level_manager.close_doors()
 			$HUD.set_cycle(cycle)
 			$HUD.reload_ammo()
 			for player_manager in $PlayerManagers.get_children():
@@ -188,3 +201,26 @@ func _on_active_player_died(playerManger: PlayerManager) -> void:
 # 	- add score
 func _on_ghost_player_died(playerManger: PlayerManager) -> void:
 	_score_point(_get_opponent_player(playerManger.player_id))
+
+
+func _update_capture_ui():
+	var index = 0
+	for capture_point in _level_manager.get_capture_points():
+		$HUD.update_capture_point_ui(index, capture_point.get_capture_progress())
+		index += 1
+
+func _on_capture_team_changed(team_id : int, capture_point_id : int):
+	$HUD.set_capture_point_color(capture_point_id, \
+		Constants.character_colors[team_id] if team_id != -1 \
+		else Constants.capture_point_color_neutral)
+
+func _on_capture_completed(capture_point_id : int, team_id : int):
+	_captured_points[capture_point_id] = team_id
+		
+
+func _on_capture_lost(capture_point_id : int, team_id : int):
+	_captured_points[capture_point_id] = -1
+
+
+
+

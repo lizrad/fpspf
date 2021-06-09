@@ -1,5 +1,7 @@
 extends Control
 
+export (Array, NodePath) var capture_points := [] 
+
 var _gamestate = Constants.Gamestate.PREP
 var _cycle := 0
 var _num_cycles := 0
@@ -96,3 +98,11 @@ func toggle_game_over_screen(active: bool):
 		$GameOverScreen.show()
 	else:
 		$GameOverScreen.hide()
+
+
+func update_capture_point_ui(capture_point_index : int, progress : float):
+	get_node(capture_points[capture_point_index]).value = progress * 100
+
+
+func set_capture_point_color(capture_point_index : int, color : Color):
+	get_node(capture_points[capture_point_index]).tint_progress = color

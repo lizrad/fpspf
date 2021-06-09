@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Level/Door.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Level/Cube.tscn" type="PackedScene" id=2]
@@ -6,10 +6,12 @@
 [ext_resource path="res://Level/Level.gd" type="Script" id=4]
 [ext_resource path="res://Level/SpawnArea.gd" type="Script" id=5]
 [ext_resource path="res://Resources/Sounds/level.wav" type="AudioStream" id=6]
+[ext_resource path="res://Level/CapturePoint.tscn" type="PackedScene" id=7]
 
 [node name="Level_2" type="Spatial"]
 script = ExtResource( 4 )
 spawn_areas = [ NodePath("SpawnArea"), NodePath("SpawnArea2") ]
+capture_points = [ NodePath("CapturePoint"), NodePath("CapturePoint2"), NodePath("CapturePoint3") ]
 
 [node name="Ground" parent="." instance=ExtResource( 2 )]
 transform = Transform( 120, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
@@ -125,3 +127,12 @@ transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 10, 15, 4, -1 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+
+[node name="CapturePoint" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 70, 1, -5 )
+
+[node name="CapturePoint2" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, -20 )
+
+[node name="CapturePoint3" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -95, 1, 10 )

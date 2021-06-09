@@ -46,3 +46,11 @@ export var scale_movement_to_view_direction := true
 var ranged_attack_type := preload("res://Attacking/Shots/HitscanShot/hitscan_shot_instant_burst.tres")
 var melee_attack_type := preload("res://Attacking/Melee/melee_instant.tres")
 
+# CAPTURE
+var capture_speed : float = 1.0
+var recapture_speed : float = 2.0
+var capture_release_speed : float = 0.5
+var capture_time : float = 5.0
+var capture_point_color_neutral = Color.black
+
+

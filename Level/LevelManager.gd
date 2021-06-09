@@ -15,3 +15,6 @@ func play_sound_loop() -> void:
 
 func stop_sound_loop() -> void:
 	_level.get_node("AudioStreamPlayer").stop()
+
+func get_capture_points() -> Array:
+	return _level.get_capture_points()
