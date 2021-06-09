@@ -103,6 +103,7 @@ func _physics_process(delta):
 
 		apply_acceleration(movement_input_vector * move_acceleration * move_direction_scale)
 		move_and_slide(velocity)
+		transform.origin.y = 0
 	
 	movement_records.append(MovementFrame.new(global_transform, attack_type))
 
