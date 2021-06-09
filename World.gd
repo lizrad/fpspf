@@ -114,7 +114,9 @@ func next_gamestate():
 			$HUD.set_cycle(cycle)
 			$HUD.reload_ammo()
 			for player_manager in $PlayerManagers.get_children():
-				player_manager.last_ghost.get_node("Attacker").reset()
+				for player in player_manager.get_children():
+					player.get_node("Attacker").reset()
+				
 				var attacker = player_manager.active_player.get_node("Attacker")
 				attacker.reload_all()
 				# disconnect ghosts from bullet refill
