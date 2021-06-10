@@ -139,6 +139,9 @@ func _set_initial_position() -> void:
 	global_transform = movement_record[start_frame].transform
 
 
+func die():
+	_show_dead()
+
 func _show_dead():
 	._show_dead()
 	$VisibilityLights.set_enabled(false)
