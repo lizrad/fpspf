@@ -175,6 +175,7 @@ func die():
 	_show_dead()
 
 func _show_dead():
+	set_current_health(0)
 	._show_dead()
 	$VisibilityLights.set_enabled(false)
 
