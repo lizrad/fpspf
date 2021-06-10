@@ -102,6 +102,7 @@ func next_gamestate():
 
 		Constants.Gamestate.PREP:
 			# prepare for play
+			_replay_manager.hide_replay_camera()
 			time_left = time_cycle + 1
 			_level_manager.open_doors()
 			if music_enabled:
@@ -109,6 +110,7 @@ func next_gamestate():
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.set_pawns_invincible(false)
 				player_manager.replace_ghost()
+				player_manager.toggle_path(false, time_prep)
 			# Reset captured point score
 			_captured_points[0] = 0
 			_captured_points[1] = 0
@@ -116,7 +118,6 @@ func next_gamestate():
 		Constants.Gamestate.REPLAY:
 			# prepare for prep
 			_an_active_player_died = false
-			_replay_manager.hide_replay_camera()
 			# update cycle -> game over if reached num_cycles
 			cycle += 1
 
@@ -136,6 +137,7 @@ func next_gamestate():
 				player_manager.set_ghosts_time_scale(1.0)
 				player_manager.reset_all_children(0)
 				player_manager.toggle_active_player(true)
+				player_manager.toggle_path(true, time_prep)
 			time_left = time_prep + 1
 			# reset scores
 			if not use_total_kills:
