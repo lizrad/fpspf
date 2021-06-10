@@ -11,7 +11,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.208776, 0.0781412, -0.156078
 script = ExtResource( 1 )
 
 [node name="AttackOriginPosition" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.856 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 
 [node name="AimVisualization" type="RayCast" parent="AttackOriginPosition"]
 enabled = true
