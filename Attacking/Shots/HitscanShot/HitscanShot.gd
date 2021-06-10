@@ -12,6 +12,8 @@ var _first_frame := true
 
 var _hit_bodies_invincibilty_tracker = {}
 
+var _attack_type_type
+
 func initialize_visual(owning_player, attack_type) ->void:
 	_visual = true
 	_bullet_range = attack_type.attack_range
@@ -32,6 +34,7 @@ func initialize(owning_player, attack_type) ->void:
 	cast_to = Vector3(0,0,-_bullet_range)
 	_attack_time = attack_type.attack_time
 	_owning_player = owning_player
+	_attack_type_type = attack_type.attack_type_type
 	$LineRenderer.points = []
 	$LineRenderer.points.append(Vector3.ZERO)
 	$LineRenderer.points.append(Vector3.ZERO)
@@ -75,6 +78,6 @@ func _update_collision():
 			assert(collider.has_method("receive_hit"))
 			if (not _hit_bodies_invincibilty_tracker.has(collider) or _hit_bodies_invincibilty_tracker[collider] <=0):
 				_hit_bodies_invincibilty_tracker[collider]=_damage_invincibility_time
-				collider.receive_hit(_damage,-transform.basis.z*_bounce_strength)
+				collider.receive_hit(_attack_type_type, _damage,-transform.basis.z*_bounce_strength)
 	else:
-			$LineRenderer.points[1] = Vector3(0,0,-_bullet_range)
+		$LineRenderer.points[1] = Vector3(0,0,-_bullet_range)

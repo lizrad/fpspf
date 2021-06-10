@@ -106,7 +106,7 @@ func _apply_frame_transform(frame):
 	var record = movement_record[frame]
 	global_transform = record.transform
 
-func receive_hit(damage: float, bounce: Vector3):
+func receive_hit(attack_type_typ, damage: float, bounce: Vector3):
 	if invincible:
 		return
 	if _dead:

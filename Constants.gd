@@ -46,9 +46,9 @@ export var scale_movement_to_view_direction := true
 var first_person = false
 
 var ranged_attack_types = [
-	preload("res://Attacking/Shots/HitscanShot/hitscan_shot_instant_burst.tres"),
+	preload("res://Attacking/Shots/HitscanShot/hitscan_shot_reset.tres"),
 	preload("res://Attacking/Shots/WallPlacement/wall_placement_attack.tres"),
-	preload("res://Attacking/Shots/HitscanShot/hitscan_shot_instant_burst.tres")
+	preload("res://Attacking/Shots/HitscanShot/hitscan_shot_reset.tres")
 ]
 
 var ranged_attack_type := preload("res://Attacking/Shots/HitscanShot/hitscan_shot_instant_burst.tres")
