@@ -10,6 +10,7 @@
 
 [node name="World" type="Spatial"]
 script = ExtResource( 2 )
+time_cycle = 30.0
 replay_speed = 5.0
 
 [node name="PlayerManagers" type="Spatial" parent="."]
@@ -31,3 +32,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
 
 [node name="CountdownSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+volume_db = -10.0
