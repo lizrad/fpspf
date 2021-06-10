@@ -15,6 +15,7 @@ export var bounce_strength: float
 export (AudioStreamSample) var sound
 export (StreamTexture) var img_bullet
 export (PackedScene) var attack
+export (PackedScene) var player_accessory
 
 # ATTACKS
 enum AttackTypeType {NORMAL, RESET}

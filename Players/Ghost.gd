@@ -147,9 +147,6 @@ func toggle_path(toggle : bool, time_prep: float)->void:
 			var index = int(step*i+prepOffset)
 			if(index<movement_record.size()):
 				$ToWorldNode/PathLine.curve.add_point(movement_record[index].transform.origin)
-	print(name)
-	for i in range($ToWorldNode/PathLine.curve.get_point_count()):
-		print($ToWorldNode/PathLine.curve.get_point_position(i))
 	pass
 
 func reset(start_frame : int) -> void:
