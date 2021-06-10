@@ -57,6 +57,8 @@ func convert_active_to_ghost(frame: int):
 	if _accessory:
 		var ghost_accessory = active_player.ranged_attack_type.player_accessory.instance()
 		new_ghost.add_child(ghost_accessory)
+		ghost_accessory.material_override.set_shader_param("visibility_mask", active_player.get_used_visibility_mask())
+		ghost_accessory.get_node("OwnMesh").set_layer_mask_bit(5 + player_id, true)
 		_accessory.queue_free()
 		_accessory = null
 	new_ghost.movement_record = movement_record
@@ -76,7 +78,9 @@ func convert_active_to_ghost(frame: int):
 		active_player.ranged_attack_type = Constants.ranged_attack_types[current_round_number]
 		if active_player.ranged_attack_type.player_accessory:
 			_accessory = active_player.ranged_attack_type.player_accessory.instance()
+			_accessory.get_node("OwnMesh").set_layer_mask_bit(5 + player_id, true)
 			active_player.add_child(_accessory);
+			_accessory.material_override.set_shader_param("visibility_mask", active_player.get_used_visibility_mask())
 
 
 func replace_ghost() -> void:
@@ -100,7 +104,9 @@ func replace_ghost() -> void:
 	
 	if active_player.ranged_attack_type.player_accessory:
 		_accessory = active_player.ranged_attack_type.player_accessory.instance()
-		active_player.add_child(_accessory);
+		active_player.add_child(_accessory)
+		_accessory.material_override.set_shader_param("visibility_mask", active_player.get_used_visibility_mask())
+		_accessory.get_node("OwnMesh").set_layer_mask_bit(5 + player_id, true)
 	
 	ghost.queue_free()
 
