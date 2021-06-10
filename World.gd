@@ -143,6 +143,9 @@ func next_gamestate():
 				player_manager.reset_all_children(0)
 				player_manager.toggle_active_player(true)
 				player_manager.toggle_path(true, time_prep)
+				
+				player_manager.set_selected_ghost_color(0)
+				
 			time_left = time_prep + 1
 			# reset scores
 			if not use_total_kills:
