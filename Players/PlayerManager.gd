@@ -75,7 +75,6 @@ func convert_active_to_ghost(frame: int):
 	if current_round_number < Constants.ranged_attack_types.size():
 		active_player.ranged_attack_type = Constants.ranged_attack_types[current_round_number]
 		if active_player.ranged_attack_type.player_accessory:
-			print("here");
 			_accessory = active_player.ranged_attack_type.player_accessory.instance()
 			active_player.add_child(_accessory);
 
@@ -96,9 +95,13 @@ func replace_ghost() -> void:
 	if _accessory:
 		_accessory.queue_free()
 	active_player.ranged_attack_type = Constants.ranged_attack_types[ghost.played_in_round]
+	
+	current_round_number = ghost.played_in_round
+	
 	if active_player.ranged_attack_type.player_accessory:
 		_accessory = active_player.ranged_attack_type.player_accessory.instance()
 		active_player.add_child(_accessory);
+	
 	ghost.queue_free()
 
 # denies killing in spawning area, also reset colors

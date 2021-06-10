@@ -106,24 +106,24 @@ transform = Transform( 20, 0, 0, 0, 3, 0, 0, 0, 10, 21, 4, 50 )
 transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 10, 51, 4, 20 )
 
 [node name="SpawnArea" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 95, 0, 70 )
+transform = Transform( 2.52871, 0, 0, 0, 1, 0, 0, 0, 2.52871, 74.4245, 0, 67.7772 )
 script = ExtResource( 5 )
 
 [node name="Door" parent="SpawnArea" instance=ExtResource( 1 )]
-transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, 5, 4, -11 )
+transform = Transform( 8.36996, 0, 0, 0, 3, 0, 0, 0, 1, 2.11774, 0.588234, -11.9859 )
 
 [node name="Door2" parent="SpawnArea" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 10, -5, 4, -1 )
+transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 9.852, -5.21899, 4.00002, -1.11429 )
 
 [node name="SpawnArea2" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -105, 0, -70 )
+transform = Transform( 2.49603, 0, 0, 0, 1, 0, 0, 0, 2.49603, -105, 0, -70 )
 script = ExtResource( 5 )
 
 [node name="Door" parent="SpawnArea2" instance=ExtResource( 1 )]
-transform = Transform( 10, 0, 0, 0, 3, 0, 0, 0, 1, 5, 4, 9 )
+transform = Transform( 5.982, 0, 0, 0, 3, 0, 0, 0, 1, 4.4223, 4.00821, 19.0535 )
 
 [node name="Door2" parent="SpawnArea2" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 10, 15, 4, -1 )
+transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 6.872, 19.4577, 4, 3.02064 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
