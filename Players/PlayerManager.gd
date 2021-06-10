@@ -54,7 +54,7 @@ func convert_active_to_ghost(frame: int):
 	var new_ghost = ghost_player_scene.instance()
 	add_child(new_ghost)
 	
-	if _accessory:
+	if active_player.ranged_attack_type.player_accessory:
 		var ghost_accessory = active_player.ranged_attack_type.player_accessory.instance()
 		new_ghost.add_child(ghost_accessory)
 		_accessory.queue_free()
