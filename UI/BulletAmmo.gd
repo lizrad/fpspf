@@ -36,7 +36,6 @@ func remove_bullet():
 
 
 func reload():
-	print("reloading all bullets")
 	_num_bullets = attack_type.ammunition
 	for i in range(_num_bullets):
 		$HBoxContainer.get_child(i).visible = true

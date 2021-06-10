@@ -83,7 +83,6 @@ func _physics_process(delta):
 # 	- reset player starting point
 # 	- restarting level time
 func next_gamestate():
-	print("Switching gamestate from "+Constants.Gamestate.keys()[_current_gamestate]+" to "+Constants.Gamestate.keys()[(_current_gamestate+1)%Constants.Gamestate.size()])
 	match _current_gamestate:
 		Constants.Gamestate.GAME:
 			# prepare for replay
