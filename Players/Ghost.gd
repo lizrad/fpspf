@@ -17,8 +17,25 @@ var _ranged_previous_ranged_attack_frame = -1
 var _previous_future_attack_frame_index = -1
 var _melee_previous_melee_attack_frame = -1
 
+var _path_active := false
+
 signal died
 
+func _ready():
+	$ToWorldNode/PathLine.curve = Curve3D.new()
+	$ToWorldNode/PathPolygon.material_override = SpatialMaterial.new()
+	$ToWorldNode/PathPolygon.material_override.flags_unshaded = true
+	$ToWorldNode/PathPolygon.material_override.flags_no_depth_test = true
+	var circleArray = []
+	var circleRadius = 0.5
+	for i in range(12):
+		var angle = 2*PI * float(i)/float(12)
+		var x = sin(angle)*circleRadius
+		var y = cos(angle)*circleRadius
+		circleArray.append(Vector2(x,y))
+	var circle = PoolVector2Array(circleArray)
+	$ToWorldNode/PathPolygon.polygon = circle;
+	pass
 	
 func set_time_scale(time_scale: float) -> void:
 	_time_scale = time_scale
@@ -118,7 +135,22 @@ func receive_hit(attack_type_typ, damage: float, bounce: Vector3):
 		died_at_frame = current_frame
 		_show_dead()
 		emit_signal("died")
-
+		
+func toggle_path(toggle : bool, time_prep: float)->void:
+	$ToWorldNode/PathLine.curve.clear_points()
+	_path_active = toggle
+	if toggle:
+		var prepOffset = time_prep * ProjectSettings.get_setting("physics/common/physics_fps")
+		var stepAmount = 60
+		var step = int(float((movement_record.size()-prepOffset))/float(stepAmount));
+		for i in range(stepAmount):
+			var index = int(step*i+prepOffset)
+			if(index<movement_record.size()):
+				$ToWorldNode/PathLine.curve.add_point(movement_record[index].transform.origin)
+	print(name)
+	for i in range($ToWorldNode/PathLine.curve.get_point_count()):
+		print($ToWorldNode/PathLine.curve.get_point_position(i))
+	pass
 
 func reset(start_frame : int) -> void:
 	current_frame = start_frame
@@ -133,7 +165,10 @@ func reset(start_frame : int) -> void:
 	_set_initial_position()
 	set_current_health(Constants.max_health)
 
-
+func set_correct_colors(color_id: int) -> void:
+	.set_correct_colors(color_id)
+	$ToWorldNode/PathPolygon.material_override.albedo_color = Constants.character_colors[color_id]
+	
 func _set_initial_position() -> void:
 	var start_frame = current_frame if current_frame < movement_record.size() else movement_record.size()-1
 	global_transform = movement_record[start_frame].transform

@@ -36,6 +36,10 @@ func set_ghosts_time_scale(time_scale: float) -> void:
 		if child != active_player:
 			child.set_time_scale(time_scale)
 
+func toggle_path(toggle: bool, time_prep: float)->void:
+	for child in get_children():
+		if child != active_player:
+			child.toggle_path(toggle, time_prep)
 
 func reset_all_children(frame: int) ->void:
 	for child in get_children():
