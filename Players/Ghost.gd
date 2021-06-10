@@ -8,6 +8,8 @@ var current_frame : int = 0
 
 var died_at_frame : int = INF
 
+var played_in_round: int
+
 var _time_scale := 1.0
 
 var _first_alive_frame = true
