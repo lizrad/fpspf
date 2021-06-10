@@ -8,11 +8,11 @@
 [resource]
 script = ExtResource( 1 )
 ammunition = 9
-burst_amount = 5
-burst_delay = 0.1
+burst_amount = 1
+burst_delay = 0.0
 attack_range = 10.0
 attack_time = 0.35
-recoil = 10.0
+recoil = 15.0
 continuously_damaging = false
 damage_invincibility_time = 1.1
 cooldown = 0.75
@@ -21,4 +21,4 @@ bounce_strength = 50.0
 sound = ExtResource( 4 )
 img_bullet = ExtResource( 2 )
 attack = ExtResource( 3 )
-attack_type_type = 0
+attack_type_type = 1

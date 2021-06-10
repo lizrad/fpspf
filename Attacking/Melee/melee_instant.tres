@@ -19,3 +19,4 @@ damage = 3.0
 bounce_strength = 250.0
 sound = ExtResource( 3 )
 attack = ExtResource( 2 )
+attack_type_type = 0

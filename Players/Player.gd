@@ -178,7 +178,11 @@ func apply_acceleration(acceleration):
 	velocity += acceleration
 
 
-func receive_hit(damage: float, bounce: Vector3):
+func receive_hit(attack_type_typ, damage: float, bounce: Vector3):
+	
+	if attack_type_typ == AttackType.AttackTypeType.RESET:
+		_move_player_to_spawn()
+		return
 	
 	print(name + " received damage: ", damage)
 	if invincible:
@@ -229,3 +233,6 @@ func _show_alive():
 	rotation.z = 0
 	$CollisionShape.disabled = false
 	$Attacker.visible = true
+
+func _move_player_to_spawn():
+	transform.origin = Vector3.ZERO
