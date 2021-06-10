@@ -9,7 +9,6 @@ var _hit_something = false
 var _continuously_damaging
 var _damage_invincibility_time
 
-
 var _hit_bodies_invincibilty_tracker = {}
 
 func initialize_visual(owning_player, attack_type) ->void:
@@ -43,7 +42,7 @@ func _hit_body(body) ->void:
 				_hit_bodies_invincibilty_tracker[body]=_damage_invincibility_time
 				print(str("Melee attack hit body named ",body.name))
 				_hit_something = true
-				body.receive_hit(_damage, (body.global_transform.origin-global_transform.origin).normalized()*_bounce_strength)
+				body.receive_hit(AttackType.AttackTypeType.NORMAL, _damage, (body.global_transform.origin-global_transform.origin).normalized()*_bounce_strength)
 
 func _physics_process(delta):
 	var bodies =  get_overlapping_bodies()

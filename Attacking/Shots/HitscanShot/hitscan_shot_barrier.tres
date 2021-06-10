@@ -19,3 +19,4 @@ damage = 1.0
 bounce_strength = 250.0
 img_bullet = ExtResource( 3 )
 attack = ExtResource( 1 )
+attack_type_type = 0

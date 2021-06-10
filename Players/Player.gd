@@ -6,7 +6,7 @@ var move_acceleration := Constants.move_acceleration
 
 export(float) var inner_deadzone := 0.2
 export(float) var outer_deadzone := 0.8
-export(float) var rotate_threshold := 0.05
+export(float) var rotate_threshold := 0.0
 
 signal died
 signal switched_pawn
@@ -59,6 +59,9 @@ func _physics_process(delta):
 		var input = get_normalized_input("player_move", outer_deadzone, inner_deadzone)
 		var movement_input_vector = Vector3(input.y, 0.0, -input.x)
 		
+		if Constants.first_person:
+			movement_input_vector = transform.basis * movement_input_vector
+		
 		if Input.is_action_pressed("player_dash_" + str(id)):
 			var e_section = max(
 				exp(log(initial_dash_burst - 1 / dash_exponent * time_since_dash_start)),
@@ -91,17 +94,21 @@ func _physics_process(delta):
 		if attack_type:
 			if not $Attacker.attack(attack_type, self):
 				attack_type = null
-		var rotate_input = get_normalized_input("player_look", 1.0, 0.0, 0.5)
+		var rotate_input = get_normalized_input("player_look", 1.0, 0.1)
 		var rotate_input_vector = Vector3(rotate_input.y, 0.0, -rotate_input.x)
 		if rotate_input_vector.distance_to(_rotate_input_vector) > rotate_threshold:
 			if rotate_input_vector != Vector3.ZERO:
-				_rotate_input_vector = rotate_input_vector
-				look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
+				if Constants.first_person:
+					rotate_y(-rotate_input_vector.dot(Vector3.RIGHT) * 0.1)
+				else:
+					_rotate_input_vector = rotate_input_vector
+					look_at(rotate_input_vector + global_transform.origin, Vector3.UP)
 		
 		var move_direction_scale = (3.0 + movement_input_vector.dot(rotate_input_vector)) / 4.0 \
 				if Constants.scale_movement_to_view_direction else 1.0
 
 		apply_acceleration(movement_input_vector * move_acceleration * move_direction_scale)
+		
 		move_and_slide(velocity)
 		transform.origin.y = 0
 	
@@ -178,7 +185,11 @@ func apply_acceleration(acceleration):
 	velocity += acceleration
 
 
-func receive_hit(damage: float, bounce: Vector3):
+func receive_hit(attack_type_typ, damage: float, bounce: Vector3):
+	
+	if attack_type_typ == AttackType.AttackTypeType.RESET:
+		_move_player_to_spawn()
+		return
 	
 	print(name + " received damage: ", damage)
 	if invincible:
@@ -229,3 +240,6 @@ func _show_alive():
 	rotation.z = 0
 	$CollisionShape.disabled = false
 	$Attacker.visible = true
+
+func _move_player_to_spawn():
+	transform.origin = Vector3.ZERO

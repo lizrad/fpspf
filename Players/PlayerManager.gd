@@ -13,12 +13,15 @@ export(int) var max_ghosts := 3
 var active_player: Player
 var last_ghost: Ghost
 
+var current_round_number := 0
+
 # TODO: use array for ghosts instead of get_children
 
 
 func _ready():
 	active_player = active_player_scene.instance()
 	active_player.id = player_id
+	active_player.ranged_attack_type = Constants.ranged_attack_types[0]
 	add_child(active_player)
 	
 	active_player.connect("died", self, "_on_player_died")
@@ -53,6 +56,7 @@ func convert_active_to_ghost(frame: int):
 	
 	new_ghost.movement_record = movement_record
 	new_ghost.died_at_frame = frame
+	new_ghost.played_in_round = current_round_number
 	new_ghost.id = active_player.id
 	new_ghost.get_node("MeshInstance").material_override.set_shader_param("color", Constants.character_colors[active_player.id + 4])
 	new_ghost.set_visibility_mask(active_player.get_used_visibility_mask())
@@ -60,6 +64,11 @@ func convert_active_to_ghost(frame: int):
 	new_ghost.connect("died", self, "_on_ghost_died", [new_ghost.get_index()])
 	last_ghost = new_ghost
 	reset_all_children(frame)
+	
+	current_round_number += 1
+	
+	if current_round_number < Constants.ranged_attack_types.size():
+		active_player.ranged_attack_type = Constants.ranged_attack_types[current_round_number]
 
 
 func replace_ghost() -> void:
@@ -75,6 +84,8 @@ func replace_ghost() -> void:
 	if active_player.selected_pawn != 0:
 		active_player.global_transform.origin = ghost.global_transform.origin
 		active_player.selected_pawn = 0
+	
+	active_player.ranged_attack_type = Constants.ranged_attack_types[ghost.played_in_round]
 	ghost.queue_free()
 
 # denies killing in spawning area, also reset colors

@@ -8,6 +8,8 @@ var current_frame : int = 0
 
 var died_at_frame : int = INF
 
+var played_in_round: int
+
 var _time_scale := 1.0
 
 var _first_alive_frame = true
@@ -121,7 +123,7 @@ func _apply_frame_transform(frame):
 	var record = movement_record[frame]
 	global_transform = record.transform
 
-func receive_hit(damage: float, bounce: Vector3):
+func receive_hit(attack_type_typ, damage: float, bounce: Vector3):
 	if invincible:
 		return
 	if _dead:

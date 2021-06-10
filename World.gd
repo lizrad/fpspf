@@ -55,6 +55,9 @@ func _ready():
 func _process(delta):
 	time_left -= (delta *(1 if _current_gamestate != Constants.Gamestate.REPLAY else replay_speed))
 	
+	if time_left <= 3.0 and not $CountdownSound.playing and _current_gamestate != Constants.Gamestate.REPLAY:
+		$CountdownSound.play()
+	
 	# update ui
 	$HUD.set_time(time_left)
 	if time_left <= 0:
