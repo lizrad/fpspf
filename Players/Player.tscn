@@ -78,7 +78,7 @@ handle_input_locally = false
 shadow_atlas_size = 2048
 
 [node name="Camera" type="Camera" parent="CameraManager/LightCamera/Viewport" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 0 )
 cull_mask = 1
 environment = SubResource( 3 )
 projection = 1
