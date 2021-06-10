@@ -86,6 +86,7 @@ func replace_ghost() -> void:
 		active_player.selected_pawn = 0
 	
 	active_player.ranged_attack_type = Constants.ranged_attack_types[ghost.played_in_round]
+	current_round_number = ghost.played_in_round
 	ghost.queue_free()
 
 # denies killing in spawning area, also reset colors
