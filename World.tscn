@@ -10,7 +10,6 @@
 
 [node name="World" type="Spatial"]
 script = ExtResource( 2 )
-time_cycle = 30.0
 replay_speed = 5.0
 
 [node name="PlayerManagers" type="Spatial" parent="."]

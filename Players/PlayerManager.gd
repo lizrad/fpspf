@@ -54,7 +54,7 @@ func convert_active_to_ghost(frame: int):
 	var new_ghost = ghost_player_scene.instance()
 	add_child(new_ghost)
 	
-	if _accessory:
+	if active_player.ranged_attack_type.player_accessory:
 		var ghost_accessory = active_player.ranged_attack_type.player_accessory.instance()
 		new_ghost.add_child(ghost_accessory)
 		ghost_accessory.material_override.set_shader_param("visibility_mask", active_player.get_used_visibility_mask())
@@ -122,6 +122,8 @@ func set_pawns_invincible(invincible : bool):
 			else:
 				child.set_correct_colors(player_id)  # active player
 
+func set_selected_ghost_color(index : int):
+	_on_pawn_switched(index)
 
 func _on_player_died():
 	emit_signal("active_player_died")
@@ -138,7 +140,7 @@ func _on_pawn_switched(idx : int) -> void:
 	if candidates <= max_ghosts:
 		return
 
-	idx = idx % candidates
+	idx = idx % (candidates - 1) + 1
 	print(name, " switched pawn: ", idx, " of ", candidates)
 	for cand in candidates:
 		var pawn = get_child(cand)

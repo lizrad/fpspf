@@ -27,7 +27,7 @@ var movement_records = []
 # pawn selection
 var _last_swap := 0
 export(int) var swap_cooldown := 500
-var selected_pawn : int = 0 # 0 is active player, > 0 ghost
+var selected_pawn : int = 1
 
 var velocity := Vector3.ZERO
 var current_target_velocity := Vector3.ZERO
