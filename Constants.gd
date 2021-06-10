@@ -43,7 +43,9 @@ export var player_camera_fov := 110.0
 
 export var scale_movement_to_view_direction := true
 
-var ranged_attack_type := preload("res://Attacking/Shots/HitscanShot/hitscan_shot_reset.tres")
+var first_person = false
+
+var ranged_attack_type := preload("res://Attacking/Shots/HitscanShot/hitscan_shot_instant_burst.tres")
 var melee_attack_type := preload("res://Attacking/Melee/melee_instant.tres")
 
 # CAPTURE
@@ -52,3 +54,5 @@ var recapture_speed : float = 2.0
 var capture_release_speed : float = 0.5
 var capture_time : float = 3.0
 var capture_point_color_neutral = Color.black
+
+
