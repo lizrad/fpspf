@@ -109,6 +109,7 @@ func _create_attack(wait_time, attack_type, owning_player) ->void:
 	var attack = attack_type.attack.instance()
 	_spawned_attacks.append(attack)
 	attack.connect("tree_exiting", self, "_attack_tree_exiting", [attack])
+	attack.set("placed_by_body", owning_player) # only used by walls now
 	get_tree().get_root().add_child(attack);
 	attack.global_transform = global_transform
 	attack.global_transform.origin = $AttackOriginPosition.global_transform.origin;
