@@ -92,6 +92,8 @@ func next_gamestate():
 			for player_manager in $PlayerManagers.get_children():
 				player_manager.active_player.get_node("Attacker").reset()
 				player_manager.convert_active_to_ghost(_current_frame - 1)
+				$HUD.set_player_attack_type(player_manager.player_id, player_manager.active_player.ranged_attack_type)
+			
 				# get last created ghost and connect to bullet gain
 				var attacker = player_manager.last_ghost.get_node("Attacker")
 				attacker.connect("gain_bullet", $HUD, "regain_bullet", [player_manager.player_id])
@@ -113,6 +115,7 @@ func next_gamestate():
 				player_manager.set_pawns_invincible(false)
 				player_manager.replace_ghost()
 				player_manager.toggle_path(false, time_prep)
+				$HUD.set_player_attack_type(player_manager.player_id, player_manager.active_player.ranged_attack_type)
 			# Reset captured point score
 			_captured_points[0] = 0
 			_captured_points[1] = 0

@@ -8,7 +8,10 @@ var _img_bullet
 
 #func _ready():
 func init():
+	for child in $HBoxContainer.get_children():
+		child.queue_free()
 	_num_bullets = attack_type.ammunition
+	print(_num_bullets)
 	for i in range(_num_bullets):
 		var rect = TextureRect.new()
 		rect.texture = attack_type.img_bullet
