@@ -5,6 +5,8 @@ signal capture_team_changed(team_id)
 signal captured(team_id)
 signal capture_lost(team_id)
 
+export var instant_capture : bool = true
+
 
 var _capture_progress : float = 0
 # Team that currently 'owns' the capturing point
@@ -28,7 +30,7 @@ func _ready():
 	$Area.connect("body_exited", self, "_on_body_exited_area")
 
 func _process(delta):
-	if _capturing_paused:
+	if _capturing_paused or instant_capture:
 		return
 	
 	if _being_captured:
@@ -57,6 +59,9 @@ func stop_capturing(team_id : int):
 	_capturing_entities[team_id] -= 1
 	_check_capturing_status()
 
+func reset_point() -> void:
+	_capture_team = -1
+	_set_capture_color(false)
 
 func _capture(delta : float):
 	_capture_progress = min(1, _capture_progress + delta * Constants.capture_speed)
@@ -105,8 +110,18 @@ func _set_capture_color(is_captured : bool):
 
 func _on_body_entered_area(body):
 	if body is CharacterBase:
-		start_capturing(body.id)
+		if instant_capture:
+			if _capture_team != body.id:
+				if _capture_team != -1:
+					emit_signal("capture_lost", _capture_team)
+				_capture_team = body.id
+				_current_capture_team = body.id
+				emit_signal("captured", _capture_team)
+				_set_capture_color(true)
+		else:
+			start_capturing(body.id)
 
 func _on_body_exited_area(body):
 	if body is CharacterBase:
-		stop_capturing(body.id)
+		if not instant_capture:
+			stop_capturing(body.id)

@@ -2,12 +2,12 @@
 
 [ext_resource path="res://Level/CapturePoint.gd" type="Script" id=1]
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=1]
 resource_local_to_scene = true
 albedo_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="CylinderMesh" id=2]
-material = SubResource( 4 )
+material = SubResource( 1 )
 
 [sub_resource type="CylinderShape" id=3]
 radius = 4.42318

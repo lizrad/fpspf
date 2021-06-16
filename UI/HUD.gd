@@ -2,10 +2,11 @@ extends Control
 
 export (Array, NodePath) var capture_points := [] 
 
+export (Array, NodePath) var capture_points_progress_bars := []
+
 var _gamestate = Constants.Gamestate.PREP
 var _cycle := 0
 var _num_cycles := 0
-
 
 func _ready() -> void:
 	$Score1.add_color_override("font_color", Constants.character_colors[0])
@@ -102,8 +103,12 @@ func toggle_game_over_screen(active: bool):
 
 
 func update_capture_point_ui(capture_point_index : int, progress : float):
-	get_node(capture_points[capture_point_index]).value = progress * 100
+	if(capture_point_index < 3):
+		get_node(capture_points[capture_point_index]).value = progress * 100
 
+func update_capture_point_ui_bar(captured_points_array : Array, capture_point_number : float):
+	get_node(capture_points_progress_bars[0]).value = (captured_points_array[0] / capture_point_number) * 100
+	get_node(capture_points_progress_bars[1]).value = (captured_points_array[1] / capture_point_number) * 100
 
 func set_capture_point_color(capture_point_index : int, color : Color):
 	get_node(capture_points[capture_point_index]).tint_progress = color

@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://UI/HUD.gd" type="Script" id=1]
 [ext_resource path="res://UI/BulletAmmo.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Resources/Fonts/Roboto-Thin.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://UI/GameOverScreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Resources/Icons/circle_white_256x256.png" type="Texture" id=5]
+[ext_resource path="res://Resources/UI/ProgressBar.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
@@ -39,6 +40,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 capture_points = [ NodePath("CenterContainer/HBoxContainer/TextureProgress"), NodePath("CenterContainer/HBoxContainer/TextureProgress2"), NodePath("CenterContainer/HBoxContainer/TextureProgress3") ]
+capture_points_progress_bars = [ NodePath("CenterContainer2/TextureProgress"), NodePath("CenterContainer2/TextureProgress2") ]
 
 [node name="Timer" type="Label" parent="."]
 anchor_left = 0.5
@@ -110,18 +112,21 @@ visible = false
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -28.4832
-margin_top = 35.5957
-margin_right = 747.517
-margin_bottom = 291.596
+margin_left = -197.0
+margin_top = 36.0
+margin_right = 3951.0
+margin_bottom = 548.0
 rect_scale = Vector2( 0.1, 0.1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
-margin_right = 776.0
-margin_bottom = 256.0
+visible = false
+margin_left = 1686.0
+margin_top = 128.0
+margin_right = 2462.0
+margin_bottom = 384.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -155,3 +160,37 @@ texture_under = ExtResource( 5 )
 texture_progress = ExtResource( 5 )
 fill_mode = 4
 tint_under = Color( 0.423529, 0.423529, 0.423529, 1 )
+
+[node name="CenterContainer2" type="CenterContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -256.0
+margin_top = 31.4644
+margin_right = 256.0
+margin_bottom = 71.4644
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureProgress" type="TextureProgress" parent="CenterContainer2"]
+margin_top = 4.0
+margin_right = 512.0
+margin_bottom = 36.0
+texture_under = ExtResource( 6 )
+texture_over = ExtResource( 6 )
+texture_progress = ExtResource( 6 )
+tint_under = Color( 0, 0, 0, 0.490196 )
+tint_over = Color( 1, 1, 1, 0 )
+tint_progress = Color( 1, 0, 0, 1 )
+
+[node name="TextureProgress2" type="TextureProgress" parent="CenterContainer2"]
+margin_top = 4.0
+margin_right = 512.0
+margin_bottom = 36.0
+texture_under = ExtResource( 6 )
+texture_over = ExtResource( 6 )
+texture_progress = ExtResource( 6 )
+fill_mode = 1
+tint_under = Color( 0, 0, 0, 0 )
+tint_over = Color( 1, 1, 1, 0 )
+tint_progress = Color( 0, 0, 1, 1 )

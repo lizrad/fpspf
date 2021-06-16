@@ -5,6 +5,7 @@ export var time_prep := 5.0 # time, before the round starts
 export var replay_speed := 1.0 # timescale of the replay
 export var num_cycles := 5 # max cycles for one game
 export var music_enabled := true
+export var required_catpure_points_percentage : float = 0.8
 
 export var use_total_kills : bool = false
 export var use_continuous_mode : bool = false
@@ -26,7 +27,7 @@ var _max_frames : int = 0
 var _an_active_player_died : bool = false
 
 var _captured_points := [0,0]
-
+var _capture_point_number_to_win : int = 0
 
 func _ready():
 	# connect to player events
@@ -51,6 +52,8 @@ func _ready():
 		capture_point.connect("captured", self, "_on_capture_completed", [index])
 		capture_point.connect("capture_lost", self, "_on_capture_lost", [index])
 		index += 1
+	_capture_point_number_to_win = index * required_catpure_points_percentage
+	print("Required capture points to win: " + str(_capture_point_number_to_win))
 
 func _process(delta):
 	time_left -= (delta *(1 if _current_gamestate != Constants.Gamestate.REPLAY else replay_speed))
@@ -116,9 +119,6 @@ func next_gamestate():
 				player_manager.replace_ghost()
 				player_manager.toggle_path(false, time_prep)
 				$HUD.set_player_attack_type(player_manager.player_id, player_manager.active_player.ranged_attack_type)
-			# Reset captured point score
-			_captured_points[0] = 0
-			_captured_points[1] = 0
 
 		Constants.Gamestate.REPLAY:
 			# prepare for prep
@@ -151,6 +151,11 @@ func next_gamestate():
 			if not use_total_kills:
 				for id in _scores.size():
 					_set_score(id, 0)
+			# Reset captured point score
+			_captured_points[0] = 0
+			_captured_points[1] = 0
+			_update_capture_ui()
+			_level_manager.reset_all_capture_points()
 
 	_current_gamestate = (_current_gamestate + 1) % Constants.Gamestate.size();
 	$HUD.set_game_state(_current_gamestate)
@@ -218,16 +223,20 @@ func _update_capture_ui():
 	for capture_point in _level_manager.get_capture_points():
 		$HUD.update_capture_point_ui(index, capture_point.get_capture_progress())
 		index += 1
+	
+	$HUD.update_capture_point_ui_bar(_captured_points, index)
+
 
 func _on_capture_team_changed(team_id : int, capture_point_id : int):
 	$HUD.set_capture_point_color(capture_point_id, \
 		Constants.character_colors[team_id] if team_id != -1 \
 		else Constants.capture_point_color_neutral)
 
+
 func _on_capture_completed(team_id : int, capture_point_id : int):
 	print("Point: " + str(capture_point_id) + " | TeamID: " + str(team_id))
 	_captured_points[team_id] += 1 
-	if _captured_points[team_id] == 2:
+	if _captured_points[team_id] >= _capture_point_number_to_win:
 		$HUD.set_winner(team_id)
 		$HUD.toggle_game_over_screen(true)
 		set_process(false)

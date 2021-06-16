@@ -18,3 +18,7 @@ func stop_sound_loop() -> void:
 
 func get_capture_points() -> Array:
 	return _level.get_capture_points()
+
+func reset_all_capture_points() -> void:
+	for capture_point in _level.get_capture_points():
+		capture_point.reset_point()
