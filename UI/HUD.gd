@@ -112,3 +112,15 @@ func update_capture_point_ui_bar(captured_points_array : Array, capture_point_nu
 
 func set_capture_point_color(capture_point_index : int, color : Color):
 	get_node(capture_points[capture_point_index]).tint_progress = color
+
+func set_max_cap_percent(percent : float):
+	for idx_bar in capture_points_progress_bars.size():
+		var progress_bar = get_node(capture_points_progress_bars[idx_bar])
+		var prog_width = progress_bar.rect_size.x
+		var sprite = progress_bar.get_node("triangle")
+		sprite.modulate = Constants.character_colors[idx_bar]
+		# TODO FIXME: how to use FillMode enums? or calc from ints
+		if progress_bar.fill_mode == 0: # FILL_LEFT_TO_RIGHT
+			sprite.position.x = prog_width * percent
+		elif progress_bar.fill_mode == 1: # FILL_RIGHT_TO_LEFT:
+			sprite.position.x = prog_width - prog_width * percent

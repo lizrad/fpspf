@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://UI/HUD.gd" type="Script" id=1]
 [ext_resource path="res://UI/BulletAmmo.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://UI/GameOverScreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Resources/Icons/circle_white_256x256.png" type="Texture" id=5]
 [ext_resource path="res://Resources/UI/ProgressBar.png" type="Texture" id=6]
+[ext_resource path="res://Resources/Icons/triangle.png" type="Texture" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
@@ -183,6 +184,12 @@ tint_under = Color( 0, 0, 0, 0.490196 )
 tint_over = Color( 1, 1, 1, 0 )
 tint_progress = Color( 1, 0, 0, 1 )
 
+[node name="triangle" type="Sprite" parent="CenterContainer2/TextureProgress"]
+position = Vector2( 0, -10 )
+rotation = 3.14159
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 7 )
+
 [node name="TextureProgress2" type="TextureProgress" parent="CenterContainer2"]
 margin_top = 4.0
 margin_right = 512.0
@@ -194,3 +201,8 @@ fill_mode = 1
 tint_under = Color( 0, 0, 0, 0 )
 tint_over = Color( 1, 1, 1, 0 )
 tint_progress = Color( 0, 0, 1, 1 )
+
+[node name="triangle" type="Sprite" parent="CenterContainer2/TextureProgress2"]
+position = Vector2( 0, 40 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 7 )
