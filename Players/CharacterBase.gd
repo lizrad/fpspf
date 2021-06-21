@@ -20,11 +20,6 @@ func set_correct_colors(color_id: int) -> void:
 
 func _ready():
 	$Attacker.set_owning_player(self)
-	_health_position = $HealthDisplay.translation
-	
-func _physics_process(delta):
-	$HealthDisplay.global_transform = global_transform
-	$HealthDisplay.global_transform.origin += _health_position
 	
 	#visibility_mask.get_data().save_png("res://tex%s.png" % [id])
 
@@ -38,6 +33,11 @@ func set_visibility_mask(mask: ViewportTexture):
 	visibility_mask = mask
 	$MeshInstance.material_override.set_shader_param("visibility_mask", mask)
 	$Attacker.set_visibility_mask(mask)
+	
+	if has_node("Preview"):
+		$Preview/MeshInstance.material_override = load("res://Players/VisibilityMaterial.tres").duplicate()
+		$Preview/MeshInstance.material_override.set_shader_param("color", Color(0.9, 0.9, 0.9))
+		$Preview/MeshInstance.material_override.set_shader_param("visibility_mask", mask)
 	
 	# White mask for own mesh
 	var own_mask = Image.new()
@@ -62,7 +62,6 @@ func set_rendering_for_character_id(id):
 	
 	_set_visible_instance_layers($MeshInstance, Constants.PLAYER_GENERAL)
 	_set_visible_instance_layers($OwnMeshInstance, 5 + id)
-	_set_visible_instance_layers($HealthDisplay, 5 + id)
 	_set_visible_instance_layers($VisibilityLights/OmniLight, 5 + id)
 	_set_visible_instance_layers($VisibilityLights/SightLight, 5 + id)
 	
@@ -89,11 +88,3 @@ func _show_dead():
 
 func set_current_health(new_health):
 	_current_health = new_health
-	
-	# Reset health bar
-	for child in $HealthDisplay/Viewport/HealthBar.get_children():
-		child.visible = false
-	
-	# Set appropriate amount of hearts as active
-	for i in range(new_health):
-		$HealthDisplay/Viewport/HealthBar.get_child(i).visible = true

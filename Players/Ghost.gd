@@ -22,6 +22,8 @@ var _path_active := false
 var _preview : Ghost
 var _is_preview := false
 
+var preview_frame_offset := 20
+
 signal died
 
 func _ready():
@@ -39,28 +41,8 @@ func _ready():
 	var circle = PoolVector2Array(circleArray)
 	$ToWorldNode/PathPolygon.polygon = circle;
 
-func spawn_preview():
-	if _is_preview == false:
-		_preview = self.duplicate()
-		_preview.name = "Preview"
-		_preview._is_preview = true
-		_preview.movement_record = movement_record.duplicate()
-		_preview.current_frame = 100
-		_preview.get_node("CollisionShape").disabled = true
-
-		var material = $ToWorldNode/PathPolygon.material_override
-		material.flags_transparent = true
-		material.albedo_color.a = 0.1
-
-		self.add_child(_preview)
-
 func set_time_scale(time_scale: float) -> void:
 	_time_scale = time_scale
-	if _time_scale > 0.0:
-		spawn_preview()
-	else:
-		var child = get_node("Preview")
-		if child: child.queue_free()
 
 func _physics_process(delta):
 	_frame_timer += delta*abs(_time_scale);
@@ -144,6 +126,10 @@ func _get_attack_frame(frame):
 func _apply_frame_transform(frame):
 	var record = movement_record[frame]
 	global_transform = record.transform
+	
+	if  _is_valid_frame(frame + preview_frame_offset):
+		record = movement_record[frame + preview_frame_offset]
+		$Preview.global_transform = record.transform
 
 func receive_hit(attack_type_typ, damage: float, bounce: Vector3):
 	if invincible:

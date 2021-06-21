@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Players/Player.gd" type="Script" id=1]
 [ext_resource path="res://Players/CharacterBase.tscn" type="PackedScene" id=2]
@@ -40,17 +40,6 @@ shader_param/color = Color( 1, 0, 0, 1 )
 shader_param/visibility_threshold = 0.2
 
 [sub_resource type="Environment" id=3]
-
-[sub_resource type="ViewportTexture" id=4]
-viewport_path = NodePath("HealthDisplay/Viewport")
-
-[sub_resource type="SpatialMaterial" id=5]
-resource_local_to_scene = true
-flags_unshaded = true
-params_billboard_mode = 1
-params_use_alpha_scissor = true
-params_alpha_scissor_threshold = 0.32
-albedo_texture = SubResource( 4 )
 
 [node name="Player" instance=ExtResource( 2 )]
 script = ExtResource( 1 )
@@ -116,13 +105,10 @@ current = true
 
 [node name="PlayerHUD" parent="CameraManager/ViewCamera/ViewportContainer" index="1" instance=ExtResource( 4 )]
 
-[node name="HealthDisplay" parent="." index="5"]
-material_override = SubResource( 5 )
-
-[node name="OwnMeshInstance" parent="." index="6"]
+[node name="OwnMeshInstance" parent="." index="5"]
 material_override = SubResource( 2 )
 
-[node name="RemoteTransform" type="RemoteTransform" parent="." index="11"]
+[node name="RemoteTransform" type="RemoteTransform" parent="." index="10"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 script = ExtResource( 5 )
 camera_path = NodePath("../CameraManager/ViewCamera/ViewportContainer/Viewport/Camera")
