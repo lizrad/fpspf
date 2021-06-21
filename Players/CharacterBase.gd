@@ -6,7 +6,7 @@ var id: int = -1 setget set_id, get_id
 var visibility_mask: ViewportTexture
 var invincible := true # does not loose hp
 
-var _current_health := 3
+var _current_health := 1
 var _dead = false
 
 var _health_position : Vector3

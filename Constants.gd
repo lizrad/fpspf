@@ -1,7 +1,7 @@
 extends Node
 
 # Player constants
-var max_health := 3
+var max_health := 1
 var player_only_bounce := true
 
 export(Array, Color) var character_colors = [
@@ -46,6 +46,7 @@ export var scale_movement_to_view_direction := true
 var first_person = false
 
 var ranged_attack_types = [
+	preload("res://Attacking/Shots/HitscanShot/hitscan_shot_reset.tres"),
 	preload("res://Attacking/Shots/HitscanShot/hitscan_shot_reset.tres"),
 	preload("res://Attacking/Shots/HitscanShot/hitscan_shot_reset.tres")
 	#preload("res://Attacking/Shots/WallPlacement/wall_placement_attack.tres")
