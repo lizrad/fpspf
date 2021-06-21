@@ -24,6 +24,13 @@ func _ready():
 	active_player.ranged_attack_type = Constants.ranged_attack_types[0]
 	add_child(active_player)
 	
+	# Add initial accessory
+	if active_player.ranged_attack_type.player_accessory:
+		_accessory = active_player.ranged_attack_type.player_accessory.instance()
+		active_player.add_child(_accessory)
+		_accessory.material_override.set_shader_param("visibility_mask", active_player.get_used_visibility_mask())
+		_accessory.get_node("OwnMesh").set_layer_mask_bit(5 + player_id, true)
+	
 	active_player.connect("died", self, "_on_player_died")
 	active_player.connect("switched_pawn", self, "_on_pawn_switched")
 
