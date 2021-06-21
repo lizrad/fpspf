@@ -19,6 +19,9 @@ var _melee_previous_melee_attack_frame = -1
 
 var _path_active := false
 
+var _preview : Ghost
+var _is_preview := false
+
 signal died
 
 func _ready():
@@ -35,10 +38,29 @@ func _ready():
 		circleArray.append(Vector2(x,y))
 	var circle = PoolVector2Array(circleArray)
 	$ToWorldNode/PathPolygon.polygon = circle;
-	pass
-	
+
+func spawn_preview():
+	if _is_preview == false:
+		_preview = self.duplicate()
+		_preview.name = "Preview"
+		_preview._is_preview = true
+		_preview.movement_record = movement_record.duplicate()
+		_preview.current_frame = 100
+		_preview.get_node("CollisionShape").disabled = true
+
+		var material = $ToWorldNode/PathPolygon.material_override
+		material.flags_transparent = true
+		material.albedo_color.a = 0.1
+
+		self.add_child(_preview)
+
 func set_time_scale(time_scale: float) -> void:
 	_time_scale = time_scale
+	if _time_scale > 0.0:
+		spawn_preview()
+	else:
+		var child = get_node("Preview")
+		if child: child.queue_free()
 
 func _physics_process(delta):
 	_frame_timer += delta*abs(_time_scale);
@@ -163,6 +185,9 @@ func reset(start_frame : int) -> void:
 	set_current_health(Constants.max_health)
 
 func set_correct_colors(color_id: int) -> void:
+	if _is_preview:
+		pass
+
 	.set_correct_colors(color_id)
 	$ToWorldNode/PathPolygon.material_override.albedo_color = Constants.character_colors[color_id]
 	
