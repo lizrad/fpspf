@@ -96,11 +96,10 @@ func next_gamestate():
 	match _current_gamestate:
 		Constants.Gamestate.GAME:
 			# prepare for replay
-			# Reset captured point score
+			_level_manager.toggle_all_capture_points(false)
 			_level_manager.reset_all_capture_points()
 			_captured_points[0] = 0
 			_captured_points[1] = 0
-			_level_manager.toggle_all_capture_points(false);
 			clear_walls()
 			if music_enabled:
 				_level_manager.stop_sound_loop() # TODO: play loop in reverse?
@@ -165,7 +164,9 @@ func next_gamestate():
 				for id in _scores.size():
 					_set_score(id, 0)
 			_update_capture_ui()
+			# Reset captured point score
 			_level_manager.toggle_all_capture_points(true);
+			
 
 	_current_gamestate = (_current_gamestate + 1) % Constants.Gamestate.size();
 	$HUD.set_game_state(_current_gamestate)

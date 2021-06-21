@@ -60,7 +60,11 @@ func stop_capturing(team_id : int):
 	_check_capturing_status()
 
 func reset_point() -> void:
+	_capturing_entities[0] = 0
+	_capturing_entities[1] = 0
 	_capture_team = -1
+	_capture_progress = 0
+	_check_capturing_status()
 	_set_capture_color(false)
 
 func _capture(delta : float):
@@ -89,7 +93,11 @@ func _release(delta : float):
 
 
 func _reset_capture_point():
+	_capturing_entities[0] = 0
+	_capturing_entities[1] = 0
 	_capture_team = -1
+	_capture_progress = 0
+	_check_capturing_status()
 	_set_capture_color(false)
 	emit_signal("capture_team_changed", -1)
 
@@ -127,6 +135,8 @@ func _on_body_entered_area(body):
 			start_capturing(body.id)
 
 func _on_body_exited_area(body):
+	if not _active:
+		return
 	if body is CharacterBase:
 		if not instant_capture:
 			stop_capturing(body.id)
