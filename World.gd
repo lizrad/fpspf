@@ -53,7 +53,8 @@ func _ready():
 		capture_point.connect("captured", self, "_on_capture_completed", [index])
 		capture_point.connect("capture_lost", self, "_on_capture_lost", [index])
 		index += 1
-	_capture_point_number_to_win = index * required_catpure_points_percentage
+	
+	_capture_point_number_to_win = ceil(float(index) * required_catpure_points_percentage)
 	print("Required capture points to win: " + str(_capture_point_number_to_win))
 	$HUD.set_max_cap_percent(required_catpure_points_percentage)
 
