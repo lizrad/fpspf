@@ -10,6 +10,7 @@ func _ready():
 
 func initialize(owning_player, attack_type) -> void:
 	initialize_visual(owning_player, attack_type)
+	get_tree().get_root().get_node("World").register_wall(self)
 
 
 func initialize_visual(owning_player, attack_type) ->void:
