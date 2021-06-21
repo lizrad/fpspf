@@ -33,6 +33,7 @@ func set_winner(idx : int):
 
 
 func _on_Restart_btn_pressed():
+	get_tree().get_root().get_node("World").clear_walls()
 	get_tree().reload_current_scene()
 	emit_signal("restart_pressed")
 
