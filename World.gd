@@ -80,7 +80,11 @@ func _physics_process(delta):
 		if _an_active_player_died and _current_frame >= _max_frames:
 			next_gamestate()
 
-
+func clear_walls() ->void:
+	for wall in _walls:
+				if wall:
+					wall.queue_free()
+	_walls.clear()
 # used to restart level: 
 # 	- reverse shift animation
 # 	- storing player movement as ghost
@@ -96,10 +100,7 @@ func next_gamestate():
 			_captured_points[0] = 0
 			_captured_points[1] = 0
 			_level_manager.toggle_all_capture_points(false);
-			for wall in _walls:
-				if wall:
-					wall.queue_free()
-			_walls.clear()
+			clear_walls()
 			if music_enabled:
 				_level_manager.stop_sound_loop() # TODO: play loop in reverse?
 			_replay_manager.show_replay_camera()
@@ -120,10 +121,7 @@ func next_gamestate():
 
 		Constants.Gamestate.PREP:
 			# prepare for play
-			for wall in _walls:
-				if wall:
-					wall.queue_free()
-			_walls.clear()
+			clear_walls()
 			_replay_manager.hide_replay_camera()
 			time_left = time_cycle + 1
 			_level_manager.open_doors()
