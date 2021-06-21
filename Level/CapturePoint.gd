@@ -17,7 +17,7 @@ var _current_capture_team : int = -1
 var _being_captured : bool = false
 var _capturing_paused : bool = false
 var _is_captured : bool = false
-
+var _active : bool = true
 var _capturing_entities := [0,0]
 
 onready var _mesh = get_node("MeshInstance")
@@ -108,7 +108,12 @@ func _set_capture_color(is_captured : bool):
 		Constants.character_colors[_capture_team] if is_captured \
 		else Constants.capture_point_color_neutral
 
+func toggle_active(toggle:bool)->void:
+	_active = toggle
+	
 func _on_body_entered_area(body):
+	if not _active:
+		return
 	if body is CharacterBase:
 		if instant_capture:
 			if _capture_team != body.id:
