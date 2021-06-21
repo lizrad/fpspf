@@ -112,7 +112,7 @@ func _physics_process(delta):
 		var timestamp = OS.get_ticks_msec()
 		if invincible && Input.is_action_pressed("player_switch_" + str(id)) && timestamp > _last_swap + swap_cooldown:
 			_last_swap = timestamp
-			emit_signal("switched_pawn", selected_pawn + 1)
+			emit_signal("switched_pawn", selected_pawn)
 
 		if attack_type:
 			if not $Attacker.attack(attack_type, self):
