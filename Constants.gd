@@ -60,6 +60,6 @@ var capture_speed : float = 1.0
 var recapture_speed : float = 2.0
 var capture_release_speed : float = 0.5
 var capture_time : float = 3.0
-var capture_point_color_neutral = Color.black
+var capture_point_color_neutral = Color.gray
 
 

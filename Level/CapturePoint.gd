@@ -24,7 +24,7 @@ onready var _mesh = get_node("MeshInstance")
 
 func _ready():
 	_mesh.material_override = SpatialMaterial.new()
-	_mesh.material_override.albedo_color = Color.black
+	_mesh.material_override.albedo_color = Color.gray
 	
 	$Area.connect("body_entered", self, "_on_body_entered_area")
 	$Area.connect("body_exited", self, "_on_body_exited_area")
