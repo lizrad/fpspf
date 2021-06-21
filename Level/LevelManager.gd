@@ -11,10 +11,12 @@ func close_doors():
 	_level.close_doors()
 
 func play_sound_loop() -> void:
-	_level.get_node("AudioStreamPlayer").play()
+	if _level.has_node("AudioStreamPlayer"):
+		_level.get_node("AudioStreamPlayer").play()
 
 func stop_sound_loop() -> void:
-	_level.get_node("AudioStreamPlayer").stop()
+	if _level.has_node("AudioStreamPlayer"):
+		_level.get_node("AudioStreamPlayer").stop()
 
 func get_capture_points() -> Array:
 	return _level.get_capture_points()

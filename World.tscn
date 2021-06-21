@@ -17,10 +17,10 @@ replay_speed = 5.0
 script = ExtResource( 3 )
 
 [node name="PlayerManager1" parent="PlayerManagers" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40.7056, 0, -29.2878 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0, 0 )
 
 [node name="PlayerManager2" parent="PlayerManagers" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 41.2314, -1.52588e-05, 28.2002 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 0 )
 player_id = 1
 
 [node name="LevelManager" parent="." instance=ExtResource( 5 )]

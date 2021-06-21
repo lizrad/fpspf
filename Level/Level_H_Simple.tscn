@@ -48,6 +48,8 @@ transform = Transform( 40, 0, 0, 0, 1, 0, 0, 0, 80, 0, 0, 0 )
 
 [node name="CapturePoint" parent="CapturePoints" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, -8.74228e-08 )
+instant_capture = false
 
 [node name="CapturePoint2" parent="CapturePoints" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, -9.61651e-07 )
+instant_capture = false

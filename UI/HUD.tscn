@@ -123,7 +123,6 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
-visible = false
 margin_left = 1686.0
 margin_top = 128.0
 margin_right = 2462.0
@@ -163,6 +162,7 @@ fill_mode = 4
 tint_under = Color( 0.423529, 0.423529, 0.423529, 1 )
 
 [node name="CenterContainer2" type="CenterContainer" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -256.0
