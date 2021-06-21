@@ -11,7 +11,6 @@
 [node name="Level_2" type="Spatial"]
 script = ExtResource( 4 )
 spawn_areas = [ NodePath("SpawnArea"), NodePath("SpawnArea2") ]
-capture_points = [ NodePath("CapturePoint3"), NodePath("CapturePoint2"), NodePath("CapturePoint"), NodePath("CapturePoint4"), NodePath("CapturePoint5"), NodePath("CapturePoint6"), NodePath("CapturePoint7"), NodePath("CapturePoint8"), NodePath("CapturePoint9") ]
 
 [node name="Ground" parent="." instance=ExtResource( 2 )]
 transform = Transform( 120, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0 )
@@ -128,29 +127,64 @@ transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 6.872, 19.4577, 4, 3.02064 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 
-[node name="CapturePoint3" parent="." instance=ExtResource( 7 )]
+[node name="CapturePoints" type="Spatial" parent="."]
+
+[node name="CapturePoint3" parent="CapturePoints" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -99.7109, 1, 19.522 )
 
-[node name="CapturePoint2" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, -15 )
+[node name="CapturePoint10" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -51.0886, 1, 1.30173 )
 
-[node name="CapturePoint" parent="." instance=ExtResource( 7 )]
+[node name="CapturePoint11" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -58.8549, 1, 50.1202 )
+
+[node name="CapturePoint12" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -38.9196, 1, 32.8174 )
+
+[node name="CapturePoint13" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.4791, 1, 82.2983 )
+
+[node name="CapturePoint14" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.555101, 1, -37.3083 )
+
+[node name="CapturePoint15" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.90532, 1, 2.16772 )
+
+[node name="CapturePoint2" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1199, 1, -17.9385 )
+
+[node name="CapturePoint" parent="CapturePoints" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 82.0617, 0.999969, -7.92757 )
 
-[node name="CapturePoint4" parent="." instance=ExtResource( 7 )]
+[node name="CapturePoint4" parent="CapturePoints" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 101.773, 1.00002, -81.312 )
 
-[node name="CapturePoint5" parent="." instance=ExtResource( 7 )]
+[node name="CapturePoint16" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 48.8559, 1.00002, -64.7687 )
+
+[node name="CapturePoint17" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 91.612, 1.00002, -31.4883 )
+
+[node name="CapturePoint18" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 91.612, 1.00002, -31.4883 )
+
+[node name="CapturePoint5" parent="CapturePoints" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.848305, 1.00002, -81.2514 )
 
-[node name="CapturePoint6" parent="." instance=ExtResource( 7 )]
+[node name="CapturePoint6" parent="CapturePoints" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -41.5819, 1.00002, 82.2874 )
 
-[node name="CapturePoint7" parent="." instance=ExtResource( 7 )]
+[node name="CapturePoint7" parent="CapturePoints" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6751, 1.00002, 34.5315 )
 
-[node name="CapturePoint8" parent="." instance=ExtResource( 7 )]
+[node name="CapturePoint8" parent="CapturePoints" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.6751, 1.00002, 34.5315 )
 
-[node name="CapturePoint9" parent="." instance=ExtResource( 7 )]
+[node name="CapturePoint9" parent="CapturePoints" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2408, 1, 46.0756 )
+
+[node name="CapturePoint19" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 52.3404, 1, -4.27784 )
+
+[node name="CapturePoint20" parent="CapturePoints" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 79.9079, 1, -57.8523 )

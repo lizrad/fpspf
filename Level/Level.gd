@@ -2,7 +2,6 @@ class_name Level
 extends Spatial
 
 export (Array, NodePath) var spawn_areas := []
-export (Array, NodePath) var capture_points := []
 
 
 func get_spawn_areas() -> Array:
@@ -10,8 +9,10 @@ func get_spawn_areas() -> Array:
 
 func get_capture_points() -> Array:
 	var capture_point_array := []
-	for capture_point in capture_points:
-		capture_point_array.append(get_node(capture_point)) 
+	
+	for capture_point in $CapturePoints.get_children():
+		capture_point_array.append(capture_point)
+	
 	return capture_point_array
 
 func open_doors() ->void:
