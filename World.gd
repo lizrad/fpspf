@@ -18,6 +18,7 @@ onready var _replay_manager := get_node("ReplayManager")
 onready var _level_manager := get_node("LevelManager")
 onready var _player_managers := []
 
+var _walls := []
 var _scores := [] # Scores for each player
 var _current_gamestate = Constants.Gamestate.PREP 
 var _current_frame := 0
@@ -90,6 +91,10 @@ func next_gamestate():
 	match _current_gamestate:
 		Constants.Gamestate.GAME:
 			# prepare for replay
+			for wall in _walls:
+				if wall:
+					wall.queue_free()
+			_walls.clear()
 			if music_enabled:
 				_level_manager.stop_sound_loop() # TODO: play loop in reverse?
 			_replay_manager.show_replay_camera()
@@ -110,6 +115,10 @@ func next_gamestate():
 
 		Constants.Gamestate.PREP:
 			# prepare for play
+			for wall in _walls:
+				if wall:
+					wall.queue_free()
+			_walls.clear()
 			_replay_manager.hide_replay_camera()
 			time_left = time_cycle + 1
 			_level_manager.open_doors()
@@ -126,7 +135,6 @@ func next_gamestate():
 			_an_active_player_died = false
 			# update cycle -> game over if reached num_cycles
 			cycle += 1
-
 			# starting preparation cycle
 			_level_manager.close_doors()
 			$HUD.set_cycle(cycle)
@@ -161,7 +169,13 @@ func next_gamestate():
 	_current_gamestate = (_current_gamestate + 1) % Constants.Gamestate.size();
 	$HUD.set_game_state(_current_gamestate)
 
-
+func register_wall(wall) ->void:
+	_walls.append(wall)
+	
+#TODO: call this if we make walls destroyable
+func unregister_wall(wall) ->void:
+	_walls.remove(_walls.find(wall))
+	
 func _get_winner() -> int:
 	var max_score := 0
 	var winner := 0
