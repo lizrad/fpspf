@@ -1,9 +1,10 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://Attacking/AttackType.gd" type="Script" id=1]
 [ext_resource path="res://Attacking/Shots/WallPlacement/Wall.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Attacking/Shots/WallPlacement/WallBackpackAccesory.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Attacking/Shots/bullet.png" type="Texture" id=4]
+[ext_resource path="res://Attacking/Shots/WallPlacement/WallPreview.tscn" type="PackedScene" id=5]
 
 [resource]
 resource_local_to_scene = true
@@ -23,3 +24,7 @@ img_bullet = ExtResource( 4 )
 attack = ExtResource( 2 )
 player_accessory = ExtResource( 3 )
 attack_type_type = 0
+charge_time = 2.0
+charge_object = ExtResource( 5 )
+move_while_charging = false
+rotate_while_charging = false

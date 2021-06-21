@@ -20,3 +20,6 @@ bounce_strength = 250.0
 sound = ExtResource( 3 )
 attack = ExtResource( 2 )
 attack_type_type = 0
+charge_time = 0.0
+move_while_charging = false
+rotate_while_charging = false

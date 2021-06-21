@@ -21,3 +21,8 @@ export (PackedScene) var player_accessory
 enum AttackTypeType {NORMAL, RESET}
 
 export (AttackTypeType) var attack_type_type
+
+export var charge_time: float
+export var charge_object: PackedScene
+export var move_while_charging: bool
+export var rotate_while_charging: bool

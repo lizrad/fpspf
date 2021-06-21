@@ -90,6 +90,16 @@ func _process(delta):
 		_attack_deadline -= delta
 
 
+func has_ammo(attack_type) -> bool:
+	if not _ammunition_tracker.has(attack_type):
+		return true
+	
+	if _ammunition_tracker[attack_type] == 0:
+		return false
+	
+	return true
+
+
 func _handle_ammunition(attack_type) -> bool:
 	if not _ammunition_tracker.has(attack_type):
 		_ammunition_tracker[attack_type] = attack_type.ammunition

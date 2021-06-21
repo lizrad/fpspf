@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Attacking/Shots/WallPlacement/WallMesh.tres" type="CubeMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_transparent = true
+albedo_color = Color( 0, 0.882353, 1, 0.392157 )
+
+[node name="WallPreview" type="Spatial"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+material_override = SubResource( 1 )
+mesh = ExtResource( 1 )
+material/0 = null

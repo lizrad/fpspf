@@ -22,3 +22,6 @@ sound = ExtResource( 4 )
 img_bullet = ExtResource( 2 )
 attack = ExtResource( 3 )
 attack_type_type = 1
+charge_time = 0.0
+move_while_charging = false
+rotate_while_charging = false

@@ -34,6 +34,8 @@ var current_target_velocity := Vector3.ZERO
 var _rotate_input_vector:= Vector3.ZERO
 
 var input_enabled : bool = true
+var move_enabled: bool = true
+var waiting_for_shot: bool = false
 
 onready var _player_hud : PlayerHUD = get_node("CameraManager/ViewCamera/ViewportContainer/PlayerHUD")
 
@@ -59,6 +61,9 @@ func _physics_process(delta):
 		var input = get_normalized_input("player_move", outer_deadzone, inner_deadzone)
 		var movement_input_vector = Vector3(input.y, 0.0, -input.x)
 		
+		# Let's hack
+		if not move_enabled: movement_input_vector = Vector3.ZERO
+		
 		if Constants.first_person:
 			movement_input_vector = transform.basis * movement_input_vector
 		
@@ -79,8 +84,26 @@ func _physics_process(delta):
 		var progress = time_since_dash_start / dash_cooldown
 		_player_hud.set_dash_progress(1.0 if progress == 0.0 else progress)
 
-		if Input.is_action_pressed("player_shoot_" + str(id)):
-			attack_type = ranged_attack_type
+		if Input.is_action_pressed("player_shoot_" + str(id)) and not waiting_for_shot:
+			if $Attacker.has_ammo(ranged_attack_type):
+				waiting_for_shot = true
+				
+				if not ranged_attack_type.move_while_charging:
+					move_enabled = false
+				
+				var charge_object_instance
+				if ranged_attack_type.charge_object:
+					charge_object_instance = ranged_attack_type.charge_object.instance()
+					$Attacker.add_child(charge_object_instance)
+				
+				yield(get_tree().create_timer(ranged_attack_type.charge_time), "timeout")
+				
+				move_enabled = true
+				attack_type = ranged_attack_type
+				if charge_object_instance:
+					charge_object_instance.queue_free()
+				
+				waiting_for_shot = false
 
 		if Input.is_action_pressed("player_melee_" + str(id)):
 			attack_type = melee_attack_type
